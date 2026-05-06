@@ -309,6 +309,54 @@
     letter-spacing: 1px;
   }
 
+  .btn-done {
+    padding: 16px 48px;
+    border-radius: 30px;
+    border: 2px solid var(--walk);
+    background: transparent;
+    color: var(--walk);
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 22px;
+    letter-spacing: 4px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+  .btn-done:active { background: var(--walk); color: var(--dark); transform: scale(0.96); }
+
+  /* Log panel */
+  .log-panel {
+    width: 100%;
+    background: var(--card);
+    border: 1px solid #1E1E2E;
+    border-radius: 16px;
+    padding: 16px;
+  }
+  .log-panel h3 {
+    font-size: 11px;
+    letter-spacing: 3px;
+    color: var(--muted);
+    text-transform: uppercase;
+    margin-bottom: 12px;
+  }
+  .log-empty { font-size: 13px; color: var(--muted); text-align: center; padding: 8px 0; }
+  .log-entry {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 0;
+    border-bottom: 1px solid #1E1E2E;
+    font-size: 13px;
+    animation: fadeIn 0.3s ease;
+  }
+  .log-entry:last-child { border-bottom: none; }
+  .log-left { display: flex; flex-direction: column; gap: 2px; }
+  .log-entry .log-name { color: var(--text); font-weight: 500; }
+  .log-entry .log-date { color: var(--muted); font-size: 11px; }
+  .log-entry .log-time { color: var(--walk); font-family: 'Bebas Neue', sans-serif; font-size: 18px; letter-spacing: 1px; }
+  .log-streak { font-size: 12px; color: var(--muted); margin-bottom: 10px; }
+  .log-streak strong { color: var(--run); font-family: 'Bebas Neue', sans-serif; font-size: 18px; }
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(-6px); } to { opacity: 1; transform: translateY(0); } }
+
   /* Workout info panel */
   .workout-info {
     width: 100%;
@@ -409,10 +457,19 @@
   <div class="stat-val" style="font-size:48px; color: var(--walk);" id="completeStat"></div>
   <div class="complete-sub">
     Workout complete.<br>
-    Log it in your tracker.<br>
     <strong style="color:var(--text)">You showed up. That's what counts.</strong>
   </div>
+  <button class="btn-done" onclick="logWorkout()" id="doneBtn">✓ MARK AS DONE</button>
   <button class="btn-restart" onclick="resetTimer()">Do it again ↺</button>
+</div>
+
+<!-- Log panel — always visible on main screen -->
+<div class="container" style="padding-top:0; margin-top:-10px;">
+  <div class="log-panel" id="logPanel">
+    <h3>🏅 Workout history</h3>
+    <div class="log-streak" id="logStreak"></div>
+    <div id="logList"><div class="log-empty">No workouts logged yet.<br>Complete a session and tap ✓ MARK AS DONE.</div></div>
+  </div>
 </div>
 
 <script>
@@ -489,55 +546,72 @@ function beepWarning() {
   tone(880, 0.07, 0.5, 'square');
 }
 
-// ── VOICE ENGINE ─────────────────────────────────────────────
-let voiceReady = false;
+// ── VOICE ENGINE (Android Chrome compatible) ──────────────────
 let selectedVoice = null;
+let speechUnlocked = false;
 
-function initVoice() {
-  if (!window.speechSynthesis) return;
-  const load = () => {
-    const voices = speechSynthesis.getVoices();
-    // Prefer English female voice
-    selectedVoice =
-      voices.find(v => v.lang.startsWith('en') && v.name.toLowerCase().includes('female')) ||
-      voices.find(v => v.lang.startsWith('en-GB')) ||
-      voices.find(v => v.lang.startsWith('en')) ||
-      voices[0] || null;
-    voiceReady = true;
-  };
-  if (speechSynthesis.getVoices().length) load();
-  else speechSynthesis.addEventListener('voiceschanged', load);
+// Load voices — on Android they load async, keep trying
+function loadVoices() {
+  const voices = window.speechSynthesis ? speechSynthesis.getVoices() : [];
+  if (!voices.length) return false;
+  selectedVoice =
+    voices.find(v => v.lang === 'en-GB') ||
+    voices.find(v => v.lang === 'en-US') ||
+    voices.find(v => v.lang.startsWith('en')) ||
+    voices[0] || null;
+  return true;
+}
+
+// Called on first user tap — unlocks speech on Android
+function unlockSpeech() {
+  if (speechUnlocked || !window.speechSynthesis) return;
+  speechUnlocked = true;
+  // Attempt to load voices immediately
+  if (!loadVoices()) {
+    window.speechSynthesis.addEventListener('voiceschanged', loadVoices, { once: true });
+  }
+  // Warm-up utterance — required on Android to unlock the engine
+  const warmup = new SpeechSynthesisUtterance('');
+  warmup.volume = 0;
+  speechSynthesis.speak(warmup);
 }
 
 function speak(text, delay = 0) {
-  if (!window.speechSynthesis) return;
+  if (!window.speechSynthesis || !speechUnlocked) return;
+  if (!selectedVoice) loadVoices();
   setTimeout(() => {
-    speechSynthesis.cancel();
-    const u = new SpeechSynthesisUtterance(text);
-    if (selectedVoice) u.voice = selectedVoice;
-    u.rate  = 0.95;
-    u.pitch = 1.1;
-    u.volume = 1.0;
-    speechSynthesis.speak(u);
+    try {
+      window.speechSynthesis.cancel();
+      const u = new SpeechSynthesisUtterance(text);
+      if (selectedVoice) {
+        u.voice = selectedVoice;
+        u.lang  = selectedVoice.lang;
+      } else {
+        u.lang = 'en-US';
+      }
+      u.rate   = 0.88;
+      u.pitch  = 1.0;
+      u.volume = 1.0;
+      window.speechSynthesis.speak(u);
+    } catch(e) {}
   }, delay);
 }
 
-function announceRun()  {
+function announceRun() {
   beepRun();
-  speak("Start running!", 350);
+  speak("Start running!", 400);
 }
 function announceWalk() {
   beepWalk();
-  speak("Walk now. Good job!", 200);
+  speak("Walk now!", 250);
 }
 function announceDone() {
   beepDone();
-  speak("Workout complete! Well done Tatiana!", 500);
+  speak("Workout complete! Well done Tatiana!", 600);
 }
 function announceWarning(n) {
   beepWarning();
-  // only speak countdown on last 3 seconds of run (not walk — less disruptive)
-  if (currentInterval === 'run') speak(String(n), 80);
+  if (currentInterval === 'run') speak(String(n), 100);
 }
 
 function loadWorkout() {
@@ -703,9 +777,9 @@ function completeWorkout() {
 
 function toggleTimer() {
   if (!isRunning) {
-    // Init audio & voice on first user gesture
+    // Unlock audio + speech on first user gesture (required on Android)
     getCtx();
-    initVoice();
+    unlockSpeech();
     isRunning = true;
     document.getElementById('mainBtn').textContent = '⏸';
     document.body.className = currentInterval === 'run' ? 'active' : 'walk-mode active';
@@ -716,10 +790,10 @@ function toggleTimer() {
       timeLeft = workout.run;
       currentRound = 0;
       totalElapsed = 0;
-      speak("Ready? Let's go! Start running!", 200);
       beepRun();
+      speak("Ready? Let's go! Start running!", 500);
     } else {
-      speak("Resuming. " + (currentInterval === 'run' ? "Keep running!" : "Keep walking!"), 200);
+      speak("Resuming. " + (currentInterval === 'run' ? "Keep running!" : "Keep walking!"), 300);
     }
 
     timer = setInterval(tick, 1000);
@@ -728,11 +802,11 @@ function toggleTimer() {
     // Pause
     isRunning = false;
     clearInterval(timer);
-    speechSynthesis.cancel();
+    window.speechSynthesis && speechSynthesis.cancel();
     document.getElementById('mainBtn').textContent = '▶';
     document.body.className = 'idle-mode';
     document.getElementById('phaseBadge').textContent = 'PAUSED';
-    speak("Paused.");
+    speak("Paused.", 100);
   }
 }
 
@@ -762,12 +836,75 @@ function resetTimer() {
   document.getElementById('progressRing').style.strokeDashoffset = '0';
   document.getElementById('mainScreen').style.display = 'flex';
   document.getElementById('completeScreen').classList.remove('show');
+  const doneBtn = document.getElementById('doneBtn');
+  doneBtn.textContent = '✓ MARK AS DONE';
+  doneBtn.dataset.logged = '0';
+  doneBtn.style.borderColor = 'var(--walk)';
+  doneBtn.style.color = 'var(--walk)';
   buildDots();
   updateWorkoutInfo();
 }
 
+// ── WORKOUT LOG ──────────────────────────────────────────────
+let workoutLog = JSON.parse(localStorage.getItem('tatiana_log') || '[]');
+let lastLoggedTime = null;
+
+function logWorkout() {
+  const btn = document.getElementById('doneBtn');
+  // Prevent double-logging same session
+  if (btn.dataset.logged === '1') {
+    speak("Already logged!");
+    return;
+  }
+
+  const entry = {
+    workout: workout.name,
+    duration: formatTotal(totalElapsed),
+    date: new Date().toLocaleDateString('en-GB', { weekday: 'short', day: 'numeric', month: 'short' }),
+    ts: Date.now()
+  };
+
+  workoutLog.unshift(entry); // newest first
+  localStorage.setItem('tatiana_log', JSON.stringify(workoutLog));
+
+  btn.textContent = '✅ LOGGED!';
+  btn.dataset.logged = '1';
+  btn.style.borderColor = '#27AE60';
+  btn.style.color = '#27AE60';
+
+  speak("Workout logged! Great job Tatiana!", 200);
+  renderLog();
+}
+
+function renderLog() {
+  const list = document.getElementById('logList');
+  const streak = document.getElementById('logStreak');
+
+  if (workoutLog.length === 0) {
+    list.innerHTML = '<div class="log-empty">No workouts logged yet.<br>Complete a session and tap ✓ MARK AS DONE.</div>';
+    streak.innerHTML = '';
+    return;
+  }
+
+  // Streak count
+  streak.innerHTML = `<strong>${workoutLog.length}</strong> workout${workoutLog.length > 1 ? 's' : ''} completed 🔥`;
+
+  // Show last 10
+  const entries = workoutLog.slice(0, 10);
+  list.innerHTML = entries.map(e => `
+    <div class="log-entry">
+      <div class="log-left">
+        <span class="log-name">${e.workout}</span>
+        <span class="log-date">${e.date}</span>
+      </div>
+      <span class="log-time">${e.duration}</span>
+    </div>
+  `).join('');
+}
+
 // Init
 loadWorkout();
+renderLog();
 </script>
 </body>
 </html>
