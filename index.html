@@ -846,12 +846,12 @@ function resetTimer() {
 }
 
 // ── WORKOUT LOG ──────────────────────────────────────────────
+const SHEET_URL = "https://script.google.com/macros/s/AKfycbzzegszVRmHJpa9a0B9ubvsztPC1oeGrez7X1iQZqfSL4ckQDWPFkfERv8_MVnPM6SixQ/exec";
+
 let workoutLog = JSON.parse(localStorage.getItem('tatiana_log') || '[]');
-let lastLoggedTime = null;
 
 function logWorkout() {
   const btn = document.getElementById('doneBtn');
-  // Prevent double-logging same session
   if (btn.dataset.logged === '1') {
     speak("Already logged!");
     return;
@@ -864,16 +864,42 @@ function logWorkout() {
     ts: Date.now()
   };
 
-  workoutLog.unshift(entry); // newest first
+  // Save locally first (works offline)
+  workoutLog.unshift(entry);
   localStorage.setItem('tatiana_log', JSON.stringify(workoutLog));
 
-  btn.textContent = '✅ LOGGED!';
+  // Update button immediately
+  btn.textContent = '⏳ SYNCING...';
   btn.dataset.logged = '1';
-  btn.style.borderColor = '#27AE60';
-  btn.style.color = '#27AE60';
+  btn.style.borderColor = '#F9CA24';
+  btn.style.color = '#F9CA24';
 
   speak("Workout logged! Great job Tatiana!", 200);
   renderLog();
+
+  // Sync to Google Sheets
+  fetch(SHEET_URL, {
+    method: "POST",
+    mode: "no-cors",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      date: entry.date,
+      workout: entry.workout,
+      duration: entry.duration,
+      notes: "Logged from Run Timer app"
+    })
+  })
+  .then(() => {
+    btn.textContent = '✅ SYNCED TO DRIVE!';
+    btn.style.borderColor = '#27AE60';
+    btn.style.color = '#27AE60';
+  })
+  .catch(() => {
+    // Offline or error — still logged locally
+    btn.textContent = '✅ LOGGED (offline)';
+    btn.style.borderColor = '#27AE60';
+    btn.style.color = '#27AE60';
+  });
 }
 
 function renderLog() {
