@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
 <title>Tatiana — Run Timer</title>
-<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
 :root {
   --run:#E94560; --walk:#4ECDC4; --strength:#F9CA24; --bike:#6C63FF;
@@ -20,9 +20,10 @@ body.walk-active .bg-ring{background:var(--walk);animation:pulse 2s ease-in-out 
 .app-header{display:flex;justify-content:space-between;align-items:center;padding:20px 0 14px;}
 .logo{font-family:'Bebas Neue';font-size:20px;letter-spacing:4px;color:var(--run);}
 .week-badge{font-size:11px;letter-spacing:2px;color:var(--muted);background:var(--card2);border:1px solid var(--border);padding:4px 12px;border-radius:20px;text-transform:uppercase;}
-.tabs{display:flex;gap:8px;margin-bottom:16px;}
-.tab{flex:1;padding:10px;border-radius:12px;border:1px solid var(--border);background:var(--card);color:var(--muted);font-size:12px;letter-spacing:2px;text-transform:uppercase;cursor:pointer;text-align:center;font-family:'DM Sans';transition:all 0.2s;}
+.tabs{display:flex;gap:6px;margin-bottom:16px;}
+.tab{flex:1;padding:9px 4px;border-radius:12px;border:1px solid var(--border);background:var(--card);color:var(--muted);font-size:11px;letter-spacing:1px;text-transform:uppercase;cursor:pointer;text-align:center;font-family:'DM Sans';transition:all 0.2s;}
 .tab.active{background:var(--run);color:#fff;border-color:var(--run);}
+/* PLAN */
 .week-plan{display:flex;flex-direction:column;gap:8px;}
 .day-card{background:var(--card);border:1px solid var(--border);border-radius:16px;overflow:hidden;transition:all 0.3s;}
 .day-card.today{border-color:var(--run);box-shadow:0 0 20px rgba(233,69,96,0.15);}
@@ -37,7 +38,6 @@ body.walk-active .bg-ring{background:var(--walk);animation:pulse 2s ease-in-out 
 .badge-walk{background:rgba(78,205,196,0.15);color:var(--walk);}
 .badge-rest{background:rgba(85,85,112,0.15);color:var(--muted);}
 .today-label{font-size:10px;letter-spacing:2px;color:var(--run);text-transform:uppercase;font-weight:500;}
-.done-check{font-size:18px;}
 .day-body{padding:0 16px 16px;display:none;}
 .day-card.today .day-body,.day-card.expanded .day-body{display:block;}
 .day-desc{font-size:13px;color:var(--muted);line-height:1.7;margin-bottom:14px;font-style:italic;}
@@ -47,7 +47,44 @@ body.walk-active .bg-ring{background:var(--walk);animation:pulse 2s ease-in-out 
 .btn-mark-done{padding:13px 20px;border-radius:30px;border:1px solid var(--border);background:var(--card2);color:var(--muted);font-family:'DM Sans';font-size:13px;cursor:pointer;transition:all 0.2s;white-space:nowrap;}
 .btn-mark-done.done-state,.btn-full-done.done-state{border-color:#27AE60;color:#27AE60;}
 .btn-full-done{width:100%;padding:14px;border-radius:30px;border:1px solid var(--border);background:var(--card2);color:var(--muted);font-family:'DM Sans';font-size:13px;cursor:pointer;transition:all 0.2s;}
-/* Timer screen */
+
+/* EXERCISE LIBRARY */
+.ex-section{margin-bottom:20px;}
+.ex-section-title{font-size:10px;letter-spacing:3px;color:var(--muted);text-transform:uppercase;margin-bottom:10px;padding:0 2px;}
+.ex-card{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:14px 16px;margin-bottom:8px;display:flex;align-items:center;gap:14px;cursor:pointer;transition:all 0.2s;}
+.ex-card:active{background:var(--card2);}
+.ex-icon{width:60px;height:60px;flex-shrink:0;border-radius:12px;background:var(--card2);display:flex;align-items:center;justify-content:center;}
+.ex-info{flex:1;}
+.ex-name{font-size:14px;font-weight:500;color:var(--text);margin-bottom:3px;}
+.ex-meta{font-size:11px;color:var(--muted);}
+.ex-tag{display:inline-block;font-size:9px;letter-spacing:2px;text-transform:uppercase;padding:2px 8px;border-radius:10px;margin-top:5px;}
+.ex-tag-posture{background:rgba(233,69,96,0.15);color:var(--run);}
+.ex-tag-strength{background:rgba(249,202,36,0.15);color:var(--strength);}
+.ex-tag-warmup{background:rgba(78,205,196,0.15);color:var(--walk);}
+.ex-arrow{color:var(--muted);font-size:20px;}
+
+/* EXERCISE DETAIL OVERLAY */
+.ex-overlay{display:none;position:fixed;inset:0;background:var(--dark);z-index:200;overflow-y:auto;}
+.ex-overlay.show{display:block;}
+.ex-overlay-inner{max-width:440px;margin:0 auto;padding:20px 16px 60px;}
+.ex-detail-header{display:flex;align-items:center;gap:12px;margin-bottom:20px;}
+.ex-detail-title{font-family:'Bebas Neue';font-size:26px;letter-spacing:3px;color:var(--text);}
+.ex-detail-meta{font-size:11px;color:var(--muted);letter-spacing:2px;margin-top:2px;}
+.ex-illustration-box{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:20px;margin-bottom:16px;display:flex;flex-direction:column;align-items:center;gap:16px;}
+.ex-illustration-label{font-size:10px;letter-spacing:3px;color:var(--muted);text-transform:uppercase;text-align:center;}
+.ex-phases{display:flex;gap:20px;justify-content:center;width:100%;}
+.ex-phase{display:flex;flex-direction:column;align-items:center;gap:8px;flex:1;}
+.ex-phase-label{font-size:10px;letter-spacing:2px;color:var(--run);text-transform:uppercase;}
+.ex-steps-box{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:16px;margin-bottom:12px;}
+.ex-steps-box h3{font-size:10px;letter-spacing:3px;color:var(--muted);text-transform:uppercase;margin-bottom:14px;}
+.ex-step{display:flex;gap:12px;margin-bottom:14px;align-items:flex-start;}
+.ex-step:last-child{margin-bottom:0;}
+.ex-step-num{width:26px;height:26px;border-radius:50%;background:var(--run);color:#fff;font-size:12px;font-weight:500;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px;}
+.ex-step-text{font-size:13px;color:var(--text);line-height:1.7;}
+.ex-tip-box{background:rgba(249,202,36,0.06);border:1px solid rgba(249,202,36,0.2);border-radius:12px;padding:14px 16px;font-size:13px;color:var(--strength);line-height:1.7;}
+.ex-tip-box strong{display:block;font-size:10px;letter-spacing:3px;text-transform:uppercase;margin-bottom:6px;}
+
+/* TIMER */
 #timerScreen{display:none;}
 .timer-header{display:flex;align-items:center;gap:12px;padding:20px 0 14px;}
 .btn-back{width:40px;height:40px;border-radius:50%;border:1px solid var(--border);background:var(--card);color:var(--text);font-size:18px;cursor:pointer;display:flex;align-items:center;justify-content:center;}
@@ -82,7 +119,8 @@ body.walk-active .btn-main{background:var(--walk);box-shadow:0 0 24px rgba(78,20
 .btn-secondary{width:48px;height:48px;border-radius:50%;border:1px solid var(--border);background:var(--card);color:var(--muted);font-size:16px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all 0.2s;}
 .next-preview{text-align:center;font-size:11px;color:var(--muted);letter-spacing:2px;text-transform:uppercase;margin-bottom:16px;}
 .next-preview span{color:var(--text);}
-/* Complete overlay */
+
+/* COMPLETE */
 .complete-overlay{display:none;position:fixed;inset:0;background:var(--dark);z-index:100;flex-direction:column;align-items:center;justify-content:center;gap:16px;padding:30px;text-align:center;}
 .complete-overlay.show{display:flex;}
 .complete-title{font-family:'Bebas Neue';font-size:52px;color:var(--run);letter-spacing:4px;}
@@ -92,7 +130,8 @@ body.walk-active .btn-main{background:var(--walk);box-shadow:0 0 24px rgba(78,20
 .btn-done-final.synced{border-color:#27AE60;color:#27AE60;}
 .btn-done-final.syncing{border-color:var(--strength);color:var(--strength);}
 .btn-back-plan{padding:12px 32px;border-radius:30px;border:1px solid var(--border);background:var(--card);color:var(--muted);font-family:'DM Sans';font-size:13px;cursor:pointer;}
-/* Log */
+
+/* LOG */
 .log-panel{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:16px;}
 .log-panel h3{font-size:10px;letter-spacing:3px;color:var(--muted);text-transform:uppercase;margin-bottom:12px;}
 .log-streak{font-size:12px;color:var(--muted);margin-bottom:10px;}
@@ -105,6 +144,9 @@ body.walk-active .btn-main{background:var(--walk);box-shadow:0 0 24px rgba(78,20
 .log-date{font-size:11px;color:var(--muted);}
 .log-time{font-family:'Bebas Neue';font-size:18px;color:var(--walk);letter-spacing:1px;}
 @keyframes fadeIn{from{opacity:0;transform:translateY(-5px)}to{opacity:1;transform:translateY(0)}}
+
+/* SVG figures */
+.fig{overflow:visible;}
 </style>
 </head>
 <body class="idle">
@@ -114,13 +156,18 @@ body.walk-active .btn-main{background:var(--walk);box-shadow:0 0 24px rgba(78,20
 <div class="page" id="planScreen">
   <div class="app-header">
     <div class="logo">TATIANA</div>
-    <div class="week-badge">Phase 1 · Week 1</div>
+    <div class="week-badge">Phase 1 · Week 2</div>
   </div>
   <div class="tabs">
-    <div class="tab active" onclick="showTab('plan')">This Week</div>
+    <div class="tab active" onclick="showTab('plan')">Week</div>
+    <div class="tab" onclick="showTab('exercises')">Exercises</div>
     <div class="tab" onclick="showTab('log')">History</div>
   </div>
+
   <div id="planTab"><div class="week-plan" id="weekPlan"></div></div>
+
+  <div id="exercisesTab" style="display:none;"></div>
+
   <div id="logTab" style="display:none;">
     <div class="log-panel">
       <h3>🏅 Workout history</h3>
@@ -128,6 +175,20 @@ body.walk-active .btn-main{background:var(--walk);box-shadow:0 0 24px rgba(78,20
       <div id="logList"><div class="log-empty">No workouts logged yet.<br>Complete a session and tap ✓ Done.</div></div>
       <button onclick="exportCSV()" id="exportBtn" style="display:none;margin-top:14px;width:100%;padding:12px;border-radius:30px;border:1px solid var(--border);background:var(--card2);color:var(--muted);font-family:'DM Sans',sans-serif;font-size:13px;cursor:pointer;">⬇ Export history as CSV</button>
     </div>
+  </div>
+</div>
+
+<!-- ══ EXERCISE DETAIL OVERLAY ══ -->
+<div class="ex-overlay" id="exOverlay">
+  <div class="ex-overlay-inner">
+    <div class="ex-detail-header">
+      <button class="btn-back" onclick="closeExercise()">←</button>
+      <div>
+        <div class="ex-detail-title" id="exTitle"></div>
+        <div class="ex-detail-meta" id="exMeta"></div>
+      </div>
+    </div>
+    <div id="exContent"></div>
   </div>
 </div>
 
@@ -178,32 +239,405 @@ body.walk-active .btn-main{background:var(--walk);box-shadow:0 0 24px rgba(78,20
 <script>
 const SHEET_URL = "https://script.google.com/macros/s/AKfycbzzegszVRmHJpa9a0B9ubvsztPC1oeGrez7X1iQZqfSL4ckQDWPFkfERv8_MVnPM6SixQ/exec";
 
-const WEEKLY_PLAN = [
-  { day:"Monday",    type:"strength", label:"Strength A", hasTimer:false,
-    desc:"Full body · 35 min\nSquats 3×12 · Push-ups 3×10 · Band rows 3×12 · Glute bridges 3×15 · Plank 3×30s" },
-  { day:"Tuesday",   type:"run",      label:"Run / Walk", hasTimer:true,
-    desc:"Run 1 min · Walk 2 min · 8 rounds · ~30 min\nHead to the park. No pace pressure.",
-    workout:{ name:"Week 1 — Run", run:60, walk:120, rounds:8 } },
-  { day:"Wednesday", type:"rest",     label:"Easy Walk",  hasTimer:false,
-    desc:"Easy day. A gentle 10–20 min walk counts. Fill in your tracker." },
-  { day:"Thursday",  type:"bike",     label:"Bike · iFit", hasTimer:false,
-    desc:"NordicTrack · 35 min\n5 min warm-up · 25 min steady moderate effort · 5 min cool-down." },
-  { day:"Friday",    type:"rest",     label:"Rest Day",   hasTimer:false,
-    desc:"Recovery is training. Rest, stretch, hydrate. 💧" },
-  { day:"Saturday",  type:"run",      label:"Run / Walk", hasTimer:true,
-    desc:"Run 1 min · Walk 2 min · 8 rounds · ~30 min\nSame as Tuesday — you'll already feel easier.",
-    workout:{ name:"Week 1 — Run", run:60, walk:120, rounds:8 } },
-  { day:"Sunday",    type:"strength", label:"Strength B", hasTimer:false,
-    desc:"Full body · 35 min\nBand deadlifts 3×12 · Step-ups 3×10 · Lateral band walks 3×15 · Single-leg glute bridge 3×12 · Dead bug 3×10" }
+// ══════════════════════════════════════════════════
+// SVG ILLUSTRATIONS
+// ══════════════════════════════════════════════════
+const SVG = {
+  // Cat-Cow: side view on all fours, two positions
+  catcow: {
+    cat: `<svg width="130" height="90" viewBox="0 0 130 90" fill="none">
+      <!-- CAT: back arched UP, head down -->
+      <!-- body -->
+      <path d="M25 55 Q65 30 105 55" stroke="#4ECDC4" stroke-width="4" stroke-linecap="round" fill="none"/>
+      <!-- head -->
+      <circle cx="18" cy="60" r="9" fill="none" stroke="#4ECDC4" stroke-width="3"/>
+      <!-- neck -->
+      <line x1="25" y1="55" x2="18" y2="52" stroke="#4ECDC4" stroke-width="3" stroke-linecap="round"/>
+      <!-- tail -->
+      <path d="M105 55 Q115 40 112 30" stroke="#4ECDC4" stroke-width="3" stroke-linecap="round" fill="none"/>
+      <!-- front legs -->
+      <line x1="35" y1="52" x2="30" y2="75" stroke="#4ECDC4" stroke-width="3" stroke-linecap="round"/>
+      <line x1="45" y1="48" x2="40" y2="75" stroke="#4ECDC4" stroke-width="3" stroke-linecap="round"/>
+      <!-- back legs -->
+      <line x1="88" y1="48" x2="85" y2="75" stroke="#4ECDC4" stroke-width="3" stroke-linecap="round"/>
+      <line x1="98" y1="52" x2="95" y2="75" stroke="#4ECDC4" stroke-width="3" stroke-linecap="round"/>
+      <!-- arrows showing arch up -->
+      <path d="M65 28 L65 20 L60 25 M65 20 L70 25" stroke="#E94560" stroke-width="2" stroke-linecap="round" fill="none"/>
+    </svg>`,
+    cow: `<svg width="130" height="90" viewBox="0 0 130 90" fill="none">
+      <!-- COW: back sagging DOWN, head up -->
+      <path d="M25 45 Q65 68 105 45" stroke="#F9CA24" stroke-width="4" stroke-linecap="round" fill="none"/>
+      <!-- head up -->
+      <circle cx="14" cy="38" r="9" fill="none" stroke="#F9CA24" stroke-width="3"/>
+      <line x1="22" y1="42" x2="25" y2="45" stroke="#F9CA24" stroke-width="3" stroke-linecap="round"/>
+      <!-- tail up -->
+      <path d="M105 45 Q118 35 115 22" stroke="#F9CA24" stroke-width="3" stroke-linecap="round" fill="none"/>
+      <!-- front legs -->
+      <line x1="35" y1="48" x2="30" y2="75" stroke="#F9CA24" stroke-width="3" stroke-linecap="round"/>
+      <line x1="45" y1="52" x2="40" y2="75" stroke="#F9CA24" stroke-width="3" stroke-linecap="round"/>
+      <!-- back legs -->
+      <line x1="88" y1="52" x2="85" y2="75" stroke="#F9CA24" stroke-width="3" stroke-linecap="round"/>
+      <line x1="98" y1="48" x2="95" y2="75" stroke="#F9CA24" stroke-width="3" stroke-linecap="round"/>
+      <!-- arrow showing sag down -->
+      <path d="M65 70 L65 78 L60 73 M65 78 L70 73" stroke="#E94560" stroke-width="2" stroke-linecap="round" fill="none"/>
+    </svg>`
+  },
+
+  // Hip flexor stretch: kneeling lunge
+  hipflexor: {
+    start: `<svg width="110" height="110" viewBox="0 0 110 110" fill="none">
+      <!-- kneeling lunge position -->
+      <!-- head -->
+      <circle cx="55" cy="12" r="9" fill="none" stroke="#4ECDC4" stroke-width="3"/>
+      <!-- torso upright -->
+      <line x1="55" y1="21" x2="55" y2="55" stroke="#4ECDC4" stroke-width="3.5" stroke-linecap="round"/>
+      <!-- arms relaxed at sides -->
+      <line x1="55" y1="30" x2="42" y2="48" stroke="#4ECDC4" stroke-width="3" stroke-linecap="round"/>
+      <line x1="55" y1="30" x2="68" y2="48" stroke="#4ECDC4" stroke-width="3" stroke-linecap="round"/>
+      <!-- front leg bent (right) - foot forward -->
+      <line x1="55" y1="55" x2="72" y2="70" stroke="#4ECDC4" stroke-width="3.5" stroke-linecap="round"/>
+      <line x1="72" y1="70" x2="82" y2="55" stroke="#4ECDC4" stroke-width="3.5" stroke-linecap="round"/>
+      <!-- back knee on ground (left) -->
+      <line x1="55" y1="55" x2="40" y2="70" stroke="#4ECDC4" stroke-width="3.5" stroke-linecap="round"/>
+      <line x1="40" y1="70" x2="38" y2="95" stroke="#4ECDC4" stroke-width="3.5" stroke-linecap="round"/>
+      <!-- knee dot on ground -->
+      <circle cx="40" cy="70" r="4" fill="#4ECDC4" opacity="0.4"/>
+      <!-- ground line -->
+      <line x1="20" y1="95" x2="95" y2="95" stroke="#555570" stroke-width="2"/>
+      <!-- arrow: hip push forward -->
+      <path d="M62 62 L70 62" stroke="#E94560" stroke-width="2" stroke-linecap="round"/>
+      <path d="M67 58 L72 62 L67 66" stroke="#E94560" stroke-width="2" stroke-linecap="round" fill="none"/>
+    </svg>`,
+    side: `<svg width="110" height="110" viewBox="0 0 110 110" fill="none">
+      <!-- deeper lunge with hip pushed further -->
+      <circle cx="50" cy="12" r="9" fill="none" stroke="#F9CA24" stroke-width="3"/>
+      <!-- torso slight lean forward -->
+      <line x1="50" y1="21" x2="52" y2="55" stroke="#F9CA24" stroke-width="3.5" stroke-linecap="round"/>
+      <!-- arms on knee -->
+      <line x1="51" y1="32" x2="68" y2="52" stroke="#F9CA24" stroke-width="3" stroke-linecap="round"/>
+      <line x1="51" y1="32" x2="40" y2="50" stroke="#F9CA24" stroke-width="3" stroke-linecap="round"/>
+      <!-- front leg more bent -->
+      <line x1="52" y1="55" x2="75" y2="68" stroke="#F9CA24" stroke-width="3.5" stroke-linecap="round"/>
+      <line x1="75" y1="68" x2="88" y2="52" stroke="#F9CA24" stroke-width="3.5" stroke-linecap="round"/>
+      <!-- back knee on ground -->
+      <line x1="52" y1="55" x2="35" y2="68" stroke="#F9CA24" stroke-width="3.5" stroke-linecap="round"/>
+      <line x1="35" y1="68" x2="32" y2="95" stroke="#F9CA24" stroke-width="3.5" stroke-linecap="round"/>
+      <circle cx="35" cy="68" r="4" fill="#F9CA24" opacity="0.4"/>
+      <!-- stretch indicator at hip -->
+      <path d="M42 60 Q38 52 44 46" stroke="#E94560" stroke-width="2" stroke-linecap="round" fill="none" stroke-dasharray="3,2"/>
+      <line x1="20" y1="95" x2="95" y2="95" stroke="#555570" stroke-width="2"/>
+    </svg>`
+  },
+
+  // Glute bridge: lying on back, hips up
+  glutebridge: {
+    down: `<svg width="140" height="80" viewBox="0 0 140 80" fill="none">
+      <!-- lying on back, flat -->
+      <!-- head -->
+      <circle cx="12" cy="40" r="9" fill="none" stroke="#4ECDC4" stroke-width="3"/>
+      <!-- torso flat -->
+      <line x1="20" y1="40" x2="75" y2="40" stroke="#4ECDC4" stroke-width="4" stroke-linecap="round"/>
+      <!-- arms flat by sides -->
+      <line x1="35" y1="40" x2="30" y2="55" stroke="#4ECDC4" stroke-width="3" stroke-linecap="round"/>
+      <line x1="55" y1="40" x2="50" y2="55" stroke="#4ECDC4" stroke-width="3" stroke-linecap="round"/>
+      <!-- knees bent, feet on floor -->
+      <line x1="75" y1="40" x2="95" y2="58" stroke="#4ECDC4" stroke-width="4" stroke-linecap="round"/>
+      <line x1="95" y1="58" x2="110" y2="40" stroke="#4ECDC4" stroke-width="4" stroke-linecap="round"/>
+      <!-- floor -->
+      <line x1="5" y1="65" x2="135" y2="65" stroke="#555570" stroke-width="2"/>
+      <!-- feet -->
+      <line x1="105" y1="40" x2="125" y2="40" stroke="#4ECDC4" stroke-width="4" stroke-linecap="round"/>
+    </svg>`,
+    up: `<svg width="140" height="80" viewBox="0 0 140 80" fill="none">
+      <!-- hips raised up -->
+      <circle cx="12" cy="52" r="9" fill="none" stroke="#F9CA24" stroke-width="3"/>
+      <!-- torso angled up -->
+      <line x1="20" y1="52" x2="60" y2="30" stroke="#F9CA24" stroke-width="4" stroke-linecap="round"/>
+      <!-- arms flat -->
+      <line x1="35" y1="47" x2="28" y2="62" stroke="#F9CA24" stroke-width="3" stroke-linecap="round"/>
+      <line x1="48" y1="40" x2="42" y2="55" stroke="#F9CA24" stroke-width="3" stroke-linecap="round"/>
+      <!-- hips up, legs at angle -->
+      <line x1="60" y1="30" x2="85" y2="52" stroke="#F9CA24" stroke-width="4" stroke-linecap="round"/>
+      <line x1="85" y1="52" x2="110" y2="52" stroke="#F9CA24" stroke-width="4" stroke-linecap="round"/>
+      <!-- feet on floor -->
+      <line x1="105" y1="52" x2="125" y2="52" stroke="#F9CA24" stroke-width="4" stroke-linecap="round"/>
+      <!-- floor -->
+      <line x1="5" y1="65" x2="135" y2="65" stroke="#555570" stroke-width="2"/>
+      <!-- arrow up at hips -->
+      <path d="M65 28 L65 18 L60 23 M65 18 L70 23" stroke="#E94560" stroke-width="2" stroke-linecap="round" fill="none"/>
+    </svg>`
+  },
+
+  // Dead bug: lying on back, opposite arm/leg extended
+  deadbug: {
+    start: `<svg width="140" height="85" viewBox="0 0 140 85" fill="none">
+      <!-- lying on back -->
+      <circle cx="12" cy="35" r="9" fill="none" stroke="#4ECDC4" stroke-width="3"/>
+      <line x1="20" y1="35" x2="75" y2="35" stroke="#4ECDC4" stroke-width="4" stroke-linecap="round"/>
+      <!-- both arms up 90deg -->
+      <line x1="35" y1="35" x2="35" y2="15" stroke="#4ECDC4" stroke-width="3" stroke-linecap="round"/>
+      <line x1="55" y1="35" x2="55" y2="15" stroke="#4ECDC4" stroke-width="3" stroke-linecap="round"/>
+      <!-- both knees up 90deg (tabletop) -->
+      <line x1="75" y1="35" x2="85" y2="18" stroke="#4ECDC4" stroke-width="3.5" stroke-linecap="round"/>
+      <line x1="85" y1="18" x2="105" y2="18" stroke="#4ECDC4" stroke-width="3.5" stroke-linecap="round"/>
+      <line x1="75" y1="35" x2="90" y2="18" stroke="#4ECDC4" stroke-width="3.5" stroke-linecap="round"/>
+      <!-- floor -->
+      <line x1="5" y1="55" x2="135" y2="55" stroke="#555570" stroke-width="2"/>
+      <text x="55" y="72" font-size="9" fill="#555570" text-anchor="middle" font-family="DM Sans">Start position</text>
+    </svg>`,
+    extend: `<svg width="140" height="85" viewBox="0 0 140 85" fill="none">
+      <!-- lying on back -->
+      <circle cx="12" cy="38" r="9" fill="none" stroke="#F9CA24" stroke-width="3"/>
+      <line x1="20" y1="38" x2="75" y2="38" stroke="#F9CA24" stroke-width="4" stroke-linecap="round"/>
+      <!-- RIGHT arm extended back -->
+      <line x1="35" y1="38" x2="15" y2="25" stroke="#F9CA24" stroke-width="3" stroke-linecap="round"/>
+      <!-- LEFT arm stays up -->
+      <line x1="55" y1="38" x2="55" y2="18" stroke="#F9CA24" stroke-width="3" stroke-linecap="round"/>
+      <!-- LEFT leg extended out (opposite to arm) -->
+      <line x1="75" y1="38" x2="118" y2="38" stroke="#F9CA24" stroke-width="3.5" stroke-linecap="round"/>
+      <!-- RIGHT knee stays up (tabletop) -->
+      <line x1="75" y1="38" x2="85" y2="20" stroke="#F9CA24" stroke-width="3.5" stroke-linecap="round"/>
+      <line x1="85" y1="20" x2="100" y2="20" stroke="#F9CA24" stroke-width="3.5" stroke-linecap="round"/>
+      <!-- arrows -->
+      <path d="M13 23 L8 18" stroke="#E94560" stroke-width="2" stroke-linecap="round"/>
+      <path d="M120 38 L126 38" stroke="#E94560" stroke-width="2" stroke-linecap="round"/>
+      <path d="M123 35 L127 38 L123 41" stroke="#E94560" stroke-width="2" stroke-linecap="round" fill="none"/>
+      <line x1="5" y1="58" x2="135" y2="58" stroke="#555570" stroke-width="2"/>
+      <text x="65" y="72" font-size="9" fill="#555570" text-anchor="middle" font-family="DM Sans">Opposite arm + leg</text>
+    </svg>`
+  },
+
+  // Posterior pelvic tilt: standing, pelvis tuck
+  pelvictilt: {
+    before: `<svg width="80" height="120" viewBox="0 0 80 120" fill="none">
+      <!-- BEFORE: anterior tilt (bad) -->
+      <circle cx="40" cy="12" r="9" fill="none" stroke="#E94560" stroke-width="3"/>
+      <!-- torso with arch -->
+      <path d="M40 21 Q32 50 38 65" stroke="#E94560" stroke-width="3.5" stroke-linecap="round" fill="none"/>
+      <!-- belly pushing forward -->
+      <path d="M38 40 Q50 50 42 60" stroke="#E94560" stroke-width="2" stroke-linecap="round" fill="none" stroke-dasharray="3,2" opacity="0.6"/>
+      <!-- legs -->
+      <line x1="38" y1="65" x2="30" y2="100" stroke="#E94560" stroke-width="3.5" stroke-linecap="round"/>
+      <line x1="38" y1="65" x2="46" y2="100" stroke="#E94560" stroke-width="3.5" stroke-linecap="round"/>
+      <!-- feet -->
+      <line x1="24" y1="100" x2="35" y2="100" stroke="#E94560" stroke-width="3" stroke-linecap="round"/>
+      <line x1="40" y1="100" x2="55" y2="100" stroke="#E94560" stroke-width="3" stroke-linecap="round"/>
+      <text x="40" y="115" font-size="8" fill="#E94560" text-anchor="middle" font-family="DM Sans">Before</text>
+    </svg>`,
+    after: `<svg width="80" height="120" viewBox="0 0 80 120" fill="none">
+      <!-- AFTER: neutral/posterior tilt (good) -->
+      <circle cx="40" cy="12" r="9" fill="none" stroke="#27AE60" stroke-width="3"/>
+      <!-- straighter torso -->
+      <line x1="40" y1="21" x2="40" y2="65" stroke="#27AE60" stroke-width="3.5" stroke-linecap="round"/>
+      <!-- neutral belly -->
+      <path d="M40 40 Q44 50 40 60" stroke="#27AE60" stroke-width="2" stroke-linecap="round" fill="none" opacity="0.5"/>
+      <!-- pelvis tuck indicator -->
+      <path d="M40 60 Q36 65 40 68" stroke="#F9CA24" stroke-width="2.5" stroke-linecap="round" fill="none"/>
+      <!-- legs straight -->
+      <line x1="40" y1="65" x2="32" y2="100" stroke="#27AE60" stroke-width="3.5" stroke-linecap="round"/>
+      <line x1="40" y1="65" x2="48" y2="100" stroke="#27AE60" stroke-width="3.5" stroke-linecap="round"/>
+      <line x1="26" y1="100" x2="37" y2="100" stroke="#27AE60" stroke-width="3" stroke-linecap="round"/>
+      <line x1="42" y1="100" x2="56" y2="100" stroke="#27AE60" stroke-width="3" stroke-linecap="round"/>
+      <text x="40" y="115" font-size="8" fill="#27AE60" text-anchor="middle" font-family="DM Sans">After</text>
+    </svg>`
+  },
+
+  // Plank: front support position
+  plank: {
+    correct: `<svg width="150" height="75" viewBox="0 0 150 75" fill="none">
+      <!-- head -->
+      <circle cx="12" cy="28" r="9" fill="none" stroke="#4ECDC4" stroke-width="3"/>
+      <!-- straight body line -->
+      <line x1="20" y1="30" x2="105" y2="45" stroke="#4ECDC4" stroke-width="4" stroke-linecap="round"/>
+      <!-- forearms on floor -->
+      <line x1="28" y1="32" x2="22" y2="50" stroke="#4ECDC4" stroke-width="3.5" stroke-linecap="round"/>
+      <line x1="22" y1="50" x2="45" y2="50" stroke="#4ECDC4" stroke-width="3.5" stroke-linecap="round"/>
+      <line x1="48" y1="37" x2="42" y2="50" stroke="#4ECDC4" stroke-width="3.5" stroke-linecap="round"/>
+      <!-- toes -->
+      <line x1="105" y1="45" x2="120" y2="50" stroke="#4ECDC4" stroke-width="3.5" stroke-linecap="round"/>
+      <line x1="115" y1="50" x2="132" y2="50" stroke="#4ECDC4" stroke-width="3" stroke-linecap="round"/>
+      <!-- floor -->
+      <line x1="5" y1="58" x2="145" y2="58" stroke="#555570" stroke-width="2"/>
+      <!-- straight line indicator -->
+      <line x1="15" y1="22" x2="108" y2="38" stroke="#E94560" stroke-width="1.5" stroke-dasharray="4,3" opacity="0.6"/>
+      <text x="72" y="70" font-size="9" fill="#555570" text-anchor="middle" font-family="DM Sans">Body in straight line</text>
+    </svg>`
+  }
+};
+
+// ══════════════════════════════════════════════════
+// EXERCISE DATA
+// ══════════════════════════════════════════════════
+const EXERCISES = [
+  {
+    id: 'cat-cow',
+    name: 'Cat-Cow',
+    category: 'warmup',
+    tag: 'warm-up · posture',
+    tagClass: 'ex-tag-warmup',
+    meta: '10 slow reps · before every session',
+    icon: `<svg width="40" height="32" viewBox="0 0 130 90" fill="none"><path d="M25 55 Q65 30 105 55" stroke="#4ECDC4" stroke-width="5" stroke-linecap="round" fill="none"/><circle cx="18" cy="60" r="8" fill="none" stroke="#4ECDC4" stroke-width="4"/><line x1="35" y1="52" x2="30" y2="75" stroke="#4ECDC4" stroke-width="4"/><line x1="95" y1="52" x2="92" y2="75" stroke="#4ECDC4" stroke-width="4"/></svg>`,
+    why: 'Cat-Cow mobilises your spine and directly targets your anterior pelvic tilt. It teaches your spine to move through its full range and activates the deep core muscles that stabilise your pelvis.',
+    phases: [
+      { label: 'CAT', svg: SVG.catcow.cat, desc: 'Back arched up, head drops down, belly pulled in' },
+      { label: 'COW', svg: SVG.catcow.cow, desc: 'Back sags down, head lifts up, belly relaxes' }
+    ],
+    steps: [
+      'Start on all fours — wrists under shoulders, knees under hips.',
+      'CAT: Breathe out, round your back up to the ceiling like a scared cat. Let your head drop. Pull your belly button up.',
+      'COW: Breathe in, let your back sag down, lift your head and tailbone up.',
+      'Move slowly and continuously between the two positions. 10 full rounds.'
+    ],
+    tip: 'Go slow — this is not a fast movement. You should feel each vertebra moving. If your lower back is very stiff, make the movement smaller and build up over days.'
+  },
+  {
+    id: 'hip-flexor',
+    name: 'Hip Flexor Stretch',
+    category: 'warmup',
+    tag: 'warm-up · posture',
+    tagClass: 'ex-tag-warmup',
+    meta: '30 seconds each side · before every run',
+    icon: `<svg width="40" height="40" viewBox="0 0 110 110" fill="none"><circle cx="55" cy="12" r="8" fill="none" stroke="#4ECDC4" stroke-width="4"/><line x1="55" y1="20" x2="55" y2="52" stroke="#4ECDC4" stroke-width="4"/><line x1="55" y1="52" x2="75" y2="68" stroke="#4ECDC4" stroke-width="4"/><line x1="75" y1="68" x2="85" y2="52" stroke="#4ECDC4" stroke-width="4"/><line x1="55" y1="52" x2="38" y2="68" stroke="#4ECDC4" stroke-width="4"/><line x1="38" y1="68" x2="36" y2="90" stroke="#4ECDC4" stroke-width="4"/></svg>`,
+    why: 'Tight hip flexors are the #1 cause of anterior pelvic tilt. You sit for hours every day — this shortens the hip flexors and pulls your pelvis forward. This stretch directly counteracts that.',
+    phases: [
+      { label: 'POSITION', svg: SVG.hipflexor.start, desc: 'Kneeling lunge, back knee on floor' },
+      { label: 'STRETCH', svg: SVG.hipflexor.side, desc: 'Push hips forward, feel stretch in front of back hip' }
+    ],
+    steps: [
+      'Kneel on your right knee, left foot forward with knee at 90 degrees. You can put a folded mat under your knee for comfort.',
+      'Keep your torso upright — do not lean forward.',
+      'Gently push your hips forward until you feel a stretch at the front of your right hip.',
+      'Hold for 30 seconds. Breathe normally.',
+      'Switch legs and repeat on the other side.'
+    ],
+    tip: 'The stretch should be felt at the FRONT of the back hip — not in the knee. If you feel knee discomfort, put more padding underneath. You can also raise your back foot on a chair for a deeper stretch.'
+  },
+  {
+    id: 'pelvic-tilt',
+    name: 'Posterior Pelvic Tilt',
+    category: 'posture',
+    tag: 'posture fix',
+    tagClass: 'ex-tag-posture',
+    meta: '15 reps · Strength A & B · teaches neutral spine',
+    icon: `<svg width="30" height="40" viewBox="0 0 80 120" fill="none"><circle cx="40" cy="12" r="8" fill="none" stroke="#E94560" stroke-width="4"/><line x1="40" y1="20" x2="40" y2="62" stroke="#E94560" stroke-width="4"/><line x1="40" y1="62" x2="30" y2="95" stroke="#E94560" stroke-width="4"/><line x1="40" y1="62" x2="50" y2="95" stroke="#E94560" stroke-width="4"/></svg>`,
+    why: 'This exercise teaches your pelvis to find the neutral position. It directly counteracts the forward tilt visible in your posture photo. Think of it as "resetting" your pelvis position.',
+    phases: [
+      { label: 'BEFORE', svg: SVG.pelvictilt.before, desc: 'Anterior tilt — lower back arched, belly forward' },
+      { label: 'AFTER', svg: SVG.pelvictilt.after, desc: 'Neutral — lower back flattened, core engaged' }
+    ],
+    steps: [
+      'Stand with your back against a wall, feet about 10cm from the wall.',
+      'Notice the gap between your lower back and the wall — this is your anterior tilt.',
+      'Gently tighten your abs and squeeze your glutes. This will rock your pelvis backwards.',
+      'Try to flatten your lower back against the wall. Hold for 3 seconds.',
+      'Release and repeat. 15 reps.',
+      'Once you get the feeling, practice this standing away from the wall — and during your runs!'
+    ],
+    tip: 'This is also called "tucking your pelvis." Once you know the feeling, you can do it anywhere — standing in a queue, sitting at your desk, during your run. The goal is for neutral pelvis to become your default position.'
+  },
+  {
+    id: 'glute-bridge',
+    name: 'Glute Bridge',
+    category: 'strength',
+    tag: 'strength · posture',
+    tagClass: 'ex-tag-strength',
+    meta: '3 × 15 reps · Strength A & B',
+    icon: `<svg width="44" height="28" viewBox="0 0 140 80" fill="none"><circle cx="12" cy="52" r="8" fill="none" stroke="#F9CA24" stroke-width="4"/><line x1="20" y1="52" x2="60" y2="30" stroke="#F9CA24" stroke-width="5"/><line x1="60" y1="30" x2="85" y2="52" stroke="#F9CA24" stroke-width="5"/><line x1="85" y1="52" x2="115" y2="52" stroke="#F9CA24" stroke-width="5"/></svg>`,
+    why: 'Weak glutes cannot hold the pelvis in a neutral position — so it tips forward. Glute bridges directly strengthen the glutes and teach them to stabilise your hips. Essential for both posture and running.',
+    phases: [
+      { label: 'DOWN', svg: SVG.glutebridge.down, desc: 'Lying on back, knees bent, feet flat, arms by sides' },
+      { label: 'UP', svg: SVG.glutebridge.up, desc: 'Drive hips up, squeeze glutes at the top' }
+    ],
+    steps: [
+      'Lie on your back, knees bent, feet flat on the floor hip-width apart. Arms by your sides.',
+      'Press your lower back gently into the floor (posterior pelvic tilt position).',
+      'Breathe out and drive your hips up by squeezing your glutes. Your body should form a straight line from shoulders to knees.',
+      'Squeeze hard at the top for 2 seconds.',
+      'Lower slowly back down. Do not let your lower back arch when you go back down.',
+      '3 sets of 15 reps.'
+    ],
+    tip: 'The squeeze at the top is the most important part. Many people just go up and down without actually activating the glutes. Think "squeeze a coin between your bum cheeks" at the top of each rep.'
+  },
+  {
+    id: 'dead-bug',
+    name: 'Dead Bug',
+    category: 'strength',
+    tag: 'strength · core',
+    tagClass: 'ex-tag-strength',
+    meta: '3 × 10 reps · Strength A & B',
+    icon: `<svg width="44" height="28" viewBox="0 0 140 85" fill="none"><circle cx="12" cy="35" r="8" fill="none" stroke="#F9CA24" stroke-width="4"/><line x1="20" y1="35" x2="75" y2="35" stroke="#F9CA24" stroke-width="5"/><line x1="35" y1="35" x2="35" y2="15" stroke="#F9CA24" stroke-width="3.5"/><line x1="55" y1="35" x2="55" y2="15" stroke="#F9CA24" stroke-width="3.5"/><line x1="75" y1="35" x2="95" y2="18" stroke="#F9CA24" stroke-width="3.5"/><line x1="95" y1="18" x2="115" y2="18" stroke="#F9CA24" stroke-width="3.5"/></svg>`,
+    why: 'The dead bug trains your deep core to keep the spine stable while your arms and legs move — exactly what happens when you run. It also reinforces the neutral pelvic position under load.',
+    phases: [
+      { label: 'START', svg: SVG.deadbug.start, desc: 'On back, arms up, knees at 90° (tabletop)' },
+      { label: 'EXTEND', svg: SVG.deadbug.extend, desc: 'Opposite arm and leg extend — keep lower back flat!' }
+    ],
+    steps: [
+      'Lie on your back. Press your lower back firmly into the floor — keep it there for the whole exercise.',
+      'Raise both arms straight up toward the ceiling. Raise both knees to 90 degrees (tabletop position).',
+      'Breathe out. Slowly extend your RIGHT arm back behind your head and your LEFT leg out straight — at the same time.',
+      'Go only as far as you can without your lower back lifting off the floor.',
+      'Breathe in, bring them back to the start position.',
+      'Repeat on the other side (left arm, right leg). That is one rep. Do 10 reps total.'
+    ],
+    tip: 'Your lower back must stay in contact with the floor the entire time. This is non-negotiable. If it lifts, you have gone too far. Make the movement smaller. The core work happens in resisting the movement — not in how far you extend.'
+  },
+  {
+    id: 'plank',
+    name: 'Plank',
+    category: 'strength',
+    tag: 'strength · core',
+    tagClass: 'ex-tag-strength',
+    meta: '3 × 30 seconds · Strength A',
+    icon: `<svg width="44" height="22" viewBox="0 0 150 75" fill="none"><circle cx="12" cy="28" r="8" fill="none" stroke="#4ECDC4" stroke-width="4"/><line x1="20" y1="30" x2="105" y2="45" stroke="#4ECDC4" stroke-width="5"/><line x1="28" y1="32" x2="22" y2="52" stroke="#4ECDC4" stroke-width="4"/><line x1="22" y1="52" x2="45" y2="52" stroke="#4ECDC4" stroke-width="4"/><line x1="105" y1="45" x2="122" y2="52" stroke="#4ECDC4" stroke-width="4"/></svg>`,
+    why: 'The plank builds the endurance of your core stabilisers — the muscles that hold your spine neutral during running. It also teaches you to maintain neutral pelvis under fatigue.',
+    phases: [
+      { label: 'FORM', svg: SVG.plank.correct, desc: 'Forearms on floor, body in straight line head to heels' }
+    ],
+    steps: [
+      'Start on your forearms and toes. Elbows directly under your shoulders.',
+      'Create a straight line from your head to your heels — no hips up, no hips sagging.',
+      'Engage your core by pulling your belly button gently in. Squeeze your glutes.',
+      'Keep your neck neutral — look at the floor between your hands.',
+      'Hold for 30 seconds. Breathe normally.',
+      'If 30 seconds is too hard, start with 15 seconds and build up.'
+    ],
+    tip: 'Quality over time. A perfect 15-second plank is better than 30 seconds with your hips sagging. The moment your hips drop or rise, the exercise loses its benefit. Stop, rest, go again.'
+  }
 ];
 
-// ── STATE ──
+// ══════════════════════════════════════════════════
+// WEEKLY PLAN
+// ══════════════════════════════════════════════════
+const WEEKLY_PLAN = [
+  { day:"Monday",    type:"strength", label:"Strength A", hasTimer:false,
+    desc:"Full body · 35 min\nWarm-up: Cat-cow 10 reps · Hip flexor stretch 30s each\nSquats 3×12 · Push-ups 3×10 · Band rows 3×12 · Glute bridges 3×15 · Dead bug 3×10 · Plank 3×30s · Pelvic tilt 15 reps" },
+  { day:"Tuesday",   type:"run",      label:"Run / Walk", hasTimer:true,
+    desc:"Warm-up: Hip flexor stretch 30s each side · Cat-cow 10 reps\nRun 90 sec · Walk 90 sec · 8 rounds · ~24 min\nHead to the park. Week 2 — you've got this.",
+    workout:{ name:"Week 2 — Run", run:90, walk:90, rounds:8 } },
+  { day:"Wednesday", type:"bike",     label:"Bike · iFit", hasTimer:false,
+    desc:"Active recovery after Tuesday run 🚴\nNordicTrack · 35 min · moderate effort\n5 min warm-up · 25 min steady · 5 min cool-down" },
+  { day:"Thursday",  type:"rest",     label:"Rest Day",   hasTimer:false,
+    desc:"Recovery is training. Rest, stretch, hydrate. 💧\nOptional: gentle 10 min walk." },
+  { day:"Friday",    type:"strength", label:"Strength B", hasTimer:false,
+    desc:"Full body · 35 min\nWarm-up: Cat-cow 10 reps · Hip flexor stretch 30s each\nBand deadlifts 3×12 · Step-ups 3×10 · Lateral band walks 3×15 · Single-leg glute bridge 3×12 · Dead bug 3×10 · Pelvic tilt 15 reps" },
+  { day:"Saturday",  type:"run",      label:"Run / Walk", hasTimer:true,
+    desc:"Warm-up: Hip flexor stretch 30s each side · Cat-cow 10 reps\nRun 90 sec · Walk 90 sec · 8 rounds · ~24 min\nSame as Tuesday — you already know you can do this.",
+    workout:{ name:"Week 2 — Run", run:90, walk:90, rounds:8 } },
+  { day:"Sunday",    type:"rest",     label:"Rest Day",   hasTimer:false,
+    desc:"Full rest. Let the body absorb the week's work. 💤" }
+];
+
+// ══════════════════════════════════════════════════
+// STATE
+// ══════════════════════════════════════════════════
 let workoutLog    = JSON.parse(localStorage.getItem('tatiana_log') || '[]');
 let currentDayIdx = -1;
 let activeWorkout = null;
 let timer=null, isRunning=false, currentInterval='run', currentRound=0, timeLeft=0, totalElapsed=0;
 
-// ── AUDIO ──
+// ══════════════════════════════════════════════════
+// AUDIO
+// ══════════════════════════════════════════════════
 const AudioCtx = window.AudioContext || window.webkitAudioContext;
 let audioCtx;
 function getCtx(){ if(!audioCtx) audioCtx=new AudioCtx(); if(audioCtx.state==='suspended') audioCtx.resume(); return audioCtx; }
@@ -218,7 +652,9 @@ function beepWalk(){ tone(659,.12,.6,'square',0);tone(440,.35,.8,'square',.14); 
 function beepDone(){ tone(523,.1,.6,'square',0);tone(659,.1,.6,'square',.12);tone(784,.1,.6,'square',.24);tone(1047,.5,.8,'square',.36); }
 function beepTick(){ tone(880,.07,.5,'square'); }
 
-// ── VOICE ──
+// ══════════════════════════════════════════════════
+// VOICE
+// ══════════════════════════════════════════════════
 let selectedVoice=null, speechUnlocked=false;
 function loadVoices(){ const v=window.speechSynthesis?speechSynthesis.getVoices():[];if(!v.length)return false;
   selectedVoice=v.find(x=>x.lang==='en-GB')||v.find(x=>x.lang==='en-US')||v.find(x=>x.lang.startsWith('en'))||v[0]||null;return true; }
@@ -231,21 +667,102 @@ function speak(text,delay=0){
     if(selectedVoice){u.voice=selectedVoice;u.lang=selectedVoice.lang;}else u.lang='en-US';
     u.rate=0.88;u.pitch=1.0;u.volume=1.0;speechSynthesis.speak(u);}catch(e){}},delay); }
 
-// ── TABS ──
+// ══════════════════════════════════════════════════
+// TABS
+// ══════════════════════════════════════════════════
 function showTab(name){
   document.getElementById('planTab').style.display=name==='plan'?'block':'none';
+  document.getElementById('exercisesTab').style.display=name==='exercises'?'block':'none';
   document.getElementById('logTab').style.display=name==='log'?'block':'none';
-  document.querySelectorAll('.tab').forEach((t,i)=>t.classList.toggle('active',(i===0&&name==='plan')||(i===1&&name==='log')));
-  if(name==='log')renderLog();
+  document.querySelectorAll('.tab').forEach((t,i)=>t.classList.toggle('active',
+    (i===0&&name==='plan')||(i===1&&name==='exercises')||(i===2&&name==='log')));
+  if(name==='log') renderLog();
+  if(name==='exercises') renderExercises();
 }
 
-// ── WEEK KEY & TODAY ──
+// ══════════════════════════════════════════════════
+// EXERCISE LIBRARY
+// ══════════════════════════════════════════════════
+function renderExercises(){
+  const tab = document.getElementById('exercisesTab');
+  const warmup  = EXERCISES.filter(e=>e.category==='warmup');
+  const posture  = EXERCISES.filter(e=>e.category==='posture');
+  const strength = EXERCISES.filter(e=>e.category==='strength');
+
+  tab.innerHTML = `
+    ${section('🔥 Warm-up (before every session)', warmup)}
+    ${section('🧘 Posture Fix', posture)}
+    ${section('💪 Strength & Core', strength)}
+  `;
+}
+
+function section(title, exercises){
+  return `<div class="ex-section">
+    <div class="ex-section-title">${title}</div>
+    ${exercises.map(ex=>`
+      <div class="ex-card" onclick="openExercise('${ex.id}')">
+        <div class="ex-icon">${ex.icon}</div>
+        <div class="ex-info">
+          <div class="ex-name">${ex.name}</div>
+          <div class="ex-meta">${ex.meta}</div>
+          <span class="ex-tag ${ex.tagClass}">${ex.tag}</span>
+        </div>
+        <div class="ex-arrow">›</div>
+      </div>`).join('')}
+  </div>`;
+}
+
+function openExercise(id){
+  const ex = EXERCISES.find(e=>e.id===id);
+  if(!ex) return;
+  document.getElementById('exTitle').textContent = ex.name.toUpperCase();
+  document.getElementById('exMeta').textContent  = ex.meta;
+
+  const phasesHTML = ex.phases.length === 1
+    ? `<div style="text-align:center;">${ex.phases[0].svg}<div class="ex-illustration-label" style="margin-top:8px;">${ex.phases[0].desc}</div></div>`
+    : `<div class="ex-phases">${ex.phases.map(p=>`
+        <div class="ex-phase">
+          <div class="ex-phase-label">${p.label}</div>
+          ${p.svg}
+          <div class="ex-illustration-label">${p.desc}</div>
+        </div>`).join('')}</div>`;
+
+  document.getElementById('exContent').innerHTML = `
+    <div class="ex-illustration-box">
+      <div class="ex-illustration-label" style="margin-bottom:12px;">HOW IT LOOKS</div>
+      ${phasesHTML}
+    </div>
+    <div class="ex-steps-box">
+      <h3>WHY THIS EXERCISE</h3>
+      <p style="font-size:13px;color:var(--muted);line-height:1.7;margin-bottom:16px;">${ex.why}</p>
+      <h3>HOW TO DO IT</h3>
+      ${ex.steps.map((s,i)=>`
+        <div class="ex-step">
+          <div class="ex-step-num">${i+1}</div>
+          <div class="ex-step-text">${s}</div>
+        </div>`).join('')}
+    </div>
+    <div class="ex-tip-box">
+      <strong>💡 COACH TIP</strong>
+      ${ex.tip}
+    </div>
+  `;
+  document.getElementById('exOverlay').classList.add('show');
+  document.getElementById('exOverlay').scrollTop = 0;
+}
+
+function closeExercise(){
+  document.getElementById('exOverlay').classList.remove('show');
+}
+
+// ══════════════════════════════════════════════════
+// WEEKLY PLAN
+// ══════════════════════════════════════════════════
 function getTodayIdx(){ const js=new Date().getDay(); return js===0?6:js-1; }
 function getWeekKey(){ const now=new Date(),day=now.getDay(),diff=now.getDate()-day+(day===0?-6:1),mon=new Date(new Date().setDate(diff)); return mon.toISOString().slice(0,10); }
 function getDoneDays(){ const s=JSON.parse(localStorage.getItem('tatiana_daydone')||'{}'); return s[getWeekKey()]||[]; }
 function saveDoneDay(idx){ const s=JSON.parse(localStorage.getItem('tatiana_daydone')||'{}'),k=getWeekKey();if(!s[k])s[k]=[];if(!s[k].includes(idx)){s[k].push(idx);localStorage.setItem('tatiana_daydone',JSON.stringify(s));} }
 
-// ── RENDER PLAN ──
 function renderPlan(){
   const todayIdx=getTodayIdx(), doneDays=getDoneDays();
   const container=document.getElementById('weekPlan');
@@ -255,7 +772,7 @@ function renderPlan(){
     const card=document.createElement('div');
     card.className=`day-card${isToday?' today':''}${isDone?' done':''}`;
     card.id=`day-${idx}`;
-    const badge=isDone?'<span class="done-check">✅</span>':isToday?'<span class="today-label">TODAY</span>':'';
+    const badge=isDone?'<span style="font-size:18px;">✅</span>':isToday?'<span class="today-label">TODAY</span>':'';
     const actions=session.hasTimer
       ?`<button class="btn-start-run" onclick="startRunSession(${idx})">▶ START RUN</button>
         <button class="btn-mark-done${isDone?' done-state':''}" onclick="quickDone(${idx},event)">${isDone?'✅ Done':'✓ Done'}</button>`
@@ -281,14 +798,15 @@ function quickDone(idx,e){
   if(e)e.stopPropagation();
   if(getDoneDays().includes(idx))return;
   saveDoneDay(idx);
-  const session=WEEKLY_PLAN[idx];
-  const entry={ workout:session.label, duration:'—', date:new Date().toLocaleDateString('en-GB',{weekday:'short',day:'numeric',month:'short'}), ts:Date.now() };
+  const entry={ workout:WEEKLY_PLAN[idx].label, duration:'—', date:new Date().toLocaleDateString('en-GB',{weekday:'short',day:'numeric',month:'short'}), ts:Date.now() };
   addToLog(entry);
   syncToSheet({date:entry.date,workout:entry.workout,duration:'—',notes:'Marked done from plan'});
   renderPlan();
 }
 
-// ── START RUN ──
+// ══════════════════════════════════════════════════
+// TIMER
+// ══════════════════════════════════════════════════
 function startRunSession(idx){
   currentDayIdx=idx; activeWorkout=WEEKLY_PLAN[idx].workout;
   document.getElementById('planScreen').style.display='none';
@@ -312,7 +830,6 @@ function backToPlanFromComplete(){
   renderPlan();
 }
 
-// ── TIMER ──
 function resetTimerState(){
   clearInterval(timer);isRunning=false;currentInterval='run';currentRound=0;timeLeft=0;totalElapsed=0;
   document.getElementById('mainBtn').textContent='▶';
@@ -417,7 +934,9 @@ function toggleTimer(){
 
 function skipInterval(){ if(!isRunning)return;clearInterval(timer);nextInterval();if(isRunning)timer=setInterval(tick,1000); }
 
-// ── LOG & SYNC ──
+// ══════════════════════════════════════════════════
+// LOG & SYNC
+// ══════════════════════════════════════════════════
 function logAndSync(){
   const btn=document.getElementById('doneFinalBtn');
   if(btn.dataset.logged==='1'){speak('Already logged!');return;}
@@ -437,10 +956,10 @@ function syncToSheet(data){ return fetch(SHEET_URL,{method:'POST',mode:'no-cors'
 
 function renderLog(){
   const list=document.getElementById('logList'),streak=document.getElementById('logStreak');
-  if(workoutLog.length===0){list.innerHTML='<div class="log-empty">No workouts logged yet.<br>Complete a session and tap ✓ Done.</div>';streak.innerHTML='';return;}
+  const btn=document.getElementById('exportBtn');
+  if(workoutLog.length===0){list.innerHTML='<div class="log-empty">No workouts logged yet.<br>Complete a session and tap ✓ Done.</div>';streak.innerHTML='';if(btn)btn.style.display='none';return;}
   streak.innerHTML=`<strong>${workoutLog.length}</strong> workout${workoutLog.length>1?'s':''} completed 🔥`;
-  const exportBtn=document.getElementById('exportBtn');
-  if(exportBtn) exportBtn.style.display=workoutLog.length>0?'block':'none';
+  if(btn)btn.style.display='block';
   list.innerHTML=workoutLog.slice(0,15).map(e=>`
     <div class="log-entry">
       <div class="log-left"><span class="log-name">${e.workout}</span><span class="log-date">${e.date}</span></div>
@@ -448,20 +967,20 @@ function renderLog(){
     </div>`).join('');
 }
 
-// ── EXPORT CSV ──
 function exportCSV(){
   if(workoutLog.length===0)return;
   const rows=[['Date','Workout','Duration','Timestamp']];
-  workoutLog.forEach(e=>rows.push([e.date, e.workout, e.duration, new Date(e.ts).toISOString()]));
+  workoutLog.forEach(e=>rows.push([e.date,e.workout,e.duration,new Date(e.ts).toISOString()]));
   const csv=rows.map(r=>r.map(v=>`"${v}"`).join(',')).join('\n');
   const blob=new Blob([csv],{type:'text/csv'});
   const url=URL.createObjectURL(blob);
-  const a=document.createElement('a');
-  a.href=url; a.download='tatiana_workout_log.csv'; a.click();
+  const a=document.createElement('a');a.href=url;a.download='tatiana_workout_log.csv';a.click();
   URL.revokeObjectURL(url);
 }
 
-// ── INIT ──
+// ══════════════════════════════════════════════════
+// INIT
+// ══════════════════════════════════════════════════
 renderPlan();
 </script>
 </body>
