@@ -14,35 +14,27 @@ body.run-active .bg-ring{background:var(--run);animation:pulse 2s ease-in-out in
 body.walk-active .bg-ring{background:var(--walk);animation:pulse 2s ease-in-out infinite;}
 @keyframes pulse{0%,100%{transform:translate(-50%,-50%) scale(1);opacity:0.04}50%{transform:translate(-50%,-50%) scale(1.15);opacity:0.09}}
 .page{position:relative;z-index:1;max-width:440px;margin:0 auto;padding:0 16px;}
-
-/* HEADER */
-.app-header{display:flex;justify-content:space-between;align-items:center;padding:20px 0 12px;}
+.app-header{display:flex;justify-content:space-between;align-items:center;padding:20px 0 10px;}
 .logo{font-family:'Bebas Neue';font-size:20px;letter-spacing:4px;color:var(--run);}
 .phase-label{font-size:10px;letter-spacing:2px;color:var(--muted);text-transform:uppercase;}
-
-/* WEEK SELECTOR */
 .week-bar{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:12px 16px;margin-bottom:10px;}
 .week-bar-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;}
 .week-bar-label{font-size:10px;letter-spacing:2px;color:var(--muted);text-transform:uppercase;}
+.week-bar-right{display:flex;align-items:center;gap:8px;}
 .week-select{background:var(--card2);border:1px solid var(--border);color:var(--text);font-family:'Bebas Neue';font-size:15px;letter-spacing:2px;padding:4px 10px;border-radius:8px;cursor:pointer;outline:none;}
 .week-select option{background:var(--card2);}
+.btn-reset-week{padding:4px 10px;border-radius:8px;border:1px solid var(--muted);background:transparent;color:var(--muted);font-size:11px;cursor:pointer;font-family:'DM Sans';}
 .week-progress-row{display:flex;align-items:center;gap:10px;}
 .week-progress-bar{flex:1;height:5px;background:var(--card2);border-radius:3px;overflow:hidden;}
 .week-progress-fill{height:100%;background:var(--run);border-radius:3px;transition:width 0.5s;}
 .week-progress-text{font-size:11px;color:var(--muted);white-space:nowrap;}
-
-/* ADVANCE BANNER */
 .advance-banner{background:rgba(78,205,196,0.08);border:1px solid rgba(78,205,196,0.25);border-radius:12px;padding:12px 14px;margin-bottom:12px;display:none;gap:10px;align-items:center;}
 .advance-banner.show{display:flex;}
 .advance-text{font-size:13px;color:var(--walk);flex:1;line-height:1.5;}
 .btn-advance{padding:8px 16px;border-radius:20px;border:1px solid var(--walk);background:transparent;color:var(--walk);font-size:12px;cursor:pointer;font-family:'DM Sans';white-space:nowrap;}
-
-/* TABS */
 .tabs{display:flex;gap:6px;margin-bottom:16px;}
 .tab{flex:1;padding:9px 4px;border-radius:12px;border:1px solid var(--border);background:var(--card);color:var(--muted);font-size:11px;letter-spacing:1px;text-transform:uppercase;cursor:pointer;text-align:center;font-family:'DM Sans';transition:all 0.2s;}
 .tab.active{background:var(--run);color:#fff;border-color:var(--run);}
-
-/* DAY CARDS */
 .week-plan{display:flex;flex-direction:column;gap:8px;}
 .day-card{background:var(--card);border:1px solid var(--border);border-radius:16px;overflow:hidden;transition:all 0.3s;}
 .day-card.today{border-color:var(--run);box-shadow:0 0 20px rgba(233,69,96,0.15);}
@@ -54,7 +46,8 @@ body.walk-active .bg-ring{background:var(--walk);animation:pulse 2s ease-in-out 
 .badge-run{background:rgba(233,69,96,0.15);color:var(--run);}
 .badge-strength{background:rgba(249,202,36,0.15);color:var(--strength);}
 .badge-bike{background:rgba(108,99,255,0.15);color:var(--bike);}
-.badge-walk,.badge-rest{background:rgba(85,85,112,0.15);color:var(--muted);}
+.badge-swim{background:rgba(78,205,196,0.15);color:var(--walk);}
+.badge-rest{background:rgba(85,85,112,0.15);color:var(--muted);}
 .today-pill{font-size:10px;letter-spacing:2px;color:var(--run);text-transform:uppercase;font-weight:500;}
 .day-body{padding:0 16px 16px;display:none;}
 .day-card.today .day-body,.day-card.expanded .day-body{display:block;}
@@ -62,11 +55,22 @@ body.walk-active .bg-ring{background:var(--walk);animation:pulse 2s ease-in-out 
 .session-actions{display:flex;gap:8px;flex-wrap:wrap;}
 .btn-start{flex:1;padding:13px;border-radius:30px;border:none;background:var(--run);color:#fff;font-family:'Bebas Neue';font-size:16px;letter-spacing:3px;cursor:pointer;min-width:120px;}
 .btn-start:active{transform:scale(0.96);}
+.btn-start-timer{flex:1;padding:13px;border-radius:30px;border:none;background:var(--strength);color:var(--dark);font-family:'Bebas Neue';font-size:16px;letter-spacing:3px;cursor:pointer;}
 .btn-done-day{padding:13px 20px;border-radius:30px;border:1px solid var(--border);background:var(--card2);color:var(--muted);font-size:13px;cursor:pointer;white-space:nowrap;}
-.btn-done-day.done-state{border-color:var(--green);color:var(--green);}
+.btn-done-day.done-state,.btn-done-full.done-state{border-color:var(--green);color:var(--green);}
 .btn-done-full{width:100%;padding:14px;border-radius:30px;border:1px solid var(--border);background:var(--card2);color:var(--muted);font-size:13px;cursor:pointer;}
-.btn-done-full.done-state{border-color:var(--green);color:var(--green);}
-
+.btn-repeat{padding:8px 14px;border-radius:20px;border:1px solid var(--border);background:transparent;color:var(--muted);font-size:11px;cursor:pointer;margin-top:8px;}
+/* EASY RUN TIMER */
+.easy-timer-screen{display:none;position:fixed;inset:0;background:var(--dark);z-index:150;flex-direction:column;align-items:center;justify-content:center;gap:20px;padding:30px;}
+.easy-timer-screen.show{display:flex;}
+.easy-timer-title{font-family:'Bebas Neue';font-size:24px;letter-spacing:4px;color:var(--strength);}
+.easy-timer-display{font-family:'Bebas Neue';font-size:100px;line-height:1;color:var(--text);letter-spacing:4px;}
+.easy-timer-desc{font-size:14px;color:var(--muted);text-align:center;line-height:1.6;max-width:300px;}
+.easy-timer-controls{display:flex;gap:14px;align-items:center;}
+.btn-easy-main{width:80px;height:80px;border-radius:50%;border:none;background:var(--strength);color:var(--dark);font-size:28px;cursor:pointer;display:flex;align-items:center;justify-content:center;}
+.btn-easy-sec{width:52px;height:52px;border-radius:50%;border:1px solid var(--border);background:var(--card);color:var(--muted);font-size:18px;cursor:pointer;display:flex;align-items:center;justify-content:center;}
+.easy-progress-bar{width:100%;max-width:300px;height:6px;background:var(--card2);border-radius:3px;overflow:hidden;}
+.easy-progress-fill{height:100%;background:var(--strength);border-radius:3px;transition:width 1s linear;}
 /* EXERCISE LIBRARY */
 .ex-section{margin-bottom:20px;}
 .ex-section-title{font-size:10px;letter-spacing:3px;color:var(--muted);text-transform:uppercase;margin-bottom:10px;}
@@ -80,8 +84,6 @@ body.walk-active .bg-ring{background:var(--walk);animation:pulse 2s ease-in-out 
 .ex-tag-warmup{background:rgba(78,205,196,0.15);color:var(--walk);}
 .ex-tag-posture{background:rgba(233,69,96,0.15);color:var(--run);}
 .ex-tag-strength{background:rgba(249,202,36,0.15);color:var(--strength);}
-
-/* EXERCISE OVERLAY */
 .ex-overlay{display:none;position:fixed;inset:0;background:var(--dark);z-index:200;overflow-y:auto;}
 .ex-overlay.show{display:block;}
 .ex-overlay-inner{max-width:440px;margin:0 auto;padding:20px 16px 60px;}
@@ -101,7 +103,6 @@ body.walk-active .bg-ring{background:var(--walk);animation:pulse 2s ease-in-out 
 .ex-step-t{font-size:13px;color:var(--text);line-height:1.7;}
 .ex-tip{background:rgba(249,202,36,0.06);border:1px solid rgba(249,202,36,0.2);border-radius:12px;padding:14px;font-size:13px;color:var(--strength);line-height:1.7;}
 .ex-tip strong{display:block;font-size:10px;letter-spacing:3px;text-transform:uppercase;margin-bottom:6px;}
-
 /* TIMER */
 #timerScreen{display:none;}
 .timer-header{display:flex;align-items:center;gap:12px;padding:20px 0 14px;}
@@ -135,9 +136,9 @@ body.idle .t-time{color:var(--text);}
 body.walk-active .btn-main{background:var(--walk);box-shadow:0 0 24px rgba(78,205,196,0.4);}
 .btn-main:active{transform:scale(0.94);}
 .btn-sec{width:48px;height:48px;border-radius:50%;border:1px solid var(--border);background:var(--card);color:var(--muted);font-size:16px;cursor:pointer;display:flex;align-items:center;justify-content:center;}
-.next-preview{text-align:center;font-size:11px;color:var(--muted);letter-spacing:2px;text-transform:uppercase;margin-bottom:16px;}
+.btn-photo{padding:8px 16px;border-radius:20px;border:1px solid var(--strength);background:transparent;color:var(--strength);font-size:12px;cursor:pointer;font-family:'DM Sans';}
+.next-preview{text-align:center;font-size:11px;color:var(--muted);letter-spacing:2px;text-transform:uppercase;margin-bottom:10px;}
 .next-preview span{color:var(--text);}
-
 /* COMPLETE */
 .complete-overlay{display:none;position:fixed;inset:0;background:var(--dark);z-index:100;flex-direction:column;align-items:center;justify-content:center;gap:16px;padding:30px;text-align:center;}
 .complete-overlay.show{display:flex;}
@@ -148,7 +149,6 @@ body.walk-active .btn-main{background:var(--walk);box-shadow:0 0 24px rgba(78,20
 .btn-done-final.synced{border-color:var(--green);color:var(--green);}
 .btn-done-final.syncing{border-color:var(--strength);color:var(--strength);}
 .btn-back-plan{padding:12px 32px;border-radius:30px;border:1px solid var(--border);background:var(--card);color:var(--muted);font-size:13px;cursor:pointer;}
-
 /* LOG */
 .log-panel{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:16px;}
 .log-panel h3{font-size:10px;letter-spacing:3px;color:var(--muted);text-transform:uppercase;margin-bottom:12px;}
@@ -173,29 +173,28 @@ body.walk-active .btn-main{background:var(--walk);box-shadow:0 0 24px rgba(78,20
     <div class="logo">TATIANA</div>
     <div class="phase-label" id="phaseLabel">Phase 1 — Build the habit</div>
   </div>
-
   <div class="week-bar">
     <div class="week-bar-top">
       <div class="week-bar-label">Current week</div>
-      <select class="week-select" id="weekSelect" onchange="onWeekChange()"></select>
+      <div class="week-bar-right">
+        <select class="week-select" id="weekSelect" onchange="onWeekChange()"></select>
+        <button class="btn-reset-week" onclick="confirmResetWeek()">↺ Reset</button>
+      </div>
     </div>
     <div class="week-progress-row">
       <div class="week-progress-bar"><div class="week-progress-fill" id="progressFill"></div></div>
       <div class="week-progress-text" id="progressText"></div>
     </div>
   </div>
-
   <div class="advance-banner" id="advanceBanner">
     <div class="advance-text">🎉 Week complete! Ready for the next one?</div>
     <button class="btn-advance" onclick="advanceWeek()">Next week →</button>
   </div>
-
   <div class="tabs">
     <div class="tab active" onclick="showTab('plan')">Week</div>
     <div class="tab" onclick="showTab('exercises')">Exercises</div>
     <div class="tab" onclick="showTab('log')">History</div>
   </div>
-
   <div id="planTab"><div class="week-plan" id="weekPlan"></div></div>
   <div id="exercisesTab" style="display:none;"></div>
   <div id="logTab" style="display:none;">
@@ -205,6 +204,19 @@ body.walk-active .btn-main{background:var(--walk);box-shadow:0 0 24px rgba(78,20
       <div id="logList"><div class="log-empty">No workouts logged yet.</div></div>
       <button onclick="exportCSV()" id="exportBtn" style="display:none;margin-top:14px;width:100%;padding:12px;border-radius:30px;border:1px solid var(--border);background:var(--card2);color:var(--muted);font-size:13px;cursor:pointer;">⬇ Export as CSV</button>
     </div>
+  </div>
+</div>
+
+<!-- EASY RUN TIMER -->
+<div class="easy-timer-screen" id="easyTimerScreen">
+  <div class="easy-timer-title">🏃 EASY RUN</div>
+  <div class="easy-timer-display" id="easyTimeDisplay">20:00</div>
+  <div class="easy-progress-bar"><div class="easy-progress-fill" id="easyProgressFill" style="width:100%"></div></div>
+  <div class="easy-timer-desc" id="easyTimerDesc">Slow and steady. No walk breaks.<br>Pick landmarks, not the clock.<br>Feel your abs engage.</div>
+  <div class="easy-timer-controls">
+    <button class="btn-easy-sec" onclick="resetEasyTimer()">↺</button>
+    <button class="btn-easy-main" id="easyMainBtn" onclick="toggleEasyTimer()">▶</button>
+    <button class="btn-easy-sec" onclick="closeEasyTimer()">✕</button>
   </div>
 </div>
 
@@ -222,7 +234,7 @@ body.walk-active .btn-main{background:var(--walk);box-shadow:0 0 24px rgba(78,20
   </div>
 </div>
 
-<!-- TIMER SCREEN -->
+<!-- INTERVAL TIMER SCREEN -->
 <div class="page" id="timerScreen">
   <div class="timer-header">
     <button class="btn-back" onclick="backToPlan()">←</button>
@@ -255,6 +267,9 @@ body.walk-active .btn-main{background:var(--walk);box-shadow:0 0 24px rgba(78,20
     <button class="btn-sec" onclick="skipInterval()">⏭</button>
   </div>
   <div class="next-preview" id="nextPreview">Press play to start</div>
+  <div style="text-align:center;margin-top:4px;">
+    <button class="btn-photo" onclick="pauseForPhoto()">📸 Photo break</button>
+  </div>
 </div>
 
 <!-- COMPLETE OVERLAY -->
@@ -269,186 +284,225 @@ body.walk-active .btn-main{background:var(--walk);box-shadow:0 0 24px rgba(78,20
 <script>
 const SHEET_URL="https://script.google.com/macros/s/AKfycbzzegszVRmHJpa9a0B9ubvsztPC1oeGrez7X1iQZqfSL4ckQDWPFkfERv8_MVnPM6SixQ/exec";
 
-// ═══════════════════════════════════════════
-// WEEK PLANS — 4 weeks, completion-based
-// Each week: array of 7 days (Mon-Sun)
-// isTraining:true = counts toward week completion
-// ═══════════════════════════════════════════
-const WEEKS = [
-  // ─── WEEK 1 ───────────────────────────────
-  { label:"Week 1 — Starting Out", phase:"Phase 1 — Build the habit", days:[
-    { day:"Monday",    type:"strength", label:"Strength A", isTraining:true,  hasTimer:false,
-      desc:"Warm-up: Cat-cow 10 reps · Hip flexor stretch 30s each side\nSquats 3×12 · Push-ups 3×10 · Band rows 3×12 · Glute bridges 3×15 · Dead bug 3×10 · Plank 3×30s · Pelvic tilt 15 reps" },
-    { day:"Tuesday",   type:"run",      label:"Run / Walk", isTraining:true,  hasTimer:true,
-      desc:"Warm-up: Hip flexor stretch 30s each side · Cat-cow 10 reps\nRun 1 min · Walk 2 min · 8 rounds · ~30 min\nHead to the park. No pace pressure — just get out there.",
-      workout:{name:"Week 1 — Run",run:60,walk:120,rounds:8} },
-    { day:"Wednesday", type:"bike",     label:"Bike · iFit", isTraining:true, hasTimer:false,
-      desc:"Active recovery after Tuesday run 🚴\nNordicTrack · 35 min · moderate effort\n5 min warm-up · 25 min steady · 5 min cool-down" },
-    { day:"Thursday",  type:"rest",     label:"Rest Day",   isTraining:false, hasTimer:false,
-      desc:"Recovery is training. Rest, stretch, hydrate. 💧" },
-    { day:"Friday",    type:"strength", label:"Strength B", isTraining:true,  hasTimer:false,
-      desc:"Warm-up: Cat-cow 10 reps · Hip flexor stretch 30s each side\nBand deadlifts 3×12 · Step-ups 3×10 · Lateral band walks 3×15 · Single-leg glute bridge 3×12 · Dead bug 3×10 · Pelvic tilt 15 reps" },
-    { day:"Saturday",  type:"run",      label:"Run / Walk", isTraining:true,  hasTimer:true,
-      desc:"Warm-up: Hip flexor stretch 30s each side · Cat-cow 10 reps\nRun 1 min · Walk 2 min · 8 rounds · ~30 min\nSame as Tuesday — notice how much easier it already feels.",
-      workout:{name:"Week 1 — Run",run:60,walk:120,rounds:8} },
-    { day:"Sunday",    type:"rest",     label:"Rest Day",   isTraining:false, hasTimer:false,
-      desc:"Full rest. Let the body absorb the week. 💤" }
-  ]},
-
-  // ─── WEEK 2 ───────────────────────────────
-  { label:"Week 2 — Building Rhythm", phase:"Phase 1 — Build the habit", days:[
-    { day:"Monday",    type:"strength", label:"Strength A", isTraining:true,  hasTimer:false,
-      desc:"Warm-up: Cat-cow 10 reps · Hip flexor stretch 30s each side\nSquats 3×12 · Push-ups 3×10 · Band rows 3×12 · Glute bridges 3×15 · Dead bug 3×10 · Plank 3×40s · Pelvic tilt 15 reps" },
-    { day:"Tuesday",   type:"run",      label:"Run / Walk", isTraining:true,  hasTimer:true,
-      desc:"Warm-up: Hip flexor stretch 30s each side · Cat-cow 10 reps\nRun 90 sec · Walk 90 sec · 8 rounds · ~24 min\nIntervals are getting more balanced — you've got this.",
-      workout:{name:"Week 2 — Run",run:90,walk:90,rounds:8} },
-    { day:"Wednesday", type:"bike",     label:"Bike · iFit", isTraining:true, hasTimer:false,
-      desc:"Active recovery after Tuesday run 🚴\nNordicTrack · 35 min · moderate effort\n5 min warm-up · 25 min steady · 5 min cool-down" },
-    { day:"Thursday",  type:"rest",     label:"Rest Day",   isTraining:false, hasTimer:false,
-      desc:"Recovery is training. Rest, stretch, hydrate. 💧" },
-    { day:"Friday",    type:"strength", label:"Strength B", isTraining:true,  hasTimer:false,
-      desc:"Warm-up: Cat-cow 10 reps · Hip flexor stretch 30s each side\nBand deadlifts 3×12 · Step-ups 3×10 · Lateral band walks 3×15 · Single-leg glute bridge 3×12 · Dead bug 3×10 · Pelvic tilt 15 reps" },
-    { day:"Saturday",  type:"run",      label:"Run / Walk", isTraining:true,  hasTimer:true,
-      desc:"Warm-up: Hip flexor stretch 30s each side · Cat-cow 10 reps\nRun 90 sec · Walk 90 sec · 8 rounds · ~24 min\nYou already ran this Tuesday. Familiar territory.",
-      workout:{name:"Week 2 — Run",run:90,walk:90,rounds:8} },
-    { day:"Sunday",    type:"rest",     label:"Rest Day",   isTraining:false, hasTimer:false,
-      desc:"Full rest. Let the body absorb the week. 💤" }
-  ]},
-
-  // ─── WEEK 3 ───────────────────────────────
-  { label:"Week 3 — Getting Stronger", phase:"Phase 1 — Build the habit", days:[
-    { day:"Monday",    type:"strength", label:"Strength A", isTraining:true,  hasTimer:false,
-      desc:"Warm-up: Cat-cow 10 reps · Hip flexor stretch 30s each side\nSquats 3×15 · Push-ups 3×12 · Band rows 3×12 · Glute bridges 3×15 · Dead bug 3×12 · Plank 3×45s · Pelvic tilt 15 reps" },
-    { day:"Tuesday",   type:"run",      label:"Run / Walk", isTraining:true,  hasTimer:true,
-      desc:"Warm-up: Hip flexor stretch 30s each side · Cat-cow 10 reps\nRun 2 min · Walk 2 min · 7 rounds · ~28 min\nLonger run intervals — trust your legs.",
-      workout:{name:"Week 3 — Run",run:120,walk:120,rounds:7} },
-    { day:"Wednesday", type:"bike",     label:"Bike · iFit", isTraining:true, hasTimer:false,
-      desc:"Active recovery after Tuesday run 🚴\nNordicTrack · 40 min · moderate effort\n5 min warm-up · 30 min steady · 5 min cool-down" },
-    { day:"Thursday",  type:"rest",     label:"Rest Day",   isTraining:false, hasTimer:false,
-      desc:"Recovery is training. Rest, stretch, hydrate. 💧" },
-    { day:"Friday",    type:"strength", label:"Strength B", isTraining:true,  hasTimer:false,
-      desc:"Warm-up: Cat-cow 10 reps · Hip flexor stretch 30s each side\nBand deadlifts 3×15 · Step-ups 3×12 · Lateral band walks 3×15 · Single-leg glute bridge 3×15 · Dead bug 3×12 · Pelvic tilt 15 reps" },
-    { day:"Saturday",  type:"run",      label:"Run / Walk", isTraining:true,  hasTimer:true,
-      desc:"Warm-up: Hip flexor stretch 30s each side · Cat-cow 10 reps\nRun 2 min · Walk 2 min · 7 rounds · ~28 min\nFocus on breathing — in through nose, out through mouth.",
-      workout:{name:"Week 3 — Run",run:120,walk:120,rounds:7} },
-    { day:"Sunday",    type:"rest",     label:"Rest Day",   isTraining:false, hasTimer:false,
-      desc:"Full rest. Let the body absorb the week. 💤" }
-  ]},
-
-  // ─── WEEK 4 ───────────────────────────────
-  { label:"Week 4 — First Milestone", phase:"Phase 1 — Build the habit", days:[
-    { day:"Monday",    type:"strength", label:"Strength A", isTraining:true,  hasTimer:false,
-      desc:"Warm-up: Cat-cow 10 reps · Hip flexor stretch 30s each side\nSquats 3×15 · Push-ups 3×12 · Band rows 3×15 · Glute bridges 3×20 · Dead bug 3×12 · Plank 3×50s · Pelvic tilt 15 reps" },
-    { day:"Tuesday",   type:"run",      label:"Run / Walk", isTraining:true,  hasTimer:true,
-      desc:"Warm-up: Hip flexor stretch 30s each side · Cat-cow 10 reps\nRun 3 min · Walk 2 min · 6 rounds · ~30 min\nBig milestone — 3 minutes of continuous running!",
-      workout:{name:"Week 4 — Run",run:180,walk:120,rounds:6} },
-    { day:"Wednesday", type:"bike",     label:"Bike · iFit", isTraining:true, hasTimer:false,
-      desc:"Active recovery after Tuesday run 🚴\nNordicTrack · 40 min\n5 min warm-up · 30 min moderate effort · 5 min cool-down" },
-    { day:"Thursday",  type:"rest",     label:"Rest Day",   isTraining:false, hasTimer:false,
-      desc:"Recovery is training. Rest, stretch, hydrate. 💧" },
-    { day:"Friday",    type:"strength", label:"Strength B", isTraining:true,  hasTimer:false,
-      desc:"Warm-up: Cat-cow 10 reps · Hip flexor stretch 30s each side\nBand deadlifts 3×15 · Step-ups 3×12 · Lateral band walks 3×20 · Single-leg glute bridge 3×15 · Dead bug 3×12 · Pelvic tilt 15 reps" },
-    { day:"Saturday",  type:"run",      label:"Run / Walk", isTraining:true,  hasTimer:true,
-      desc:"Warm-up: Hip flexor stretch 30s each side · Cat-cow 10 reps\nRun 3 min · Walk 2 min · 6 rounds · ~30 min\nEnd of month 1. Look how far you've come. 💪",
-      workout:{name:"Week 4 — Run",run:180,walk:120,rounds:6} },
-    { day:"Sunday",    type:"rest",     label:"Rest Day",   isTraining:false, hasTimer:false,
-      desc:"End of week 4 — take photos, take measurements, celebrate! 🎉" }
-  ]}
-];
-
-// ═══════════════════════════════════════════
-// SVG ILLUSTRATIONS
-// ═══════════════════════════════════════════
+// ═══ SVG ILLUSTRATIONS ═══
 const SVG={
   catCat:`<svg width="120" height="80" viewBox="0 0 130 90" fill="none"><path d="M25 55 Q65 30 105 55" stroke="#4ECDC4" stroke-width="4" stroke-linecap="round" fill="none"/><circle cx="18" cy="60" r="9" fill="none" stroke="#4ECDC4" stroke-width="3"/><line x1="25" y1="55" x2="18" y2="52" stroke="#4ECDC4" stroke-width="3" stroke-linecap="round"/><path d="M105 55 Q115 40 112 30" stroke="#4ECDC4" stroke-width="3" stroke-linecap="round" fill="none"/><line x1="35" y1="52" x2="30" y2="75" stroke="#4ECDC4" stroke-width="3" stroke-linecap="round"/><line x1="95" y1="52" x2="92" y2="75" stroke="#4ECDC4" stroke-width="3" stroke-linecap="round"/><path d="M65 28 L65 20 L60 25 M65 20 L70 25" stroke="#E94560" stroke-width="2" stroke-linecap="round" fill="none"/></svg>`,
   catCow:`<svg width="120" height="80" viewBox="0 0 130 90" fill="none"><path d="M25 45 Q65 68 105 45" stroke="#F9CA24" stroke-width="4" stroke-linecap="round" fill="none"/><circle cx="14" cy="38" r="9" fill="none" stroke="#F9CA24" stroke-width="3"/><line x1="22" y1="42" x2="25" y2="45" stroke="#F9CA24" stroke-width="3" stroke-linecap="round"/><path d="M105 45 Q118 35 115 22" stroke="#F9CA24" stroke-width="3" stroke-linecap="round" fill="none"/><line x1="35" y1="48" x2="30" y2="75" stroke="#F9CA24" stroke-width="3" stroke-linecap="round"/><line x1="95" y1="48" x2="92" y2="75" stroke="#F9CA24" stroke-width="3" stroke-linecap="round"/><path d="M65 70 L65 78 L60 73 M65 78 L70 73" stroke="#E94560" stroke-width="2" stroke-linecap="round" fill="none"/></svg>`,
   hipStart:`<svg width="100" height="110" viewBox="0 0 110 110" fill="none"><circle cx="55" cy="12" r="9" fill="none" stroke="#4ECDC4" stroke-width="3"/><line x1="55" y1="21" x2="55" y2="55" stroke="#4ECDC4" stroke-width="3.5" stroke-linecap="round"/><line x1="55" y1="30" x2="42" y2="48" stroke="#4ECDC4" stroke-width="3" stroke-linecap="round"/><line x1="55" y1="30" x2="68" y2="48" stroke="#4ECDC4" stroke-width="3" stroke-linecap="round"/><line x1="55" y1="55" x2="72" y2="70" stroke="#4ECDC4" stroke-width="3.5" stroke-linecap="round"/><line x1="72" y1="70" x2="82" y2="55" stroke="#4ECDC4" stroke-width="3.5" stroke-linecap="round"/><line x1="55" y1="55" x2="40" y2="70" stroke="#4ECDC4" stroke-width="3.5" stroke-linecap="round"/><line x1="40" y1="70" x2="38" y2="95" stroke="#4ECDC4" stroke-width="3.5" stroke-linecap="round"/><circle cx="40" cy="70" r="4" fill="#4ECDC4" opacity="0.4"/><line x1="15" y1="95" x2="95" y2="95" stroke="#555570" stroke-width="2"/></svg>`,
-  hipDeep:`<svg width="100" height="110" viewBox="0 0 110 110" fill="none"><circle cx="50" cy="12" r="9" fill="none" stroke="#F9CA24" stroke-width="3"/><line x1="50" y1="21" x2="52" y2="55" stroke="#F9CA24" stroke-width="3.5" stroke-linecap="round"/><line x1="51" y1="32" x2="68" y2="52" stroke="#F9CA24" stroke-width="3" stroke-linecap="round"/><line x1="51" y1="32" x2="40" y2="50" stroke="#F9CA24" stroke-width="3" stroke-linecap="round"/><line x1="52" y1="55" x2="75" y2="68" stroke="#F9CA24" stroke-width="3.5" stroke-linecap="round"/><line x1="75" y1="68" x2="88" y2="52" stroke="#F9CA24" stroke-width="3.5" stroke-linecap="round"/><line x1="52" y1="55" x2="35" y2="68" stroke="#F9CA24" stroke-width="3.5" stroke-linecap="round"/><line x1="35" y1="68" x2="32" y2="95" stroke="#F9CA24" stroke-width="3.5" stroke-linecap="round"/><circle cx="35" cy="68" r="4" fill="#F9CA24" opacity="0.4"/><path d="M42 60 Q38 52 44 46" stroke="#E94560" stroke-width="2" stroke-linecap="round" fill="none" stroke-dasharray="3,2"/><line x1="15" y1="95" x2="95" y2="95" stroke="#555570" stroke-width="2"/></svg>`,
+  hipDeep:`<svg width="100" height="110" viewBox="0 0 110 110" fill="none"><circle cx="50" cy="12" r="9" fill="none" stroke="#F9CA24" stroke-width="3"/><line x1="50" y1="21" x2="52" y2="55" stroke="#F9CA24" stroke-width="3.5" stroke-linecap="round"/><line x1="51" y1="32" x2="68" y2="52" stroke="#F9CA24" stroke-width="3" stroke-linecap="round"/><line x1="51" y1="32" x2="40" y2="50" stroke="#F9CA24" stroke-width="3" stroke-linecap="round"/><line x1="52" y1="55" x2="75" y2="68" stroke="#F9CA24" stroke-width="3.5" stroke-linecap="round"/><line x1="75" y1="68" x2="88" y2="52" stroke="#F9CA24" stroke-width="3.5" stroke-linecap="round"/><line x1="52" y1="55" x2="35" y2="68" stroke="#F9CA24" stroke-width="3.5" stroke-linecap="round"/><line x1="35" y1="68" x2="32" y2="95" stroke="#F9CA24" stroke-width="3.5" stroke-linecap="round"/><circle cx="35" cy="68" r="4" fill="#F9CA24" opacity="0.4"/><line x1="15" y1="95" x2="95" y2="95" stroke="#555570" stroke-width="2"/></svg>`,
   gbDown:`<svg width="130" height="70" viewBox="0 0 140 80" fill="none"><circle cx="12" cy="40" r="9" fill="none" stroke="#4ECDC4" stroke-width="3"/><line x1="20" y1="40" x2="75" y2="40" stroke="#4ECDC4" stroke-width="4" stroke-linecap="round"/><line x1="35" y1="40" x2="30" y2="55" stroke="#4ECDC4" stroke-width="3" stroke-linecap="round"/><line x1="55" y1="40" x2="50" y2="55" stroke="#4ECDC4" stroke-width="3" stroke-linecap="round"/><line x1="75" y1="40" x2="95" y2="58" stroke="#4ECDC4" stroke-width="4" stroke-linecap="round"/><line x1="95" y1="58" x2="110" y2="40" stroke="#4ECDC4" stroke-width="4" stroke-linecap="round"/><line x1="105" y1="40" x2="125" y2="40" stroke="#4ECDC4" stroke-width="4" stroke-linecap="round"/><line x1="5" y1="65" x2="135" y2="65" stroke="#555570" stroke-width="2"/></svg>`,
   gbUp:`<svg width="130" height="70" viewBox="0 0 140 80" fill="none"><circle cx="12" cy="52" r="9" fill="none" stroke="#F9CA24" stroke-width="3"/><line x1="20" y1="52" x2="60" y2="30" stroke="#F9CA24" stroke-width="4" stroke-linecap="round"/><line x1="35" y1="47" x2="28" y2="62" stroke="#F9CA24" stroke-width="3" stroke-linecap="round"/><line x1="48" y1="40" x2="42" y2="55" stroke="#F9CA24" stroke-width="3" stroke-linecap="round"/><line x1="60" y1="30" x2="85" y2="52" stroke="#F9CA24" stroke-width="4" stroke-linecap="round"/><line x1="85" y1="52" x2="110" y2="52" stroke="#F9CA24" stroke-width="4" stroke-linecap="round"/><line x1="105" y1="52" x2="125" y2="52" stroke="#F9CA24" stroke-width="4" stroke-linecap="round"/><line x1="5" y1="65" x2="135" y2="65" stroke="#555570" stroke-width="2"/><path d="M65 28 L65 18 L60 23 M65 18 L70 23" stroke="#E94560" stroke-width="2" stroke-linecap="round" fill="none"/></svg>`,
-  dbStart:`<svg width="130" height="75" viewBox="0 0 140 85" fill="none"><circle cx="12" cy="35" r="9" fill="none" stroke="#4ECDC4" stroke-width="3"/><line x1="20" y1="35" x2="75" y2="35" stroke="#4ECDC4" stroke-width="4" stroke-linecap="round"/><line x1="35" y1="35" x2="35" y2="15" stroke="#4ECDC4" stroke-width="3" stroke-linecap="round"/><line x1="55" y1="35" x2="55" y2="15" stroke="#4ECDC4" stroke-width="3" stroke-linecap="round"/><line x1="75" y1="35" x2="85" y2="18" stroke="#4ECDC4" stroke-width="3.5" stroke-linecap="round"/><line x1="85" y1="18" x2="105" y2="18" stroke="#4ECDC4" stroke-width="3.5" stroke-linecap="round"/><line x1="75" y1="35" x2="88" y2="18" stroke="#4ECDC4" stroke-width="3.5" stroke-linecap="round"/><line x1="5" y1="55" x2="135" y2="55" stroke="#555570" stroke-width="2"/></svg>`,
+  dbStart:`<svg width="130" height="75" viewBox="0 0 140 85" fill="none"><circle cx="12" cy="35" r="9" fill="none" stroke="#4ECDC4" stroke-width="3"/><line x1="20" y1="35" x2="75" y2="35" stroke="#4ECDC4" stroke-width="4" stroke-linecap="round"/><line x1="35" y1="35" x2="35" y2="15" stroke="#4ECDC4" stroke-width="3" stroke-linecap="round"/><line x1="55" y1="35" x2="55" y2="15" stroke="#4ECDC4" stroke-width="3" stroke-linecap="round"/><line x1="75" y1="35" x2="85" y2="18" stroke="#4ECDC4" stroke-width="3.5" stroke-linecap="round"/><line x1="85" y1="18" x2="105" y2="18" stroke="#4ECDC4" stroke-width="3.5" stroke-linecap="round"/><line x1="5" y1="55" x2="135" y2="55" stroke="#555570" stroke-width="2"/></svg>`,
   dbExtend:`<svg width="130" height="75" viewBox="0 0 140 85" fill="none"><circle cx="12" cy="38" r="9" fill="none" stroke="#F9CA24" stroke-width="3"/><line x1="20" y1="38" x2="75" y2="38" stroke="#F9CA24" stroke-width="4" stroke-linecap="round"/><line x1="35" y1="38" x2="15" y2="25" stroke="#F9CA24" stroke-width="3" stroke-linecap="round"/><line x1="55" y1="38" x2="55" y2="18" stroke="#F9CA24" stroke-width="3" stroke-linecap="round"/><line x1="75" y1="38" x2="118" y2="38" stroke="#F9CA24" stroke-width="3.5" stroke-linecap="round"/><line x1="75" y1="38" x2="85" y2="20" stroke="#F9CA24" stroke-width="3.5" stroke-linecap="round"/><line x1="85" y1="20" x2="100" y2="20" stroke="#F9CA24" stroke-width="3.5" stroke-linecap="round"/><line x1="5" y1="58" x2="135" y2="58" stroke="#555570" stroke-width="2"/></svg>`,
-  ptBefore:`<svg width="70" height="110" viewBox="0 0 80 120" fill="none"><circle cx="40" cy="12" r="9" fill="none" stroke="#E94560" stroke-width="3"/><path d="M40 21 Q32 50 38 65" stroke="#E94560" stroke-width="3.5" stroke-linecap="round" fill="none"/><path d="M38 40 Q50 50 42 60" stroke="#E94560" stroke-width="2" stroke-linecap="round" fill="none" stroke-dasharray="3,2" opacity="0.6"/><line x1="38" y1="65" x2="30" y2="100" stroke="#E94560" stroke-width="3.5" stroke-linecap="round"/><line x1="38" y1="65" x2="46" y2="100" stroke="#E94560" stroke-width="3.5" stroke-linecap="round"/><line x1="24" y1="100" x2="35" y2="100" stroke="#E94560" stroke-width="3" stroke-linecap="round"/><line x1="40" y1="100" x2="55" y2="100" stroke="#E94560" stroke-width="3" stroke-linecap="round"/></svg>`,
-  ptAfter:`<svg width="70" height="110" viewBox="0 0 80 120" fill="none"><circle cx="40" cy="12" r="9" fill="none" stroke="#27AE60" stroke-width="3"/><line x1="40" y1="21" x2="40" y2="65" stroke="#27AE60" stroke-width="3.5" stroke-linecap="round"/><path d="M40 60 Q36 65 40 68" stroke="#F9CA24" stroke-width="2.5" stroke-linecap="round" fill="none"/><line x1="40" y1="65" x2="32" y2="100" stroke="#27AE60" stroke-width="3.5" stroke-linecap="round"/><line x1="40" y1="65" x2="48" y2="100" stroke="#27AE60" stroke-width="3.5" stroke-linecap="round"/><line x1="26" y1="100" x2="37" y2="100" stroke="#27AE60" stroke-width="3" stroke-linecap="round"/><line x1="42" y1="100" x2="56" y2="100" stroke="#27AE60" stroke-width="3" stroke-linecap="round"/></svg>`,
-  plank:`<svg width="140" height="65" viewBox="0 0 150 75" fill="none"><circle cx="12" cy="28" r="9" fill="none" stroke="#4ECDC4" stroke-width="3"/><line x1="20" y1="30" x2="105" y2="45" stroke="#4ECDC4" stroke-width="4" stroke-linecap="round"/><line x1="28" y1="32" x2="22" y2="50" stroke="#4ECDC4" stroke-width="3.5" stroke-linecap="round"/><line x1="22" y1="50" x2="45" y2="50" stroke="#4ECDC4" stroke-width="3.5" stroke-linecap="round"/><line x1="48" y1="37" x2="42" y2="50" stroke="#4ECDC4" stroke-width="3.5" stroke-linecap="round"/><line x1="105" y1="45" x2="120" y2="50" stroke="#4ECDC4" stroke-width="3.5" stroke-linecap="round"/><line x1="115" y1="50" x2="132" y2="50" stroke="#4ECDC4" stroke-width="3" stroke-linecap="round"/><line x1="5" y1="58" x2="145" y2="58" stroke="#555570" stroke-width="2"/><line x1="15" y1="22" x2="108" y2="38" stroke="#E94560" stroke-width="1.5" stroke-dasharray="4,3" opacity="0.5"/></svg>`
+  ptBefore:`<svg width="70" height="110" viewBox="0 0 80 120" fill="none"><circle cx="40" cy="12" r="9" fill="none" stroke="#E94560" stroke-width="3"/><path d="M40 21 Q32 50 38 65" stroke="#E94560" stroke-width="3.5" stroke-linecap="round" fill="none"/><line x1="38" y1="65" x2="30" y2="100" stroke="#E94560" stroke-width="3.5" stroke-linecap="round"/><line x1="38" y1="65" x2="46" y2="100" stroke="#E94560" stroke-width="3.5" stroke-linecap="round"/></svg>`,
+  ptAfter:`<svg width="70" height="110" viewBox="0 0 80 120" fill="none"><circle cx="40" cy="12" r="9" fill="none" stroke="#27AE60" stroke-width="3"/><line x1="40" y1="21" x2="40" y2="65" stroke="#27AE60" stroke-width="3.5" stroke-linecap="round"/><line x1="40" y1="65" x2="32" y2="100" stroke="#27AE60" stroke-width="3.5" stroke-linecap="round"/><line x1="40" y1="65" x2="48" y2="100" stroke="#27AE60" stroke-width="3.5" stroke-linecap="round"/></svg>`,
+  plank:`<svg width="140" height="65" viewBox="0 0 150 75" fill="none"><circle cx="12" cy="28" r="9" fill="none" stroke="#4ECDC4" stroke-width="3"/><line x1="20" y1="30" x2="105" y2="45" stroke="#4ECDC4" stroke-width="4" stroke-linecap="round"/><line x1="28" y1="32" x2="22" y2="50" stroke="#4ECDC4" stroke-width="3.5" stroke-linecap="round"/><line x1="22" y1="50" x2="45" y2="50" stroke="#4ECDC4" stroke-width="3.5" stroke-linecap="round"/><line x1="105" y1="45" x2="120" y2="50" stroke="#4ECDC4" stroke-width="3.5" stroke-linecap="round"/><line x1="5" y1="58" x2="145" y2="58" stroke="#555570" stroke-width="2"/></svg>`,
+  rdl:`<svg width="130" height="110" viewBox="0 0 140 120" fill="none"><circle cx="30" cy="12" r="9" fill="none" stroke="#F9CA24" stroke-width="3"/><path d="M30 21 Q28 50 50 70" stroke="#F9CA24" stroke-width="3.5" stroke-linecap="round" fill="none"/><line x1="35" y1="35" x2="15" y2="50" stroke="#F9CA24" stroke-width="3" stroke-linecap="round"/><line x1="35" y1="35" x2="55" y2="55" stroke="#F9CA24" stroke-width="3" stroke-linecap="round"/><line x1="50" y1="70" x2="35" y2="105" stroke="#F9CA24" stroke-width="3.5" stroke-linecap="round"/><line x1="50" y1="70" x2="65" y2="105" stroke="#F9CA24" stroke-width="3.5" stroke-linecap="round"/><line x1="15" y1="55" x2="105" y2="55" stroke="#4ECDC4" stroke-width="2" stroke-dasharray="4,3" opacity="0.6"/><text x="108" y="58" font-size="9" fill="#4ECDC4" font-family="DM Sans">flat!</text></svg>`,
+  row:`<svg width="130" height="90" viewBox="0 0 140 100" fill="none"><circle cx="20" cy="30" r="9" fill="none" stroke="#4ECDC4" stroke-width="3"/><line x1="20" y1="39" x2="20" y2="65" stroke="#4ECDC4" stroke-width="3.5" stroke-linecap="round"/><line x1="20" y1="50" x2="5" y2="65" stroke="#4ECDC4" stroke-width="3" stroke-linecap="round"/><line x1="20" y1="50" x2="40" y2="70" stroke="#4ECDC4" stroke-width="3" stroke-linecap="round"/><line x1="20" y1="65" x2="10" y2="95" stroke="#4ECDC4" stroke-width="3.5" stroke-linecap="round"/><line x1="20" y1="65" x2="30" y2="95" stroke="#4ECDC4" stroke-width="3.5" stroke-linecap="round"/><rect x="45" y="55" width="60" height="12" rx="4" fill="none" stroke="#555570" stroke-width="2"/><path d="M40 68 Q50 50 65 58" stroke="#F9CA24" stroke-width="2.5" stroke-linecap="round" fill="none"/><path d="M62 55 L67 58 L62 61" stroke="#F9CA24" stroke-width="2" stroke-linecap="round" fill="none"/></svg>`,
+  birddog:`<svg width="130" height="90" viewBox="0 0 140 100" fill="none"><path d="M25 55 Q65 50 105 55" stroke="#4ECDC4" stroke-width="4" stroke-linecap="round" fill="none"/><circle cx="18" cy="50" r="9" fill="none" stroke="#4ECDC4" stroke-width="3"/><line x1="35" y1="53" x2="30" y2="78" stroke="#4ECDC4" stroke-width="3" stroke-linecap="round"/><line x1="95" y1="53" x2="92" y2="78" stroke="#4ECDC4" stroke-width="3" stroke-linecap="round"/><line x1="18" y1="42" x2="5" y2="28" stroke="#F9CA24" stroke-width="3" stroke-linecap="round"/><line x1="105" y1="55" x2="125" y2="45" stroke="#F9CA24" stroke-width="3" stroke-linecap="round"/><path d="M3 26 L7 20" stroke="#E94560" stroke-width="2" stroke-linecap="round"/><path d="M127 43 L133 40" stroke="#E94560" stroke-width="2" stroke-linecap="round"/></svg>`,
+  press:`<svg width="110" height="110" viewBox="0 0 120 120" fill="none"><circle cx="60" cy="15" r="9" fill="none" stroke="#F9CA24" stroke-width="3"/><line x1="60" y1="24" x2="60" y2="65" stroke="#F9CA24" stroke-width="3.5" stroke-linecap="round"/><line x1="60" y1="38" x2="30" y2="20" stroke="#F9CA24" stroke-width="3" stroke-linecap="round"/><line x1="60" y1="38" x2="90" y2="20" stroke="#F9CA24" stroke-width="3" stroke-linecap="round"/><circle cx="22" cy="18" r="5" fill="none" stroke="#F9CA24" stroke-width="2.5"/><circle cx="98" cy="18" r="5" fill="none" stroke="#F9CA24" stroke-width="2.5"/><line x1="60" y1="65" x2="45" y2="100" stroke="#F9CA24" stroke-width="3.5" stroke-linecap="round"/><line x1="60" y1="65" x2="75" y2="100" stroke="#F9CA24" stroke-width="3.5" stroke-linecap="round"/><path d="M28 16 L28 6 L24 10 M28 6 L32 10" stroke="#E94560" stroke-width="2" stroke-linecap="round" fill="none"/><path d="M92 16 L92 6 L88 10 M92 6 L96 10" stroke="#E94560" stroke-width="2" stroke-linecap="round" fill="none"/></svg>`,
+  lateral:`<svg width="110" height="100" viewBox="0 0 120 110" fill="none"><circle cx="60" cy="15" r="9" fill="none" stroke="#4ECDC4" stroke-width="3"/><line x1="60" y1="24" x2="60" y2="65" stroke="#4ECDC4" stroke-width="3.5" stroke-linecap="round"/><line x1="60" y1="42" x2="25" y2="55" stroke="#4ECDC4" stroke-width="3" stroke-linecap="round"/><line x1="60" y1="42" x2="95" y2="55" stroke="#4ECDC4" stroke-width="3" stroke-linecap="round"/><circle cx="20" cy="53" r="5" fill="none" stroke="#4ECDC4" stroke-width="2.5"/><circle cx="100" cy="53" r="5" fill="none" stroke="#4ECDC4" stroke-width="2.5"/><line x1="60" y1="65" x2="45" y2="100" stroke="#4ECDC4" stroke-width="3.5" stroke-linecap="round"/><line x1="60" y1="65" x2="75" y2="100" stroke="#4ECDC4" stroke-width="3.5" stroke-linecap="round"/></svg>`,
+  hang:`<svg width="110" height="110" viewBox="0 0 120 120" fill="none"><line x1="10" y1="10" x2="110" y2="10" stroke="#555570" stroke-width="4" stroke-linecap="round"/><line x1="60" y1="10" x2="60" y2="28" stroke="#4ECDC4" stroke-width="3" stroke-linecap="round"/><circle cx="60" cy="37" r="9" fill="none" stroke="#4ECDC4" stroke-width="3"/><line x1="60" y1="46" x2="60" y2="78" stroke="#4ECDC4" stroke-width="3.5" stroke-linecap="round"/><line x1="60" y1="55" x2="35" y2="68" stroke="#4ECDC4" stroke-width="3" stroke-linecap="round"/><line x1="60" y1="55" x2="85" y2="68" stroke="#4ECDC4" stroke-width="3" stroke-linecap="round"/><line x1="60" y1="78" x2="50" y2="108" stroke="#4ECDC4" stroke-width="3.5" stroke-linecap="round"/><line x1="60" y1="78" x2="70" y2="108" stroke="#4ECDC4" stroke-width="3.5" stroke-linecap="round"/></svg>`,
+  sideleg:`<svg width="130" height="80" viewBox="0 0 140 90" fill="none"><circle cx="15" cy="35" r="9" fill="none" stroke="#4ECDC4" stroke-width="3"/><line x1="15" y1="44" x2="15" y2="65" stroke="#4ECDC4" stroke-width="3.5" stroke-linecap="round"/><line x1="15" y1="55" x2="5" y2="65" stroke="#4ECDC4" stroke-width="3" stroke-linecap="round"/><line x1="15" y1="65" x2="55" y2="65" stroke="#4ECDC4" stroke-width="3.5" stroke-linecap="round"/><line x1="55" y1="65" x2="80" y2="65" stroke="#F9CA24" stroke-width="3.5" stroke-linecap="round"/><line x1="15" y1="65" x2="55" y2="80" stroke="#4ECDC4" stroke-width="3.5" stroke-linecap="round"/><path d="M78 63 L84 65 L78 67" stroke="#E94560" stroke-width="2" stroke-linecap="round" fill="none"/><line x1="5" y1="85" x2="120" y2="85" stroke="#555570" stroke-width="2"/></svg>`,
+  chest:`<svg width="130" height="90" viewBox="0 0 140 100" fill="none"><rect x="20" y="55" width="100" height="12" rx="4" fill="none" stroke="#555570" stroke-width="2"/><circle cx="70" cy="30" r="9" fill="none" stroke="#F9CA24" stroke-width="3"/><line x1="70" y1="39" x2="70" y2="58" stroke="#F9CA24" stroke-width="3.5" stroke-linecap="round"/><line x1="70" y1="48" x2="40" y2="40" stroke="#F9CA24" stroke-width="3" stroke-linecap="round"/><line x1="70" y1="48" x2="100" y2="40" stroke="#F9CA24" stroke-width="3" stroke-linecap="round"/><circle cx="35" cy="38" r="5" fill="none" stroke="#F9CA24" stroke-width="2.5"/><circle cx="105" cy="38" r="5" fill="none" stroke="#F9CA24" stroke-width="2.5"/><path d="M38 38 L38 30 L34 34 M38 30 L42 34" stroke="#E94560" stroke-width="2" stroke-linecap="round" fill="none"/><path d="M102 38 L102 30 L98 34 M102 30 L106 34" stroke="#E94560" stroke-width="2" stroke-linecap="round" fill="none"/></svg>`
 };
 
-// ═══════════════════════════════════════════
-// EXERCISE LIBRARY
-// ═══════════════════════════════════════════
+// ═══ EXERCISE LIBRARY ═══
 const EXERCISES=[
-  { id:'cat-cow', name:'Cat-Cow', category:'warmup', tag:'warm-up · posture', tagClass:'ex-tag-warmup',
-    meta:'10 slow reps · before every session',
-    icon:`<svg width="40" height="32" viewBox="0 0 130 90" fill="none"><path d="M25 55 Q65 30 105 55" stroke="#4ECDC4" stroke-width="5" stroke-linecap="round" fill="none"/><circle cx="18" cy="60" r="8" fill="none" stroke="#4ECDC4" stroke-width="4"/><line x1="35" y1="52" x2="30" y2="75" stroke="#4ECDC4" stroke-width="4"/><line x1="95" y1="52" x2="92" y2="75" stroke="#4ECDC4" stroke-width="4"/></svg>`,
-    why:'Cat-Cow mobilises your entire spine and directly targets your anterior pelvic tilt. It teaches each vertebra to move and activates the deep core muscles that hold your pelvis neutral.',
-    phases:[
-      {label:'CAT',svg:SVG.catCat,desc:'Back arched UP · head drops · belly pulls in'},
-      {label:'COW',svg:SVG.catCow,desc:'Back sags DOWN · head lifts · belly relaxes'}],
-    steps:['Start on all fours — wrists under shoulders, knees under hips.','CAT: Breathe out, round your back UP to the ceiling. Head drops down. Pull your belly button toward your spine.','COW: Breathe in, let your back sag down. Lift your head and tailbone up.','Move slowly and continuously between the two. 10 full rounds.'],
-    tip:'Go slow — you should feel each vertebra moving individually. Never rush this. The slower the better.' },
-
-  { id:'hip-flexor', name:'Hip Flexor Stretch', category:'warmup', tag:'warm-up · posture fix', tagClass:'ex-tag-warmup',
-    meta:'30 seconds each side · before every run',
-    icon:`<svg width="38" height="40" viewBox="0 0 110 110" fill="none"><circle cx="55" cy="12" r="8" fill="none" stroke="#4ECDC4" stroke-width="4"/><line x1="55" y1="20" x2="55" y2="52" stroke="#4ECDC4" stroke-width="4"/><line x1="55" y1="52" x2="75" y2="68" stroke="#4ECDC4" stroke-width="4"/><line x1="75" y1="68" x2="85" y2="52" stroke="#4ECDC4" stroke-width="4"/><line x1="55" y1="52" x2="38" y2="68" stroke="#4ECDC4" stroke-width="4"/><line x1="38" y1="68" x2="36" y2="90" stroke="#4ECDC4" stroke-width="4"/></svg>`,
-    why:'Tight hip flexors from sitting are the #1 cause of your anterior pelvic tilt. They pull the pelvis forward constantly. This stretch directly releases that tension.',
-    phases:[
-      {label:'POSITION',svg:SVG.hipStart,desc:'Kneeling lunge · back knee on floor'},
-      {label:'STRETCH',svg:SVG.hipDeep,desc:'Push hips forward · feel it in front of back hip'}],
-    steps:['Kneel on your right knee, left foot forward with knee at 90°. Put a folded mat under your knee for comfort.','Keep your torso upright — do not lean forward.','Gently push your hips forward until you feel a stretch at the FRONT of your right hip.','Hold for 30 seconds. Breathe normally.','Switch legs and repeat.'],
-    tip:'The stretch must be felt at the FRONT of the back hip — not in the knee. If you feel the knee, add more padding underneath.' },
-
-  { id:'pelvic-tilt', name:'Posterior Pelvic Tilt', category:'posture', tag:'posture fix', tagClass:'ex-tag-posture',
-    meta:'15 reps · Strength A & B · teaches neutral spine',
-    icon:`<svg width="28" height="40" viewBox="0 0 80 120" fill="none"><circle cx="40" cy="12" r="8" fill="none" stroke="#E94560" stroke-width="4"/><line x1="40" y1="20" x2="40" y2="62" stroke="#E94560" stroke-width="4"/><line x1="40" y1="62" x2="30" y2="95" stroke="#E94560" stroke-width="4"/><line x1="40" y1="62" x2="50" y2="95" stroke="#E94560" stroke-width="4"/></svg>`,
-    why:'This teaches your pelvis to find the neutral position — directly correcting the forward tilt visible in your posture. Once you learn the feeling, you can apply it during your runs.',
-    phases:[
-      {label:'BEFORE',svg:SVG.ptBefore,desc:'Anterior tilt · lower back arched · belly forward'},
-      {label:'AFTER',svg:SVG.ptAfter,desc:'Neutral · lower back flat · core engaged'}],
-    steps:['Stand with your back against a wall, feet 10cm from the wall.','Notice the gap between your lower back and the wall — this is your anterior tilt.','Tighten your abs and squeeze your glutes. This rocks your pelvis backwards.','Try to flatten your lower back against the wall. Hold 3 seconds.','Release and repeat. 15 reps.'],
-    tip:'Once you feel it against the wall, practice without the wall. Eventually this becomes your default standing and running posture.' },
-
-  { id:'glute-bridge', name:'Glute Bridge', category:'strength', tag:'strength · posture', tagClass:'ex-tag-strength',
-    meta:'3 × 15 reps · Strength A & B',
-    icon:`<svg width="44" height="28" viewBox="0 0 140 80" fill="none"><circle cx="12" cy="52" r="8" fill="none" stroke="#F9CA24" stroke-width="4"/><line x1="20" y1="52" x2="60" y2="30" stroke="#F9CA24" stroke-width="5"/><line x1="60" y1="30" x2="85" y2="52" stroke="#F9CA24" stroke-width="5"/><line x1="85" y1="52" x2="115" y2="52" stroke="#F9CA24" stroke-width="5"/></svg>`,
-    why:'Weak glutes cannot hold the pelvis neutral — so it tips forward. Glute bridges directly build the glute strength needed to stabilise your hips. Essential for posture AND running.',
-    phases:[
-      {label:'DOWN',svg:SVG.gbDown,desc:'On back · knees bent · feet flat · arms by sides'},
-      {label:'UP',svg:SVG.gbUp,desc:'Drive hips up · squeeze glutes at the top · 2 seconds'}],
-    steps:['Lie on your back, knees bent, feet flat on the floor hip-width apart.','Press your lower back gently into the floor.','Breathe out and drive your hips up by squeezing your glutes. Straight line shoulders to knees.','Squeeze hard at the top for 2 seconds.','Lower slowly. Do not let the lower back arch on the way down.','3 sets of 15 reps.'],
-    tip:'"Squeeze a coin between your bum cheeks" at the top of every rep. If you feel it in your lower back instead of your glutes, your glutes are not activating properly — go slower.' },
-
-  { id:'dead-bug', name:'Dead Bug', category:'strength', tag:'strength · core', tagClass:'ex-tag-strength',
-    meta:'3 × 10 reps · Strength A & B',
-    icon:`<svg width="44" height="28" viewBox="0 0 140 85" fill="none"><circle cx="12" cy="35" r="8" fill="none" stroke="#F9CA24" stroke-width="4"/><line x1="20" y1="35" x2="75" y2="35" stroke="#F9CA24" stroke-width="5"/><line x1="35" y1="35" x2="35" y2="15" stroke="#F9CA24" stroke-width="3.5"/><line x1="55" y1="35" x2="55" y2="15" stroke="#F9CA24" stroke-width="3.5"/><line x1="75" y1="35" x2="95" y2="18" stroke="#F9CA24" stroke-width="3.5"/><line x1="95" y1="18" x2="115" y2="18" stroke="#F9CA24" stroke-width="3.5"/></svg>`,
-    why:'The dead bug trains your core to keep the spine stable while limbs move — exactly what running demands. It also reinforces the neutral pelvic position under load.',
-    phases:[
-      {label:'START',svg:SVG.dbStart,desc:'Arms up · knees at 90° (tabletop) · back flat'},
-      {label:'EXTEND',svg:SVG.dbExtend,desc:'Opposite arm + leg extend · back stays flat!'}],
-    steps:['Lie on your back. Press your lower back FIRMLY into the floor — keep it there the whole time.','Arms straight up, both knees at 90° (tabletop).','Breathe out. Extend RIGHT arm back and LEFT leg out — at the same time.','Go only as far as the lower back stays flat.','Breathe in, return to start. Switch sides. That is 1 rep. Do 10.'],
-    tip:'Lower back on the floor is NON-NEGOTIABLE. If it lifts, make the movement smaller. The core work happens in resisting the movement, not in how far you go.' },
-
-  { id:'plank', name:'Plank', category:'strength', tag:'strength · core', tagClass:'ex-tag-strength',
-    meta:'3 × 30-50 seconds · Strength A',
-    icon:`<svg width="44" height="22" viewBox="0 0 150 75" fill="none"><circle cx="12" cy="28" r="8" fill="none" stroke="#4ECDC4" stroke-width="4"/><line x1="20" y1="30" x2="105" y2="45" stroke="#4ECDC4" stroke-width="5"/><line x1="28" y1="32" x2="22" y2="52" stroke="#4ECDC4" stroke-width="4"/><line x1="22" y1="52" x2="45" y2="52" stroke="#4ECDC4" stroke-width="4"/><line x1="105" y1="45" x2="122" y2="52" stroke="#4ECDC4" stroke-width="4"/></svg>`,
-    why:'The plank builds endurance of your core stabilisers — the muscles that hold your spine neutral during long runs. It also trains neutral pelvis under fatigue.',
-    phases:[{label:'FORM',svg:SVG.plank,desc:'Forearms on floor · body in straight line head to heels'}],
-    steps:['Forearms and toes on the floor. Elbows directly under shoulders.','Straight line from head to heels — no hips up, no sagging.','Pull belly button in. Squeeze glutes. Neck neutral.','Hold and breathe normally.','Stop the moment your hips drop — rest and go again.'],
-    tip:'A perfect 15-second plank beats 40 seconds with sagging hips every time. Quality over duration always.' }
+  {id:'cat-cow',name:'Cat-Cow',category:'warmup',tag:'warm-up · posture',tagClass:'ex-tag-warmup',meta:'10 slow reps · before every session',
+   icon:`<svg width="40" height="32" viewBox="0 0 130 90" fill="none"><path d="M25 55 Q65 30 105 55" stroke="#4ECDC4" stroke-width="5" stroke-linecap="round" fill="none"/><circle cx="18" cy="60" r="8" fill="none" stroke="#4ECDC4" stroke-width="4"/><line x1="35" y1="52" x2="30" y2="75" stroke="#4ECDC4" stroke-width="4"/><line x1="95" y1="52" x2="92" y2="75" stroke="#4ECDC4" stroke-width="4"/></svg>`,
+   why:'Cat-Cow mobilises your entire spine and directly targets your anterior pelvic tilt. It teaches each vertebra to move and activates the deep core muscles that hold your pelvis neutral.',
+   phases:[{label:'CAT',svg:SVG.catCat,desc:'Back arched UP · head drops · belly pulls in'},{label:'COW',svg:SVG.catCow,desc:'Back sags DOWN · head lifts · belly relaxes'}],
+   steps:['Start on all fours — wrists under shoulders, knees under hips.','CAT: Breathe out, round your back UP to the ceiling. Head drops down. Pull belly button toward spine.','COW: Breathe in, let your back sag down. Lift your head and tailbone up.','Move slowly and continuously between the two. 10 full rounds.'],
+   tip:'Go slow — feel each vertebra moving individually. Never rush this.'},
+  {id:'hip-flexor',name:'Hip Flexor Stretch',category:'warmup',tag:'warm-up · posture fix',tagClass:'ex-tag-warmup',meta:'30 seconds each side · before every run',
+   icon:`<svg width="38" height="40" viewBox="0 0 110 110" fill="none"><circle cx="55" cy="12" r="8" fill="none" stroke="#4ECDC4" stroke-width="4"/><line x1="55" y1="20" x2="55" y2="52" stroke="#4ECDC4" stroke-width="4"/><line x1="55" y1="52" x2="75" y2="68" stroke="#4ECDC4" stroke-width="4"/><line x1="75" y1="68" x2="85" y2="52" stroke="#4ECDC4" stroke-width="4"/><line x1="55" y1="52" x2="38" y2="68" stroke="#4ECDC4" stroke-width="4"/><line x1="38" y1="68" x2="36" y2="90" stroke="#4ECDC4" stroke-width="4"/></svg>`,
+   why:'Tight hip flexors from sitting are the #1 cause of your anterior pelvic tilt. This stretch directly releases that tension.',
+   phases:[{label:'POSITION',svg:SVG.hipStart,desc:'Kneeling lunge · back knee on floor'},{label:'STRETCH',svg:SVG.hipDeep,desc:'Push hips forward · feel it in front of back hip'}],
+   steps:['Kneel on your right knee, left foot forward with knee at 90°.','Keep your torso upright — do not lean forward.','Push hips forward until you feel a stretch at the FRONT of your right hip.','Hold for 30 seconds. Breathe normally.','Switch legs and repeat.'],
+   tip:'The stretch must be felt at the FRONT of the back hip — not in the knee.'},
+  {id:'pelvic-tilt',name:'Posterior Pelvic Tilt',category:'posture',tag:'posture fix',tagClass:'ex-tag-posture',meta:'15 reps · Strength A & B',
+   icon:`<svg width="28" height="40" viewBox="0 0 80 120" fill="none"><circle cx="40" cy="12" r="8" fill="none" stroke="#E94560" stroke-width="4"/><line x1="40" y1="20" x2="40" y2="62" stroke="#E94560" stroke-width="4"/><line x1="40" y1="62" x2="30" y2="95" stroke="#E94560" stroke-width="4"/><line x1="40" y1="62" x2="50" y2="95" stroke="#E94560" stroke-width="4"/></svg>`,
+   why:'Teaches your pelvis to find neutral position — directly correcting the forward tilt. Once you learn the feeling, apply it during your runs.',
+   phases:[{label:'BEFORE',svg:SVG.ptBefore,desc:'Anterior tilt · lower back arched'},{label:'AFTER',svg:SVG.ptAfter,desc:'Neutral · lower back flat · core engaged'}],
+   steps:['Stand with back against wall, feet 10cm from wall.','Notice the gap between lower back and wall — this is your tilt.','Tighten abs and squeeze glutes. This rocks your pelvis backwards.','Flatten your lower back against the wall. Hold 3 seconds.','Release and repeat. 15 reps.'],
+   tip:'Once you feel it, practice without the wall. This becomes your default running posture.'},
+  {id:'rdl',name:'Romanian Deadlift',category:'strength',tag:'strength A · legs & glutes',tagClass:'ex-tag-strength',meta:'3×10 reps · barbell or dumbbells · Strength A',
+   icon:`<svg width="44" height="36" viewBox="0 0 140 120" fill="none"><circle cx="30" cy="12" r="8" fill="none" stroke="#F9CA24" stroke-width="4"/><path d="M30 20 Q28 48 50 68" stroke="#F9CA24" stroke-width="4" stroke-linecap="round" fill="none"/><line x1="50" y1="68" x2="35" y2="100" stroke="#F9CA24" stroke-width="4" stroke-linecap="round"/><line x1="50" y1="68" x2="65" y2="100" stroke="#F9CA24" stroke-width="4" stroke-linecap="round"/></svg>`,
+   why:'The hip hinge pattern directly strengthens your glutes and hamstrings — the two most important running muscles. Also teaches you to move from the hips rather than the lower back, which corrects your pelvic tilt.',
+   phases:[{label:'START',svg:SVG.rdl,desc:'Soft knees · back flat · hips hinge back'},{label:'KEY',svg:SVG.rdl,desc:'Feel stretch in hamstrings · keep back neutral'}],
+   steps:['Stand with barbell or dumbbells in front of thighs. Feet hip-width apart.','Soft bend in knees — keep this throughout.','Hinge from hips — push your bottom backwards as you lower the weight.','Keep the bar close to your legs. Back stays flat — not rounded.','Lower until you feel a pull in your hamstrings. Stop there.','Drive hips forward to return to standing. Squeeze glutes at the top. 3×10.'],
+   tip:'Start light — 2×5kg plates on barbell or 5kg dumbbells. The movement matters more than the weight. If your lower back rounds, the weight is too heavy or you are going too low.'},
+  {id:'row',name:'Single Arm Dumbbell Row',category:'strength',tag:'strength A · upper back',tagClass:'ex-tag-strength',meta:'3×12 each side · 5kg dumbbell · Strength A',
+   why:'Directly targets the upper back muscles that counteract your desk posture and forward shoulder rounding. Essential for running arm drive and posture.',
+   icon:`<svg width="44" height="32" viewBox="0 0 140 100" fill="none"><circle cx="20" cy="30" r="8" fill="none" stroke="#4ECDC4" stroke-width="4"/><line x1="20" y1="38" x2="20" y2="65" stroke="#4ECDC4" stroke-width="4"/><line x1="20" y1="50" x2="40" y2="68" stroke="#4ECDC4" stroke-width="3.5"/><rect x="45" y="55" width="55" height="10" rx="3" fill="none" stroke="#555570" stroke-width="2"/></svg>`,
+   phases:[{label:'DOWN',svg:SVG.row,desc:'Arm extended · back flat · supported on bench'},{label:'UP',svg:SVG.row,desc:'Elbow drives up · shoulder blade squeezes'}],
+   steps:['Place left knee and left hand on flat bench. Right foot on floor.','Hold 5kg dumbbell in right hand, arm hanging straight down.','Keep your back flat and parallel to the floor.','Pull the dumbbell up by driving your elbow towards the ceiling.','Squeeze your shoulder blade at the top. Hold 1 second.','Lower slowly. 3×12 each side.'],
+   tip:'Think "elbow to ceiling" not "hand to hip." The elbow leads the movement. Your shoulder blade should move, not just your arm.'},
+  {id:'goblet',name:'Goblet Squat',category:'strength',tag:'strength A · legs & posture',tagClass:'ex-tag-strength',meta:'3×12 reps · 8kg kettlebell · Strength A',
+   why:'The goblet squat forces an upright torso which directly trains your posture. Holding the weight in front counteracts the pelvic tilt naturally. Builds the quads and glutes essential for running uphill.',
+   icon:`<svg width="36" height="40" viewBox="0 0 100 110" fill="none"><circle cx="50" cy="12" r="9" fill="none" stroke="#F9CA24" stroke-width="3"/><line x1="50" y1="21" x2="50" y2="45" stroke="#F9CA24" stroke-width="3.5"/><line x1="50" y1="30" x2="32" y2="42" stroke="#F9CA24" stroke-width="3"/><line x1="50" y1="30" x2="68" y2="42" stroke="#F9CA24" stroke-width="3"/><circle cx="50" cy="50" r="8" fill="none" stroke="#F9CA24" stroke-width="2.5"/><line x1="50" y1="45" x2="38" y2="80" stroke="#F9CA24" stroke-width="3.5"/><line x1="50" y1="45" x2="62" y2="80" stroke="#F9CA24" stroke-width="3.5"/></svg>`,
+   phases:[{label:'TOP',svg:SVG.gbUp,desc:'Kettlebell at chest · elbows inside knees'},{label:'BOTTOM',svg:SVG.gbDown,desc:'Deep squat · chest tall · knees tracking toes'}],
+   steps:['Hold 8kg kettlebell at chest height with both hands. Feet shoulder-width apart, toes slightly out.','Keep the kettlebell close to your chest throughout.','Squat down — chest stays tall, elbows brush inside your knees at the bottom.','Go as deep as comfortable while keeping your heel on the floor.','Drive through heels to stand. 3×12.'],
+   tip:'If your heels lift, your ankles lack mobility — place a small plate under each heel temporarily. The goal is chest tall and deep squat.'},
+  {id:'overhead-press',name:'Overhead Press',category:'strength',tag:'strength A · shoulders',tagClass:'ex-tag-strength',meta:'3×10 reps · 3kg dumbbells · Strength A',
+   why:'Builds shoulder stability and the upper back muscles that hold your posture upright during long runs. Also develops the arm drive that becomes important in longer races.',
+   icon:`<svg width="40" height="40" viewBox="0 0 120 120" fill="none"><circle cx="60" cy="15" r="9" fill="none" stroke="#F9CA24" stroke-width="3"/><line x1="60" y1="24" x2="60" y2="65" stroke="#F9CA24" stroke-width="3.5"/><line x1="60" y1="38" x2="30" y2="20" stroke="#F9CA24" stroke-width="3"/><line x1="60" y1="38" x2="90" y2="20" stroke="#F9CA24" stroke-width="3"/></svg>`,
+   phases:[{label:'START',svg:SVG.press,desc:'Dumbbells at shoulder height · elbows at 90°'},{label:'TOP',svg:SVG.press,desc:'Arms extended overhead · core engaged'}],
+   steps:['Hold 3kg dumbbells at shoulder height, palms facing forward, elbows at 90°.','Engage your core — do not let your lower back arch.','Press both dumbbells straight overhead until arms are fully extended.','Pause at the top. Lower slowly back to shoulder height.','3×10 reps.'],
+   tip:'Start at 3kg. If you feel it in your lower back rather than your shoulders, your core is not engaged enough. Tighten your abs before every rep.'},
+  {id:'dead-bug',name:'Dead Bug',category:'strength',tag:'strength A&B · core',tagClass:'ex-tag-strength',meta:'3×10 reps · mat · both sessions',
+   why:'Trains your deep core to keep the spine stable while limbs move — exactly what running demands. Reinforces neutral pelvis under load.',
+   icon:`<svg width="44" height="28" viewBox="0 0 140 85" fill="none"><circle cx="12" cy="35" r="8" fill="none" stroke="#F9CA24" stroke-width="4"/><line x1="20" y1="35" x2="75" y2="35" stroke="#F9CA24" stroke-width="5"/><line x1="35" y1="35" x2="35" y2="15" stroke="#F9CA24" stroke-width="3.5"/><line x1="55" y1="35" x2="55" y2="15" stroke="#F9CA24" stroke-width="3.5"/><line x1="75" y1="35" x2="95" y2="18" stroke="#F9CA24" stroke-width="3.5"/><line x1="95" y1="18" x2="115" y2="18" stroke="#F9CA24" stroke-width="3.5"/></svg>`,
+   phases:[{label:'START',svg:SVG.dbStart,desc:'Arms up · knees at 90° · back flat on floor'},{label:'EXTEND',svg:SVG.dbExtend,desc:'Opposite arm + leg · back stays flat!'}],
+   steps:['Lie on your back. Press lower back firmly into the floor — keep it there always.','Arms straight up, both knees at 90° (tabletop).','Breathe out. Extend RIGHT arm back and LEFT leg out simultaneously.','Go only as far as lower back stays flat.','Return to start. Switch sides. That is 1 rep. Do 10.'],
+   tip:'Lower back on the floor is NON-NEGOTIABLE. If it lifts, make the movement smaller.'},
+  {id:'side-leg',name:'Side Lying Leg Lift',category:'strength',tag:'strength A · hip stability',tagClass:'ex-tag-strength',meta:'3×15 each side · mat · Strength A',
+   why:'Strengthens the gluteus medius — the hip stabiliser that prevents your pelvis from dropping with each running stride. Weakness here causes knee pain and IT band issues.',
+   icon:`<svg width="44" height="28" viewBox="0 0 140 90" fill="none"><circle cx="15" cy="35" r="8" fill="none" stroke="#4ECDC4" stroke-width="4"/><line x1="15" y1="43" x2="15" y2="65" stroke="#4ECDC4" stroke-width="4"/><line x1="15" y1="65" x2="55" y2="65" stroke="#4ECDC4" stroke-width="4"/><line x1="55" y1="65" x2="80" y2="55" stroke="#F9CA24" stroke-width="4"/></svg>`,
+   phases:[{label:'DOWN',svg:SVG.sideleg,desc:'On side · legs stacked · body in straight line'},{label:'UP',svg:SVG.sideleg,desc:'Top leg lifts · foot flexed · hip stays forward'}],
+   steps:['Lie on your side, body in a straight line. Head resting on your bottom arm.','Stack your feet and hips directly on top of each other.','Flex your top foot (toes toward shin).','Lift the top leg to about 45° — no higher.','Hold 1 second at the top. Lower slowly. 3×15 each side.'],
+   tip:'Keep your hips stacked forward — do not let the top hip roll backwards. That rotation is cheating and removes all the benefit.'},
+  {id:'bird-dog',name:'Bird Dog',category:'strength',tag:'strength B · core & spine',tagClass:'ex-tag-strength',meta:'3×10 each side · mat · Strength B',
+   why:'Your favourite! Builds spinal stability and deep core control while training the opposite arm/leg coordination pattern — exactly like running. Also gently mobilises the lower back.',
+   icon:`<svg width="44" height="30" viewBox="0 0 140 100" fill="none"><path d="M25 55 Q65 50 105 55" stroke="#4ECDC4" stroke-width="4" stroke-linecap="round" fill="none"/><circle cx="18" cy="50" r="8" fill="none" stroke="#4ECDC4" stroke-width="3"/><line x1="35" y1="53" x2="30" y2="78" stroke="#4ECDC4" stroke-width="3"/><line x1="95" y1="53" x2="92" y2="78" stroke="#4ECDC4" stroke-width="3"/><line x1="18" y1="42" x2="5" y2="28" stroke="#F9CA24" stroke-width="3"/><line x1="105" y1="55" x2="125" y2="45" stroke="#F9CA24" stroke-width="3"/></svg>`,
+   phases:[{label:'START',svg:SVG.birddog,desc:'All fours · wrists under shoulders · back flat'},{label:'EXTEND',svg:SVG.birddog,desc:'Opposite arm + leg · hips stay level'}],
+   steps:['Start on all fours — wrists under shoulders, knees under hips.','Back flat like a table — no arching, no rounding.','Extend your RIGHT arm forward and LEFT leg back simultaneously.','Keep hips level — do not rotate or tilt.','Hold 2 seconds. Return to start. Switch sides. 3×10 each side.'],
+   tip:'Imagine a glass of water balanced on your lower back. If it would spill — you are rotating. Keep it still.'},
+  {id:'chest-press',name:'Dumbbell Chest Press',category:'strength',tag:'strength B · chest & arms',tagClass:'ex-tag-strength',meta:'3×12 reps · 3-5kg dumbbells · Strength B',
+   why:'Builds chest, shoulder and tricep strength for upper body balance. Running is not just legs — your arms drive your pace, especially in the later kilometres.',
+   icon:`<svg width="44" height="28" viewBox="0 0 140 100" fill="none"><rect x="20" y="55" width="100" height="10" rx="3" fill="none" stroke="#555570" stroke-width="2"/><circle cx="70" cy="30" r="8" fill="none" stroke="#F9CA24" stroke-width="3"/><line x1="70" y1="38" x2="70" y2="58" stroke="#F9CA24" stroke-width="3.5"/><line x1="70" y1="48" x2="40" y2="40" stroke="#F9CA24" stroke-width="3"/><line x1="70" y1="48" x2="100" y2="40" stroke="#F9CA24" stroke-width="3"/></svg>`,
+   phases:[{label:'DOWN',svg:SVG.chest,desc:'Dumbbells at chest · elbows at 45°'},{label:'UP',svg:SVG.chest,desc:'Press up · arms extended · controlled'}],
+   steps:['Lie on flat bench, feet flat on floor.','Hold 3kg dumbbells at chest height, elbows at 45° from body.','Press dumbbells up until arms are extended but not locked.','Lower slowly back to chest — 3 seconds down.','3×12 reps. Move to 5kg when 3kg feels easy.'],
+   tip:'Start with 3kg. The slow lowering is where the work happens — do not drop the weights down.'},
+  {id:'lateral-raise',name:'Lateral Raises',category:'strength',tag:'strength B · shoulders',tagClass:'ex-tag-strength',meta:'3×12 reps · 2kg dumbbells · Strength B',
+   why:'Builds the medial deltoid — the shoulder muscle that creates that elegant defined shoulder shape. Also improves shoulder stability for running arm drive. 2kg is enough, trust me. 😄',
+   icon:`<svg width="40" height="36" viewBox="0 0 120 110" fill="none"><circle cx="60" cy="15" r="9" fill="none" stroke="#4ECDC4" stroke-width="3"/><line x1="60" y1="24" x2="60" y2="65" stroke="#4ECDC4" stroke-width="3.5"/><line x1="60" y1="42" x2="25" y2="55" stroke="#4ECDC4" stroke-width="3"/><line x1="60" y1="42" x2="95" y2="55" stroke="#4ECDC4" stroke-width="3"/></svg>`,
+   phases:[{label:'DOWN',svg:SVG.lateral,desc:'Arms by sides · slight bend in elbows'},{label:'UP',svg:SVG.lateral,desc:'Arms raise to shoulder height · no higher'}],
+   steps:['Stand holding 2kg dumbbells by your sides. Slight bend in elbows.','Raise both arms out to the sides simultaneously.','Stop when arms reach shoulder height — no higher.','Pause 1 second. Lower slowly — 3 seconds down.','3×12 reps.'],
+   tip:'2kg will feel embarrassingly light for the first 5 reps and embarrassingly heavy for the last 3. That is correct. Do not go heavier yet.'},
+  {id:'dead-hang',name:'Dead Hang',category:'strength',tag:'strength B · spine & lats',tagClass:'ex-tag-strength',meta:'3×20-30 seconds · pull up bar · Strength B',
+   why:'Decompresses your spine after running — essentially undoing the compression of each footstrike. Also stretches your lats and improves shoulder mobility. Secretly one of the best things you can do for your back.',
+   icon:`<svg width="36" height="44" viewBox="0 0 120 120" fill="none"><line x1="10" y1="10" x2="110" y2="10" stroke="#555570" stroke-width="4" stroke-linecap="round"/><line x1="60" y1="10" x2="60" y2="28" stroke="#4ECDC4" stroke-width="3"/><circle cx="60" cy="37" r="9" fill="none" stroke="#4ECDC4" stroke-width="3"/><line x1="60" y1="46" x2="60" y2="78" stroke="#4ECDC4" stroke-width="3.5"/><line x1="60" y1="55" x2="35" y2="68" stroke="#4ECDC4" stroke-width="3"/><line x1="60" y1="55" x2="85" y2="68" stroke="#4ECDC4" stroke-width="3"/></svg>`,
+   phases:[{label:'HANG',svg:SVG.hang,desc:'Grip bar · let body hang fully · relax shoulders'}],
+   steps:['Grip the pull up bar with both hands, shoulder-width apart.','Let your body hang completely — feet off the floor.','Relax your shoulders — let them rise toward your ears (passive hang).','Breathe deeply. Feel your spine lengthen.','Hold 20-30 seconds. Rest and repeat 3 times.'],
+   tip:'This should feel like relief, not effort. You are not trying to pull up — just hang and decompress. Your spine will thank you after every run.'},
+  {id:'glute-bridge',name:'Glute Bridge',category:'strength',tag:'strength B · glutes',tagClass:'ex-tag-strength',meta:'3×15 reps · mat · Strength B',
+   why:'Weak glutes cannot hold the pelvis neutral — so it tips forward. Glute bridges directly build the strength needed to stabilise your hips during running.',
+   icon:`<svg width="44" height="28" viewBox="0 0 140 80" fill="none"><circle cx="12" cy="52" r="8" fill="none" stroke="#F9CA24" stroke-width="4"/><line x1="20" y1="52" x2="60" y2="30" stroke="#F9CA24" stroke-width="5"/><line x1="60" y1="30" x2="85" y2="52" stroke="#F9CA24" stroke-width="5"/><line x1="85" y1="52" x2="115" y2="52" stroke="#F9CA24" stroke-width="5"/></svg>`,
+   phases:[{label:'DOWN',svg:SVG.gbDown,desc:'On back · knees bent · feet flat · arms by sides'},{label:'UP',svg:SVG.gbUp,desc:'Drive hips up · squeeze glutes · 2 seconds'}],
+   steps:['Lie on your back, knees bent, feet flat on floor hip-width apart.','Press lower back gently into the floor.','Breathe out, drive hips up by squeezing glutes. Straight line shoulders to knees.','Squeeze hard at the top for 2 full seconds.','Lower slowly. 3×15.'],
+   tip:'"Squeeze a coin between your bum cheeks" at the top of every rep. If you feel it in your lower back — your glutes are not firing. Go slower.'},
+  {id:'plank',name:'Plank',category:'strength',tag:'strength A · core endurance',tagClass:'ex-tag-strength',meta:'3×30-50 seconds · mat · Strength A',
+   why:'Builds endurance of your core stabilisers — the muscles that hold your spine neutral during long runs. Trains neutral pelvis under fatigue.',
+   icon:`<svg width="44" height="22" viewBox="0 0 150 75" fill="none"><circle cx="12" cy="28" r="8" fill="none" stroke="#4ECDC4" stroke-width="4"/><line x1="20" y1="30" x2="105" y2="45" stroke="#4ECDC4" stroke-width="5"/><line x1="28" y1="32" x2="22" y2="52" stroke="#4ECDC4" stroke-width="4"/><line x1="22" y1="52" x2="45" y2="52" stroke="#4ECDC4" stroke-width="4"/><line x1="105" y1="45" x2="122" y2="52" stroke="#4ECDC4" stroke-width="4"/></svg>`,
+   phases:[{label:'FORM',svg:SVG.plank,desc:'Forearms on floor · body in straight line head to heels'}],
+   steps:['Forearms and toes on the floor. Elbows directly under shoulders.','Straight line from head to heels — no hips up, no sagging.','Pull belly button in. Squeeze glutes. Neck neutral.','Hold and breathe normally.','Stop the moment your hips drop — rest and go again.'],
+   tip:'A perfect 15-second plank beats 40 seconds with sagging hips every time.'}
 ];
 
-// ═══════════════════════════════════════════
-// STATE
-// ═══════════════════════════════════════════
-let workoutLog   = JSON.parse(localStorage.getItem('tatiana_log')||'[]');
-let currentWeek  = parseInt(localStorage.getItem('tatiana_week')||'0'); // 0-indexed
-let viewingWeek  = currentWeek;
-let currentDayIdx= -1;
-let activeWorkout= null;
-let timer=null,isRunning=false,currentInterval='run',currentRound=0,timeLeft=0,totalElapsed=0;
+// ═══ WEEK PLANS ═══
+const WEEKS=[
+  // WEEK 1
+  {label:"Week 1 — Starting Out",phase:"Phase 1 — Build the habit",easyRunDuration:0,days:[
+    {day:"Monday",type:"rest",label:"Rest Day",isTraining:false,hasTimer:false,desc:"Recovery is training. Rest, stretch, hydrate. 💧"},
+    {day:"Tuesday",type:"run",label:"Run / Walk",isTraining:true,hasTimer:true,desc:"Warm-up: Hip flexor stretch 30s each side · Cat-cow 10 reps\nRun 1 min · Walk 2 min · 8 rounds · ~30 min\nNo pace pressure. Just get out there.",workout:{name:"Week 1 — Run",run:60,walk:120,rounds:8,bpm:0}},
+    {day:"Wednesday",type:"bike",label:"Bike · iFit",isTraining:true,hasTimer:false,desc:"Active recovery after Tuesday run 🚴\nNordicTrack · 35 min · moderate effort\n5 min warm-up · 25 min steady · 5 min cool-down"},
+    {day:"Thursday",type:"run",label:"Easy Run",isTraining:true,hasTimer:'easy',easyMins:0,desc:"Week 1 — no easy run yet. Rest or gentle walk today. 🚶\nThis slot activates from Week 5."},
+    {day:"Friday",type:"strength",label:"Strength A",isTraining:true,hasTimer:false,desc:"Warm-up: Cat-cow 10 reps · Hip flexor stretch 30s each side\nRDL 3×10 · Dumbbell Row 3×12 · Goblet Squat 3×12\nOverhead Press 3×10 · Dead Bug 3×10 · Side Leg Lift 3×15\nPlank 3×30s"},
+    {day:"Saturday",type:"strength",label:"Strength B",isTraining:true,hasTimer:false,desc:"Warm-up: Cat-cow 10 reps · Hip flexor stretch 30s each side\nBird Dog 3×10 · Chest Press 3×12 · Glute Bridge 3×15\nLateral Raises 3×12 · Dead Hang 3×20s · Dead Bug 3×10\nPelvic Tilt 15 reps"},
+    {day:"Sunday",type:"run",label:"Run",isTraining:true,hasTimer:true,desc:"Run to the pool or around the park 🏊‍♀️\nSame intervals as Tuesday — relaxed pace.\nSwim after if you go to the pool.",workout:{name:"Week 1 — Sunday Run",run:60,walk:120,rounds:8,bpm:0}}
+  ]},
+  // WEEK 2
+  {label:"Week 2 — Building Rhythm",phase:"Phase 1 — Build the habit",days:[
+    {day:"Monday",type:"rest",label:"Rest Day",isTraining:false,hasTimer:false,desc:"Recovery is training. Rest, stretch, hydrate. 💧"},
+    {day:"Tuesday",type:"run",label:"Run / Walk",isTraining:true,hasTimer:true,desc:"Warm-up: Hip flexor stretch 30s each side · Cat-cow 10 reps\nRun 90 sec · Walk 90 sec · 8 rounds · ~24 min\nIntervals are getting balanced — you've got this.",workout:{name:"Week 2 — Run",run:90,walk:90,rounds:8,bpm:0}},
+    {day:"Wednesday",type:"bike",label:"Bike · iFit",isTraining:true,hasTimer:false,desc:"Active recovery after Tuesday run 🚴\nNordicTrack · 35 min · moderate effort"},
+    {day:"Thursday",type:"run",label:"Easy Run",isTraining:true,hasTimer:'easy',easyMins:0,desc:"Week 2 — no easy run yet. Rest or gentle walk today. 🚶\nThis slot activates from Week 5."},
+    {day:"Friday",type:"strength",label:"Strength A",isTraining:true,hasTimer:false,desc:"Warm-up: Cat-cow 10 reps · Hip flexor stretch 30s each side\nRDL 3×10 · Dumbbell Row 3×12 · Goblet Squat 3×12\nOverhead Press 3×10 · Dead Bug 3×10 · Side Leg Lift 3×15\nPlank 3×30s"},
+    {day:"Saturday",type:"strength",label:"Strength B",isTraining:true,hasTimer:false,desc:"Warm-up: Cat-cow 10 reps · Hip flexor stretch 30s each side\nBird Dog 3×10 · Chest Press 3×12 · Glute Bridge 3×15\nLateral Raises 3×12 · Dead Hang 3×20s · Dead Bug 3×10\nPelvic Tilt 15 reps"},
+    {day:"Sunday",type:"run",label:"Run",isTraining:true,hasTimer:true,desc:"Run to pool or around park 🏊‍♀️\nSame as Tuesday. Swim after if you go to the pool.",workout:{name:"Week 2 — Sunday Run",run:90,walk:90,rounds:8,bpm:0}}
+  ]},
+  // WEEK 3
+  {label:"Week 3 — Getting Stronger",phase:"Phase 1 — Build the habit",days:[
+    {day:"Monday",type:"rest",label:"Rest Day",isTraining:false,hasTimer:false,desc:"Recovery is training. Rest, stretch, hydrate. 💧"},
+    {day:"Tuesday",type:"run",label:"Run / Walk",isTraining:true,hasTimer:true,desc:"Warm-up: Hip flexor stretch 30s each side · Cat-cow 10 reps\nRun 2 min · Walk 2 min · 7 rounds · ~28 min\nLonger run intervals — trust your legs.",workout:{name:"Week 3 — Run",run:120,walk:120,rounds:7,bpm:0}},
+    {day:"Wednesday",type:"bike",label:"Bike · iFit",isTraining:true,hasTimer:false,desc:"Active recovery after Tuesday run 🚴\nNordicTrack · 35-40 min · moderate effort"},
+    {day:"Thursday",type:"run",label:"Easy Run",isTraining:true,hasTimer:'easy',easyMins:0,desc:"Week 3 — no easy run yet. Rest or gentle walk today. 🚶\nThis slot activates from Week 5."},
+    {day:"Friday",type:"strength",label:"Strength A",isTraining:true,hasTimer:false,desc:"Warm-up: Cat-cow 10 reps · Hip flexor stretch 30s each side\nRDL 3×12 · Dumbbell Row 3×12 · Goblet Squat 3×12\nOverhead Press 3×10 · Dead Bug 3×12 · Side Leg Lift 3×15\nPlank 3×40s"},
+    {day:"Saturday",type:"strength",label:"Strength B",isTraining:true,hasTimer:false,desc:"Warm-up: Cat-cow 10 reps · Hip flexor stretch 30s each side\nBird Dog 3×12 · Chest Press 3×12 · Glute Bridge 3×15\nLateral Raises 3×12 · Dead Hang 3×25s · Dead Bug 3×12\nPelvic Tilt 15 reps"},
+    {day:"Sunday",type:"run",label:"Run",isTraining:true,hasTimer:true,desc:"Run to pool or around park 🏊‍♀️\nSame as Tuesday. Swim after if you go.",workout:{name:"Week 3 — Sunday Run",run:120,walk:120,rounds:7,bpm:0}}
+  ]},
+  // WEEK 4
+  {label:"Week 4 — First Milestone",phase:"Phase 1 — Build the habit",days:[
+    {day:"Monday",type:"rest",label:"Rest Day",isTraining:false,hasTimer:false,desc:"Recovery is training. Rest, stretch, hydrate. 💧"},
+    {day:"Tuesday",type:"run",label:"Run / Walk",isTraining:true,hasTimer:true,desc:"Warm-up: Hip flexor stretch 30s each side · Cat-cow 10 reps\nRun 3 min · Walk 2 min · 6 rounds · ~30 min\nFirst time running 3 continuous minutes! Start slow in round 1.",workout:{name:"Week 4 — Run",run:180,walk:120,rounds:6,bpm:0}},
+    {day:"Wednesday",type:"bike",label:"Bike · iFit",isTraining:true,hasTimer:false,desc:"Active recovery after Tuesday run 🚴\nNordicTrack · 40 min · try 80 RPM to feel the 160 BPM running rhythm"},
+    {day:"Thursday",type:"run",label:"Easy Run",isTraining:true,hasTimer:'easy',easyMins:0,desc:"Week 4 — no easy run yet. Rest or gentle walk today. 🚶\nThis slot activates from Week 5."},
+    {day:"Friday",type:"strength",label:"Strength A",isTraining:true,hasTimer:false,desc:"Warm-up: Cat-cow 10 reps · Hip flexor stretch 30s each side\nRDL 3×12 · Dumbbell Row 3×12 · Goblet Squat 3×15\nOverhead Press 3×12 · Dead Bug 3×12 · Side Leg Lift 3×15\nPlank 3×45s"},
+    {day:"Saturday",type:"strength",label:"Strength B",isTraining:true,hasTimer:false,desc:"Warm-up: Cat-cow 10 reps · Hip flexor stretch 30s each side\nBird Dog 3×12 · Chest Press 3×12 · Glute Bridge 3×20\nLateral Raises 3×12 · Dead Hang 3×30s · Dead Bug 3×12\nPelvic Tilt 15 reps"},
+    {day:"Sunday",type:"run",label:"Run",isTraining:true,hasTimer:true,desc:"Run to pool or around park 🏊‍♀️\nSame as Tuesday. You know you can do this.",workout:{name:"Week 4 — Sunday Run",run:180,walk:120,rounds:6,bpm:0}}
+  ]},
+  // WEEK 5
+  {label:"Week 5 — Easy Run Begins",phase:"Phase 1 — Build the habit",days:[
+    {day:"Monday",type:"rest",label:"Rest Day",isTraining:false,hasTimer:false,desc:"Recovery is training. Rest, stretch, hydrate. 💧"},
+    {day:"Tuesday",type:"run",label:"Run / Walk",isTraining:true,hasTimer:true,desc:"Warm-up: Hip flexor stretch 30s each side · Cat-cow 10 reps\nRun 3 min · Walk 2 min · 6 rounds · ~30 min\nMetronome at 175 BPM — let it guide your steps.",workout:{name:"Week 5 — Run",run:180,walk:120,rounds:6,bpm:175}},
+    {day:"Wednesday",type:"bike",label:"Bike · iFit",isTraining:true,hasTimer:false,desc:"Active recovery after Tuesday run 🚴\nNordicTrack · 40 min · moderate effort"},
+    {day:"Thursday",type:"run",label:"Easy Run 🆕",isTraining:true,hasTimer:'easy',easyMins:15,desc:"NEW — your first easy continuous run! 🎉\n15 minutes · no walk breaks · embarrassingly slow pace\nPick landmarks not the clock. Feel your abs engage.\nNo metronome — just you and Versailles."},
+    {day:"Friday",type:"strength",label:"Strength A",isTraining:true,hasTimer:false,desc:"Warm-up: Cat-cow 10 reps · Hip flexor stretch 30s each side\nRDL 3×12 · Dumbbell Row 3×15 · Goblet Squat 3×15\nOverhead Press 3×12 · Dead Bug 3×12 · Side Leg Lift 3×15\nPlank 3×45s"},
+    {day:"Saturday",type:"strength",label:"Strength B",isTraining:true,hasTimer:false,desc:"Warm-up: Cat-cow 10 reps · Hip flexor stretch 30s each side\nBird Dog 3×12 · Chest Press 3×15 · Glute Bridge 3×20\nLateral Raises 3×15 · Dead Hang 3×30s · Dead Bug 3×12\nPelvic Tilt 15 reps"},
+    {day:"Sunday",type:"run",label:"Run",isTraining:true,hasTimer:true,desc:"Run to pool or around park 🏊‍♀️\nSame as Tuesday with metronome at 175 BPM.",workout:{name:"Week 5 — Sunday Run",run:180,walk:120,rounds:6,bpm:175}}
+  ]},
+  // WEEK 6
+  {label:"Week 6 — Building Endurance",phase:"Phase 1 — Build the habit",days:[
+    {day:"Monday",type:"rest",label:"Rest Day",isTraining:false,hasTimer:false,desc:"Recovery is training. Rest, stretch, hydrate. 💧"},
+    {day:"Tuesday",type:"run",label:"Run / Walk",isTraining:true,hasTimer:true,desc:"Warm-up: Hip flexor stretch 30s each side · Cat-cow 10 reps\nRun 3 min · Walk 2 min · 6 rounds\nMetronome 175 BPM — getting familiar now.",workout:{name:"Week 6 — Run",run:180,walk:120,rounds:6,bpm:175}},
+    {day:"Wednesday",type:"bike",label:"Bike · iFit",isTraining:true,hasTimer:false,desc:"Active recovery after Tuesday run 🚴\nNordicTrack · 40 min · moderate effort"},
+    {day:"Thursday",type:"run",label:"Easy Run",isTraining:true,hasTimer:'easy',easyMins:18,desc:"18 minutes continuous · slow and steady\nFocus: tall spine, lower abs engaged, landmarks not clock.\nYou should be able to speak a sentence while running."},
+    {day:"Friday",type:"strength",label:"Strength A",isTraining:true,hasTimer:false,desc:"Warm-up: Cat-cow 10 reps · Hip flexor stretch 30s each side\nRDL 3×12 · Dumbbell Row 3×15 · Goblet Squat 3×15\nOverhead Press 3×12 · Dead Bug 3×12 · Side Leg Lift 3×20\nPlank 3×50s"},
+    {day:"Saturday",type:"strength",label:"Strength B",isTraining:true,hasTimer:false,desc:"Warm-up: Cat-cow 10 reps · Hip flexor stretch 30s each side\nBird Dog 3×12 · Chest Press 3×15 · Glute Bridge 3×20\nLateral Raises 3×15 · Dead Hang 3×30s · Dead Bug 3×12\nPelvic Tilt 15 reps"},
+    {day:"Sunday",type:"run",label:"Run",isTraining:true,hasTimer:true,desc:"Run to pool or around park 🏊‍♀️\nMetronome 175 BPM.",workout:{name:"Week 6 — Sunday Run",run:180,walk:120,rounds:6,bpm:175}}
+  ]},
+  // WEEK 7
+  {label:"Week 7 — Longer Intervals",phase:"Phase 1 — Build the habit",days:[
+    {day:"Monday",type:"rest",label:"Rest Day",isTraining:false,hasTimer:false,desc:"Recovery is training. Rest, stretch, hydrate. 💧"},
+    {day:"Tuesday",type:"run",label:"Run / Walk",isTraining:true,hasTimer:true,desc:"Warm-up: Hip flexor stretch 30s each side · Cat-cow 10 reps\nRun 5 min · Walk 2 min · 5 rounds · ~35 min\nMetronome 178 BPM. Big jump — start round 1 slow!",workout:{name:"Week 7 — Run",run:300,walk:120,rounds:5,bpm:178}},
+    {day:"Wednesday",type:"bike",label:"Bike · iFit",isTraining:true,hasTimer:false,desc:"Active recovery after Tuesday run 🚴\nNordicTrack · 40 min · moderate effort"},
+    {day:"Thursday",type:"run",label:"Easy Run",isTraining:true,hasTimer:'easy',easyMins:20,desc:"20 minutes continuous · your landmark run\nThis is your aerobic base building session.\nSlow. Steady. Consistent."},
+    {day:"Friday",type:"strength",label:"Strength A",isTraining:true,hasTimer:false,desc:"Warm-up: Cat-cow 10 reps · Hip flexor stretch 30s each side\nRDL 3×15 · Dumbbell Row 3×15 · Goblet Squat 3×15\nOverhead Press 3×12 · Dead Bug 3×12 · Side Leg Lift 3×20\nPlank 3×50s"},
+    {day:"Saturday",type:"strength",label:"Strength B",isTraining:true,hasTimer:false,desc:"Warm-up: Cat-cow 10 reps · Hip flexor stretch 30s each side\nBird Dog 3×15 · Chest Press 3×15 · Glute Bridge 3×20\nLateral Raises 3×15 · Dead Hang 3×30s · Dead Bug 3×15\nPelvic Tilt 15 reps"},
+    {day:"Sunday",type:"run",label:"Run",isTraining:true,hasTimer:true,desc:"Run to pool or around park 🏊‍♀️\nMetronome 178 BPM.",workout:{name:"Week 7 — Sunday Run",run:300,walk:120,rounds:5,bpm:178}}
+  ]},
+  // WEEK 8
+  {label:"Week 8 — Consolidating",phase:"Phase 1 — Build the habit",days:[
+    {day:"Monday",type:"rest",label:"Rest Day",isTraining:false,hasTimer:false,desc:"Recovery is training. Rest, stretch, hydrate. 💧"},
+    {day:"Tuesday",type:"run",label:"Run / Walk",isTraining:true,hasTimer:true,desc:"Warm-up: Hip flexor stretch 30s each side · Cat-cow 10 reps\nRun 5 min · Walk 2 min · 5 rounds\nMetronome 178 BPM — Week 7 pace but smoother now.",workout:{name:"Week 8 — Run",run:300,walk:120,rounds:5,bpm:178}},
+    {day:"Wednesday",type:"bike",label:"Bike · iFit",isTraining:true,hasTimer:false,desc:"Active recovery after Tuesday run 🚴\nNordicTrack · 40 min · moderate effort"},
+    {day:"Thursday",type:"run",label:"Easy Run",isTraining:true,hasTimer:'easy',easyMins:22,desc:"22 minutes continuous\nBy now the first 10 minutes should feel easier.\nThat's the aerobic base establishing itself. 💪"},
+    {day:"Friday",type:"strength",label:"Strength A",isTraining:true,hasTimer:false,desc:"Warm-up: Cat-cow 10 reps · Hip flexor stretch 30s each side\nRDL 3×15 · Dumbbell Row 3×15 · Goblet Squat 3×15\nOverhead Press 3×15 · Dead Bug 3×15 · Side Leg Lift 3×20\nPlank 3×50s"},
+    {day:"Saturday",type:"strength",label:"Strength B",isTraining:true,hasTimer:false,desc:"Warm-up: Cat-cow 10 reps · Hip flexor stretch 30s each side\nBird Dog 3×15 · Chest Press 3×15 · Glute Bridge 3×20\nLateral Raises 3×15 · Dead Hang 3×30s · Dead Bug 3×15\nPelvic Tilt 15 reps"},
+    {day:"Sunday",type:"run",label:"Run",isTraining:true,hasTimer:true,desc:"Run to pool or around park 🏊‍♀️\nMetronome 178 BPM — consolidating your rhythm.",workout:{name:"Week 8 — Sunday Run",run:300,walk:120,rounds:5,bpm:178}}
+  ]}
+];
 
-// ═══════════════════════════════════════════
-// AUDIO
-// ═══════════════════════════════════════════
+// ═══ STATE ═══
+let workoutLog=JSON.parse(localStorage.getItem('tatiana_log')||'[]');
+let currentWeek=parseInt(localStorage.getItem('tatiana_week')||'0');
+let viewingWeek=currentWeek;
+let currentDayIdx=-1;
+let activeWorkout=null;
+let timer=null,isRunning=false,currentInterval='run',currentRound=0,timeLeft=0,totalElapsed=0;
+let easyTimer=null,easyRunning=false,easyTimeLeft=0,easyTotalSecs=0,easyDayIdx=-1;
+let metronomeInterval=null;
+let wakeLock=null;
+
+// ═══ WAKE LOCK ═══
+async function requestWakeLock(){
+  try{if('wakeLock' in navigator){wakeLock=await navigator.wakeLock.request('screen');}}catch(e){}
+}
+function releaseWakeLock(){try{if(wakeLock){wakeLock.release();wakeLock=null;}}catch(e){}}
+
+// ═══ AUDIO ═══
 const AudioCtx=window.AudioContext||window.webkitAudioContext;
 let audioCtx;
 function getCtx(){if(!audioCtx)audioCtx=new AudioCtx();if(audioCtx.state==='suspended')audioCtx.resume();return audioCtx;}
@@ -456,15 +510,23 @@ function tone(freq,dur,vol=0.5,type='square',delay=0){
   try{const ctx=getCtx(),o=ctx.createOscillator(),g=ctx.createGain();
   o.connect(g);g.connect(ctx.destination);o.frequency.value=freq;o.type=type;
   const t=ctx.currentTime+delay;g.gain.setValueAtTime(0,t);g.gain.linearRampToValueAtTime(vol,t+0.01);
-  g.gain.exponentialRampToValueAtTime(0.001,t+dur);o.start(t);o.stop(t+dur+0.05);}catch(e){}}
+  g.gain.exponentialRampToValueAtTime(0.001,t+dur);o.start(t);o.stop(t+dur+0.05);}catch(e){}
+}
 function beepRun(){tone(523,.12,.7,'square',0);tone(659,.12,.7,'square',.14);tone(880,.35,.9,'square',.28);}
 function beepWalk(){tone(659,.12,.6,'square',0);tone(440,.35,.8,'square',.14);}
 function beepDone(){tone(523,.1,.6,'square',0);tone(659,.1,.6,'square',.12);tone(784,.1,.6,'square',.24);tone(1047,.5,.8,'square',.36);}
 function beepTick(){tone(880,.07,.5,'square');}
+function beepMetronome(){tone(1200,.04,.2,'sine');}
 
-// ═══════════════════════════════════════════
-// VOICE
-// ═══════════════════════════════════════════
+function startMetronome(bpm){
+  stopMetronome();
+  if(!bpm||bpm===0)return;
+  const interval=60000/bpm;
+  metronomeInterval=setInterval(()=>{if(currentInterval==='run')beepMetronome();},interval);
+}
+function stopMetronome(){if(metronomeInterval){clearInterval(metronomeInterval);metronomeInterval=null;}}
+
+// ═══ VOICE ═══
 let selectedVoice=null,speechUnlocked=false;
 function loadVoices(){const v=window.speechSynthesis?speechSynthesis.getVoices():[];if(!v.length)return false;
   selectedVoice=v.find(x=>x.lang==='en-GB')||v.find(x=>x.lang==='en-US')||v.find(x=>x.lang.startsWith('en'))||v[0]||null;return true;}
@@ -477,76 +539,7 @@ function speak(text,delay=0){
     if(selectedVoice){u.voice=selectedVoice;u.lang=selectedVoice.lang;}else u.lang='en-US';
     u.rate=0.88;u.pitch=1.0;u.volume=1.0;speechSynthesis.speak(u);}catch(e){}},delay);}
 
-// ═══════════════════════════════════════════
-// WEEK SELECTOR
-// ═══════════════════════════════════════════
-function buildWeekSelect(){
-  const sel=document.getElementById('weekSelect');
-  sel.innerHTML='';
-  WEEKS.forEach((w,i)=>{
-    const opt=document.createElement('option');
-    opt.value=i;
-    opt.textContent=w.label;
-    if(i===viewingWeek)opt.selected=true;
-    sel.appendChild(opt);
-  });
-}
-
-function onWeekChange(){
-  viewingWeek=parseInt(document.getElementById('weekSelect').value);
-  renderPlan();
-}
-
-function advanceWeek(){
-  if(currentWeek<WEEKS.length-1){
-    currentWeek++;
-    viewingWeek=currentWeek;
-    localStorage.setItem('tatiana_week',currentWeek);
-    // Clear done days for new week (they're per-week already)
-    buildWeekSelect();
-    renderPlan();
-  }
-}
-
-// ═══════════════════════════════════════════
-// DONE DAYS — keyed by week index
-// ═══════════════════════════════════════════
-function getDoneKey(weekIdx){return `tatiana_done_w${weekIdx}`;}
-function getDoneDays(weekIdx){return JSON.parse(localStorage.getItem(getDoneKey(weekIdx))||'[]');}
-function saveDoneDay(weekIdx,dayIdx){
-  const d=getDoneDays(weekIdx);
-  if(!d.includes(dayIdx)){d.push(dayIdx);localStorage.setItem(getDoneKey(weekIdx),JSON.stringify(d));}
-}
-
-function getTrainingDays(weekIdx){
-  return WEEKS[weekIdx].days.map((d,i)=>d.isTraining?i:-1).filter(i=>i>=0);
-}
-
-function isWeekComplete(weekIdx){
-  const trainingDays=getTrainingDays(weekIdx);
-  const done=getDoneDays(weekIdx);
-  return trainingDays.every(i=>done.includes(i));
-}
-
-function updateWeekProgress(weekIdx){
-  const trainingDays=getTrainingDays(weekIdx);
-  const done=getDoneDays(weekIdx).filter(i=>trainingDays.includes(i));
-  const pct=trainingDays.length?Math.round(done.length/trainingDays.length*100):0;
-  document.getElementById('progressFill').style.width=pct+'%';
-  document.getElementById('progressText').textContent=`${done.length}/${trainingDays.length} sessions`;
-
-  // Show advance banner only if viewing current week and it's complete and not the last week
-  const banner=document.getElementById('advanceBanner');
-  if(weekIdx===currentWeek && isWeekComplete(weekIdx) && currentWeek<WEEKS.length-1){
-    banner.classList.add('show');
-  } else {
-    banner.classList.remove('show');
-  }
-}
-
-// ═══════════════════════════════════════════
-// TABS
-// ═══════════════════════════════════════════
+// ═══ TABS ═══
 function showTab(name){
   document.getElementById('planTab').style.display=name==='plan'?'block':'none';
   document.getElementById('exercisesTab').style.display=name==='exercises'?'block':'none';
@@ -557,48 +550,89 @@ function showTab(name){
   if(name==='exercises')renderExercises();
 }
 
-// ═══════════════════════════════════════════
-// PLAN RENDER
-// ═══════════════════════════════════════════
+// ═══ WEEK MANAGEMENT ═══
+function buildWeekSelect(){
+  const sel=document.getElementById('weekSelect');sel.innerHTML='';
+  WEEKS.forEach((w,i)=>{const o=document.createElement('option');o.value=i;o.textContent=w.label;if(i===viewingWeek)o.selected=true;sel.appendChild(o);});
+}
+function onWeekChange(){viewingWeek=parseInt(document.getElementById('weekSelect').value);renderPlan();}
+function advanceWeek(){
+  if(currentWeek<WEEKS.length-1){currentWeek++;viewingWeek=currentWeek;localStorage.setItem('tatiana_week',currentWeek);buildWeekSelect();renderPlan();}
+}
+function confirmResetWeek(){
+  if(confirm(`Reset Week ${viewingWeek+1}? Your workout history will be kept — only this week's progress will be cleared.`)){
+    localStorage.removeItem(getDoneKey(viewingWeek));renderPlan();
+  }
+}
+function getDoneKey(w){return `tatiana_done_w${w}`;}
+function getDoneDays(w){return JSON.parse(localStorage.getItem(getDoneKey(w))||'[]');}
+function saveDoneDay(w,d){const days=getDoneDays(w);if(!days.includes(d)){days.push(d);localStorage.setItem(getDoneKey(w),JSON.stringify(days));}}
+function getTrainingDays(w){return WEEKS[w].days.map((d,i)=>d.isTraining&&d.hasTimer!=='easy'?i:-1).filter(i=>i>=0);}
+
+// Thursday easy run counts if it has a real duration
+function getAllTrainingDays(w){return WEEKS[w].days.map((d,i)=>d.isTraining?i:-1).filter(i=>i>=0);}
+
+function isWeekComplete(w){
+  const td=getAllTrainingDays(w).filter(i=>{
+    const d=WEEKS[w].days[i];
+    if(d.hasTimer==='easy'&&(!d.easyMins||d.easyMins===0))return false;
+    return true;
+  });
+  const done=getDoneDays(w);
+  return td.every(i=>done.includes(i));
+}
+
+function updateWeekProgress(w){
+  const td=getAllTrainingDays(w).filter(i=>{const d=WEEKS[w].days[i];if(d.hasTimer==='easy'&&(!d.easyMins||d.easyMins===0))return false;return true;});
+  const done=getDoneDays(w).filter(i=>td.includes(i));
+  const pct=td.length?Math.round(done.length/td.length*100):0;
+  document.getElementById('progressFill').style.width=pct+'%';
+  document.getElementById('progressText').textContent=`${done.length}/${td.length} sessions`;
+  const banner=document.getElementById('advanceBanner');
+  if(w===currentWeek&&isWeekComplete(w)&&currentWeek<WEEKS.length-1)banner.classList.add('show');
+  else banner.classList.remove('show');
+}
+
+// ═══ PLAN RENDER ═══
 function getTodayIdx(){const js=new Date().getDay();return js===0?6:js-1;}
 
 function renderPlan(){
-  const todayIdx=getTodayIdx();
-  const doneDays=getDoneDays(viewingWeek);
-  const weekData=WEEKS[viewingWeek];
+  const todayIdx=getTodayIdx(),doneDays=getDoneDays(viewingWeek),weekData=WEEKS[viewingWeek];
   document.getElementById('phaseLabel').textContent=weekData.phase;
   updateWeekProgress(viewingWeek);
-
-  const container=document.getElementById('weekPlan');
-  container.innerHTML='';
-
+  const container=document.getElementById('weekPlan');container.innerHTML='';
   weekData.days.forEach((session,idx)=>{
-    const isToday=idx===todayIdx;
-    const isDone=doneDays.includes(idx);
+    const isToday=idx===todayIdx,isDone=doneDays.includes(idx);
     const card=document.createElement('div');
     card.className=`day-card${isToday?' today':''}${isDone?' done':''}`;
     card.id=`day-${idx}`;
-
-    const rightEl=isDone?'<span style="font-size:18px;">✅</span>':isToday?'<span class="today-pill">TODAY</span>':'';
-
+    const badge=isDone?'<span style="font-size:18px;">✅</span>':isToday?'<span class="today-pill">TODAY</span>':'';
     let actions='';
-    if(session.isTraining){
-      if(session.hasTimer){
-        actions=`<button class="btn-start" onclick="startRunSession(${idx})">▶ START RUN</button>
-          <button class="btn-done-day${isDone?' done-state':''}" onclick="quickDone(${idx},event)">${isDone?'✅ Done':'✓ Done'}</button>`;
+    if(!session.isTraining){
+      actions=`<div style="font-size:12px;color:var(--muted);padding:4px 0;">Rest day — no logging needed 😌</div>`;
+    } else if(session.hasTimer===true){
+      const isDoneState=isDone?' done-state':'';
+      actions=`<button class="btn-start" onclick="startRunSession(${idx})">▶ START RUN</button>
+        <button class="btn-done-day${isDoneState}" onclick="quickDone(${idx},event)">${isDone?'✅ Done':'✓ Done'}</button>`;
+    } else if(session.hasTimer==='easy'){
+      if(!session.easyMins||session.easyMins===0){
+        actions=`<div style="font-size:12px;color:var(--muted);padding:4px 0;">Gentle walk or rest — activates Week 5 🚶</div>`;
       } else {
-        actions=`<button class="btn-done-full${isDone?' done-state':''}" onclick="quickDone(${idx},event)">${isDone?'✅ Done':'✓ Mark as done'}</button>`;
+        const isDoneState=isDone?' done-state':'';
+        actions=`<button class="btn-start-timer" onclick="startEasyRun(${idx},${session.easyMins})">▶ START ${session.easyMins} MIN RUN</button>
+          <button class="btn-done-day${isDoneState}" onclick="quickDone(${idx},event)">${isDone?'✅ Done':'✓ Done'}</button>`;
       }
     } else {
-      actions=`<div style="font-size:12px;color:var(--muted);padding:4px 0;">Rest day — no logging needed 😌</div>`;
+      const isDoneState=isDone?' done-state':'';
+      actions=`<button class="btn-done-full${isDoneState}" onclick="quickDone(${idx},event)">${isDone?'✅ Done':'✓ Mark as done'}</button>
+        <button class="btn-repeat" onclick="logExtra(${idx},event)">+ Log extra session</button>`;
     }
-
     card.innerHTML=`
       <div class="day-header" onclick="toggleDay(${idx})">
         <div class="day-left">
           <span class="day-name">${session.day}</span>
           <span class="type-badge badge-${session.type}">${session.label}</span>
-        </div>${rightEl}
+        </div>${badge}
       </div>
       <div class="day-body">
         <div class="day-desc">${session.desc.replace(/\n/g,'<br>')}</div>
@@ -608,37 +642,93 @@ function renderPlan(){
   });
 }
 
-function toggleDay(idx){
-  const card=document.getElementById(`day-${idx}`);
-  if(idx===getTodayIdx())return;
-  card.classList.toggle('expanded');
-}
+function toggleDay(idx){const card=document.getElementById(`day-${idx}`);if(idx===getTodayIdx())return;card.classList.toggle('expanded');}
 
 function quickDone(idx,e){
   if(e)e.stopPropagation();
   if(getDoneDays(viewingWeek).includes(idx))return;
   saveDoneDay(viewingWeek,idx);
-  const session=WEEKS[viewingWeek].days[idx];
-  const entry={workout:session.label,duration:'—',date:new Date().toLocaleDateString('en-GB',{weekday:'short',day:'numeric',month:'short'}),ts:Date.now()};
-  addToLog(entry);
-  syncToSheet({date:entry.date,workout:entry.workout,duration:'—',notes:`Week ${viewingWeek+1} · marked done`});
+  const s=WEEKS[viewingWeek].days[idx];
+  const entry={workout:s.label,duration:'—',date:new Date().toLocaleDateString('en-GB',{weekday:'short',day:'numeric',month:'short'}),ts:Date.now()};
+  addToLog(entry);syncToSheet({date:entry.date,workout:entry.workout,duration:'—',notes:`Week ${viewingWeek+1}`});
   renderPlan();
 }
 
-// ═══════════════════════════════════════════
-// TIMER
-// ═══════════════════════════════════════════
+function logExtra(idx,e){
+  if(e)e.stopPropagation();
+  const s=WEEKS[viewingWeek].days[idx];
+  const entry={workout:s.label+' (extra)',duration:'—',date:new Date().toLocaleDateString('en-GB',{weekday:'short',day:'numeric',month:'short'}),ts:Date.now()};
+  addToLog(entry);syncToSheet({date:entry.date,workout:entry.workout,duration:'—',notes:`Week ${viewingWeek+1} · extra session`});
+  renderLog();
+  const btn=document.querySelector(`#day-${idx} .btn-repeat`);
+  if(btn){btn.textContent='✅ Logged!';btn.style.color='var(--green)';btn.style.borderColor='var(--green)';setTimeout(()=>{btn.textContent='+ Log extra session';btn.style.color='';btn.style.borderColor='';},2000);}
+}
+
+// ═══ EASY RUN TIMER ═══
+function startEasyRun(idx,mins){
+  easyDayIdx=idx;easyTotalSecs=mins*60;easyTimeLeft=easyTotalSecs;easyRunning=false;
+  document.getElementById('easyTimeDisplay').textContent=fmtT(easyTimeLeft);
+  document.getElementById('easyProgressFill').style.width='100%';
+  document.getElementById('easyMainBtn').textContent='▶';
+  document.getElementById('easyTimerScreen').classList.add('show');
+  requestWakeLock();
+}
+
+function toggleEasyTimer(){
+  getCtx();unlockSpeech();
+  if(!easyRunning){
+    easyRunning=true;
+    document.getElementById('easyMainBtn').textContent='⏸';
+    speak("Easy run starting. Slow and steady.",300);
+    easyTimer=setInterval(()=>{
+      easyTimeLeft--;
+      document.getElementById('easyTimeDisplay').textContent=fmtT(easyTimeLeft);
+      document.getElementById('easyProgressFill').style.width=(easyTimeLeft/easyTotalSecs*100)+'%';
+      if(easyTimeLeft===60)speak("One minute remaining.",200);
+      if(easyTimeLeft===0){completeEasyRun();}
+    },1000);
+  } else {
+    easyRunning=false;clearInterval(easyTimer);
+    document.getElementById('easyMainBtn').textContent='▶';
+    speak("Paused.",100);
+  }
+}
+
+function resetEasyTimer(){
+  clearInterval(easyTimer);easyRunning=false;easyTimeLeft=easyTotalSecs;
+  document.getElementById('easyTimeDisplay').textContent=fmtT(easyTimeLeft);
+  document.getElementById('easyProgressFill').style.width='100%';
+  document.getElementById('easyMainBtn').textContent='▶';
+}
+
+function completeEasyRun(){
+  clearInterval(easyTimer);easyRunning=false;
+  beepDone();speak('Easy run complete! Well done Tatiana!',500);
+  releaseWakeLock();
+  if(easyDayIdx>=0)saveDoneDay(viewingWeek,easyDayIdx);
+  const entry={workout:'Easy Run',duration:fmtT(easyTotalSecs),date:new Date().toLocaleDateString('en-GB',{weekday:'short',day:'numeric',month:'short'}),ts:Date.now()};
+  addToLog(entry);syncToSheet({date:entry.date,workout:entry.workout,duration:entry.duration,notes:`Week ${viewingWeek+1} · easy run`});
+  setTimeout(()=>{closeEasyTimer();renderPlan();},2000);
+}
+
+function closeEasyTimer(){
+  clearInterval(easyTimer);easyRunning=false;
+  document.getElementById('easyTimerScreen').classList.remove('show');
+  releaseWakeLock();
+}
+
+// ═══ INTERVAL TIMER ═══
 function startRunSession(idx){
-  currentDayIdx=idx;
-  activeWorkout=WEEKS[viewingWeek].days[idx].workout;
+  currentDayIdx=idx;activeWorkout=WEEKS[viewingWeek].days[idx].workout;
   document.getElementById('planScreen').style.display='none';
   document.getElementById('timerScreen').style.display='block';
   document.getElementById('timerTitle').textContent=activeWorkout.name.toUpperCase();
-  resetTimerState();buildDots();
+  resetTimerState();buildDots();requestWakeLock();
 }
 
 function backToPlan(){
   if(isRunning){clearInterval(timer);isRunning=false;}
+  stopMetronome();releaseWakeLock();
   document.getElementById('timerScreen').style.display='none';
   document.getElementById('planScreen').style.display='block';
   document.body.className='idle';
@@ -648,24 +738,27 @@ function backToPlanFromComplete(){
   document.getElementById('completeScreen').classList.remove('show');
   document.getElementById('timerScreen').style.display='none';
   document.getElementById('planScreen').style.display='block';
-  document.body.className='idle';
-  renderPlan();
+  document.body.className='idle';releaseWakeLock();renderPlan();
 }
 
 function resetTimerState(){
-  clearInterval(timer);isRunning=false;currentInterval='run';currentRound=0;timeLeft=0;totalElapsed=0;
-  document.getElementById('mainBtn').textContent='▶';
-  document.getElementById('tPhase').textContent='READY';
-  document.getElementById('tTime').textContent='00';
-  document.getElementById('tLbl').textContent='ready';
-  document.getElementById('tRound').textContent='0';
-  document.getElementById('tTotal').textContent='00:00';
-  document.getElementById('tLeft').textContent='—';
-  document.getElementById('tProg').style.strokeDashoffset='0';
-  document.getElementById('nextPreview').textContent='Press play to start';
-  document.body.className='idle';
+  clearInterval(timer);isRunning=false;stopMetronome();currentInterval='run';currentRound=0;timeLeft=0;totalElapsed=0;
+  document.getElementById('mainBtn').textContent='▶';document.getElementById('tPhase').textContent='READY';
+  document.getElementById('tTime').textContent='00';document.getElementById('tLbl').textContent='ready';
+  document.getElementById('tRound').textContent='0';document.getElementById('tTotal').textContent='00:00';
+  document.getElementById('tLeft').textContent='—';document.getElementById('tProg').style.strokeDashoffset='0';
+  document.getElementById('nextPreview').textContent='Press play to start';document.body.className='idle';
 }
 function resetTimer(){resetTimerState();buildDots();}
+
+function pauseForPhoto(){
+  if(!isRunning)return;
+  isRunning=false;clearInterval(timer);stopMetronome();
+  window.speechSynthesis&&speechSynthesis.cancel();
+  document.getElementById('mainBtn').textContent='▶';
+  document.getElementById('tPhase').textContent='📸 PAUSED';
+  speak('Paused for photo. Tap play to resume.',100);
+}
 
 function buildDots(){
   const dots=document.getElementById('lapDots');dots.innerHTML='';
@@ -719,14 +812,21 @@ function tick(){
 }
 
 function nextInterval(){
-  if(currentInterval==='run'){currentInterval='walk';timeLeft=activeWorkout.walk;beepWalk();speak('Walk now!',300);}
-  else{currentRound++;if(currentRound>=activeWorkout.rounds){completeWorkout();return;}
-    currentInterval='run';timeLeft=activeWorkout.run;beepRun();speak(`Round ${currentRound+1}. Start running!`,350);}
+  if(currentInterval==='run'){
+    currentInterval='walk';timeLeft=activeWorkout.walk;
+    stopMetronome();beepWalk();speak('Walk now!',300);
+  } else {
+    currentRound++;
+    if(currentRound>=activeWorkout.rounds){completeWorkout();return;}
+    currentInterval='run';timeLeft=activeWorkout.run;
+    beepRun();speak(`Round ${currentRound+1}. Start running!`,350);
+    startMetronome(activeWorkout.bpm);
+  }
   updateUI();
 }
 
 function completeWorkout(){
-  clearInterval(timer);isRunning=false;
+  clearInterval(timer);isRunning=false;stopMetronome();releaseWakeLock();
   beepDone();speak('Workout complete! Well done Tatiana!',600);
   document.body.className='idle';
   const btn=document.getElementById('doneFinalBtn');
@@ -739,11 +839,17 @@ function toggleTimer(){
   if(!isRunning){
     getCtx();unlockSpeech();isRunning=true;
     document.getElementById('mainBtn').textContent='⏸';
-    if(timeLeft===0){currentInterval='run';timeLeft=activeWorkout.run;currentRound=0;totalElapsed=0;beepRun();speak("Ready? Let's go! Start running!",500);}
-    else speak('Resuming. '+(currentInterval==='run'?'Keep running!':'Keep walking!'),300);
+    if(timeLeft===0){
+      currentInterval='run';timeLeft=activeWorkout.run;currentRound=0;totalElapsed=0;
+      beepRun();speak("Ready? Let's go! Start running!",500);
+      startMetronome(activeWorkout.bpm);
+    } else {
+      speak('Resuming. '+(currentInterval==='run'?'Keep running!':'Keep walking!'),300);
+      if(currentInterval==='run')startMetronome(activeWorkout.bpm);
+    }
     timer=setInterval(tick,1000);updateUI();
   } else {
-    isRunning=false;clearInterval(timer);
+    isRunning=false;clearInterval(timer);stopMetronome();
     window.speechSynthesis&&speechSynthesis.cancel();
     document.getElementById('mainBtn').textContent='▶';
     document.getElementById('tPhase').textContent='PAUSED';
@@ -751,11 +857,9 @@ function toggleTimer(){
   }
 }
 
-function skipInterval(){if(!isRunning)return;clearInterval(timer);nextInterval();if(isRunning)timer=setInterval(tick,1000);}
+function skipInterval(){if(!isRunning)return;clearInterval(timer);stopMetronome();nextInterval();if(isRunning)timer=setInterval(tick,1000);}
 
-// ═══════════════════════════════════════════
-// LOG & SYNC
-// ═══════════════════════════════════════════
+// ═══ LOG & SYNC ═══
 function logAndSync(){
   const btn=document.getElementById('doneFinalBtn');
   if(btn.dataset.logged==='1'){speak('Already logged!');return;}
@@ -765,17 +869,17 @@ function logAndSync(){
   addToLog(entry);
   btn.textContent='⏳ SYNCING...';btn.className='btn-done-final syncing';btn.dataset.logged='1';
   speak('Workout logged! Great job Tatiana!',200);
-  syncToSheet({date:entry.date,workout:entry.workout,duration:entry.duration,notes:`Week ${viewingWeek+1} · run timer`})
+  syncToSheet({date:entry.date,workout:entry.workout,duration:entry.duration,notes:`Week ${viewingWeek+1}`})
     .then(()=>{btn.textContent='✅ SYNCED TO DRIVE!';btn.className='btn-done-final synced';})
     .catch(()=>{btn.textContent='✅ LOGGED (offline)';btn.className='btn-done-final synced';});
 }
 
-function addToLog(entry){workoutLog.unshift(entry);localStorage.setItem('tatiana_log',JSON.stringify(workoutLog));}
+function addToLog(e){workoutLog.unshift(e);localStorage.setItem('tatiana_log',JSON.stringify(workoutLog));}
 function syncToSheet(data){return fetch(SHEET_URL,{method:'POST',mode:'no-cors',headers:{'Content-Type':'application/json'},body:JSON.stringify(data)});}
 
 function renderLog(){
   const list=document.getElementById('logList'),streak=document.getElementById('logStreak'),btn=document.getElementById('exportBtn');
-  if(workoutLog.length===0){list.innerHTML='<div class="log-empty">No workouts logged yet.</div>';streak.innerHTML='';if(btn)btn.style.display='none';return;}
+  if(!workoutLog.length){list.innerHTML='<div class="log-empty">No workouts logged yet.</div>';streak.innerHTML='';if(btn)btn.style.display='none';return;}
   streak.innerHTML=`<strong>${workoutLog.length}</strong> workout${workoutLog.length>1?'s':''} completed 🔥`;
   if(btn)btn.style.display='block';
   list.innerHTML=workoutLog.slice(0,15).map(e=>`
@@ -794,21 +898,26 @@ function exportCSV(){
   a.href=url;a.download='tatiana_workout_log.csv';a.click();URL.revokeObjectURL(url);
 }
 
-// ═══════════════════════════════════════════
-// EXERCISE LIBRARY
-// ═══════════════════════════════════════════
+// ═══ EXERCISE LIBRARY ═══
 function renderExercises(){
   const tab=document.getElementById('exercisesTab');
   const warmup=EXERCISES.filter(e=>e.category==='warmup');
   const posture=EXERCISES.filter(e=>e.category==='posture');
-  const strength=EXERCISES.filter(e=>e.category==='strength');
-  tab.innerHTML=exSection('🔥 Warm-up — before every session',warmup)+exSection('🧘 Posture Fix',posture)+exSection('💪 Strength & Core',strength);
+  const strengthA=EXERCISES.filter(e=>e.id==='rdl'||e.id==='row'||e.id==='goblet'||e.id==='overhead-press'||e.id==='side-leg'||e.id==='plank');
+  const strengthB=EXERCISES.filter(e=>e.id==='bird-dog'||e.id==='chest-press'||e.id==='lateral-raise'||e.id==='dead-hang'||e.id==='glute-bridge');
+  const both=EXERCISES.filter(e=>e.id==='dead-bug');
+  tab.innerHTML=
+    exSection('🔥 Warm-up — before every session',warmup)+
+    exSection('🧘 Posture Fix',posture)+
+    exSection('💪 Strength A — Friday',strengthA)+
+    exSection('💪 Strength B — Saturday',strengthB)+
+    exSection('💪 Both Sessions',both);
 }
 
 function exSection(title,list){
   return `<div class="ex-section"><div class="ex-section-title">${title}</div>${list.map(ex=>`
     <div class="ex-card" onclick="openExercise('${ex.id}')">
-      <div class="ex-icon">${ex.icon}</div>
+      <div class="ex-icon">${ex.icon||'💪'}</div>
       <div class="ex-info">
         <div class="ex-name">${ex.name}</div>
         <div class="ex-meta">${ex.meta}</div>
@@ -843,9 +952,7 @@ function openExercise(id){
 
 function closeExercise(){document.getElementById('exOverlay').classList.remove('show');}
 
-// ═══════════════════════════════════════════
-// INIT
-// ═══════════════════════════════════════════
+// ═══ INIT ═══
 buildWeekSelect();
 renderPlan();
 </script>
