@@ -403,46 +403,6 @@ const EXERCISES=[
 
 // ═══ WEEK PLANS ═══
 const WEEKS=[
-  // WEEK 1
-  {label:"Week 1 — Starting Out",phase:"Phase 1 — Build the habit",easyRunDuration:0,days:[
-    {day:"Monday",type:"rest",label:"Rest Day",isTraining:false,hasTimer:false,desc:"Recovery is training. Rest, stretch, hydrate. 💧"},
-    {day:"Tuesday",type:"run",label:"Run / Walk",isTraining:true,hasTimer:true,desc:"Warm-up: Hip flexor stretch 30s each side · Cat-cow 10 reps\nRun 1 min · Walk 2 min · 8 rounds · ~30 min\nNo pace pressure. Just get out there.",workout:{name:"Week 1 — Run",run:60,walk:120,rounds:8,bpm:0}},
-    {day:"Wednesday",type:"bike",label:"Bike · iFit",isTraining:true,hasTimer:false,desc:"Active recovery after Tuesday run 🚴\nNordicTrack · 35 min · moderate effort\n5 min warm-up · 25 min steady · 5 min cool-down"},
-    {day:"Thursday",type:"run",label:"Easy Run",isTraining:true,hasTimer:'easy',easyMins:0,desc:"Week 1 — no easy run yet. Rest or gentle walk today. 🚶\nThis slot activates from Week 5."},
-    {day:"Friday",type:"strength",label:"Strength A",isTraining:true,hasTimer:false,desc:"Warm-up: Cat-cow 10 reps · Hip flexor stretch 30s each side\nRDL 3×10 · Dumbbell Row 3×12 · Goblet Squat 3×12\nOverhead Press 3×10 · Dead Bug 3×10 · Side Leg Lift 3×15\nPlank 3×30s"},
-    {day:"Saturday",type:"strength",label:"Strength B",isTraining:true,hasTimer:false,desc:"Warm-up: Cat-cow 10 reps · Hip flexor stretch 30s each side\nBird Dog 3×10 · Chest Press 3×12 · Glute Bridge 3×15\nLateral Raises 3×12 · Dead Hang 3×20s · Dead Bug 3×10\nPelvic Tilt 15 reps"},
-    {day:"Sunday",type:"run",label:"Run",isTraining:true,hasTimer:true,desc:"Run to the pool or around the park 🏊‍♀️\nSame intervals as Tuesday — relaxed pace.\nSwim after if you go to the pool.",workout:{name:"Week 1 — Sunday Run",run:60,walk:120,rounds:8,bpm:0}}
-  ]},
-  // WEEK 2
-  {label:"Week 2 — Building Rhythm",phase:"Phase 1 — Build the habit",days:[
-    {day:"Monday",type:"rest",label:"Rest Day",isTraining:false,hasTimer:false,desc:"Recovery is training. Rest, stretch, hydrate. 💧"},
-    {day:"Tuesday",type:"run",label:"Run / Walk",isTraining:true,hasTimer:true,desc:"Warm-up: Hip flexor stretch 30s each side · Cat-cow 10 reps\nRun 90 sec · Walk 90 sec · 8 rounds · ~24 min\nIntervals are getting balanced — you've got this.",workout:{name:"Week 2 — Run",run:90,walk:90,rounds:8,bpm:0}},
-    {day:"Wednesday",type:"bike",label:"Bike · iFit",isTraining:true,hasTimer:false,desc:"Active recovery after Tuesday run 🚴\nNordicTrack · 35 min · moderate effort"},
-    {day:"Thursday",type:"run",label:"Easy Run",isTraining:true,hasTimer:'easy',easyMins:0,desc:"Week 2 — no easy run yet. Rest or gentle walk today. 🚶\nThis slot activates from Week 5."},
-    {day:"Friday",type:"strength",label:"Strength A",isTraining:true,hasTimer:false,desc:"Warm-up: Cat-cow 10 reps · Hip flexor stretch 30s each side\nRDL 3×10 · Dumbbell Row 3×12 · Goblet Squat 3×12\nOverhead Press 3×10 · Dead Bug 3×10 · Side Leg Lift 3×15\nPlank 3×30s"},
-    {day:"Saturday",type:"strength",label:"Strength B",isTraining:true,hasTimer:false,desc:"Warm-up: Cat-cow 10 reps · Hip flexor stretch 30s each side\nBird Dog 3×10 · Chest Press 3×12 · Glute Bridge 3×15\nLateral Raises 3×12 · Dead Hang 3×20s · Dead Bug 3×10\nPelvic Tilt 15 reps"},
-    {day:"Sunday",type:"run",label:"Run",isTraining:true,hasTimer:true,desc:"Run to pool or around park 🏊‍♀️\nSame as Tuesday. Swim after if you go to the pool.",workout:{name:"Week 2 — Sunday Run",run:90,walk:90,rounds:8,bpm:0}}
-  ]},
-  // WEEK 3
-  {label:"Week 3 — Getting Stronger",phase:"Phase 1 — Build the habit",days:[
-    {day:"Monday",type:"rest",label:"Rest Day",isTraining:false,hasTimer:false,desc:"Recovery is training. Rest, stretch, hydrate. 💧"},
-    {day:"Tuesday",type:"run",label:"Run / Walk",isTraining:true,hasTimer:true,desc:"Warm-up: Hip flexor stretch 30s each side · Cat-cow 10 reps\nRun 2 min · Walk 2 min · 7 rounds · ~28 min\nLonger run intervals — trust your legs.",workout:{name:"Week 3 — Run",run:120,walk:120,rounds:7,bpm:0}},
-    {day:"Wednesday",type:"bike",label:"Bike · iFit",isTraining:true,hasTimer:false,desc:"Active recovery after Tuesday run 🚴\nNordicTrack · 35-40 min · moderate effort"},
-    {day:"Thursday",type:"run",label:"Easy Run",isTraining:true,hasTimer:'easy',easyMins:0,desc:"Week 3 — no easy run yet. Rest or gentle walk today. 🚶\nThis slot activates from Week 5."},
-    {day:"Friday",type:"strength",label:"Strength A",isTraining:true,hasTimer:false,desc:"Warm-up: Cat-cow 10 reps · Hip flexor stretch 30s each side\nRDL 3×12 · Dumbbell Row 3×12 · Goblet Squat 3×12\nOverhead Press 3×10 · Dead Bug 3×12 · Side Leg Lift 3×15\nPlank 3×40s"},
-    {day:"Saturday",type:"strength",label:"Strength B",isTraining:true,hasTimer:false,desc:"Warm-up: Cat-cow 10 reps · Hip flexor stretch 30s each side\nBird Dog 3×12 · Chest Press 3×12 · Glute Bridge 3×15\nLateral Raises 3×12 · Dead Hang 3×25s · Dead Bug 3×12\nPelvic Tilt 15 reps"},
-    {day:"Sunday",type:"run",label:"Run",isTraining:true,hasTimer:true,desc:"Run to pool or around park 🏊‍♀️\nSame as Tuesday. Swim after if you go.",workout:{name:"Week 3 — Sunday Run",run:120,walk:120,rounds:7,bpm:0}}
-  ]},
-  // WEEK 4
-  {label:"Week 4 — First Milestone",phase:"Phase 1 — Build the habit",days:[
-    {day:"Monday",type:"rest",label:"Rest Day",isTraining:false,hasTimer:false,desc:"Recovery is training. Rest, stretch, hydrate. 💧"},
-    {day:"Tuesday",type:"run",label:"Run / Walk",isTraining:true,hasTimer:true,desc:"Warm-up: Hip flexor stretch 30s each side · Cat-cow 10 reps\nRun 3 min · Walk 2 min · 6 rounds · ~30 min\nFirst time running 3 continuous minutes! Start slow in round 1.",workout:{name:"Week 4 — Run",run:180,walk:120,rounds:6,bpm:0}},
-    {day:"Wednesday",type:"bike",label:"Bike · iFit",isTraining:true,hasTimer:false,desc:"Active recovery after Tuesday run 🚴\nNordicTrack · 40 min · try 80 RPM to feel the 160 BPM running rhythm"},
-    {day:"Thursday",type:"run",label:"Easy Run",isTraining:true,hasTimer:'easy',easyMins:0,desc:"Week 4 — no easy run yet. Rest or gentle walk today. 🚶\nThis slot activates from Week 5."},
-    {day:"Friday",type:"strength",label:"Strength A",isTraining:true,hasTimer:false,desc:"Warm-up: Cat-cow 10 reps · Hip flexor stretch 30s each side\nRDL 3×12 · Dumbbell Row 3×12 · Goblet Squat 3×15\nOverhead Press 3×12 · Dead Bug 3×12 · Side Leg Lift 3×15\nPlank 3×45s"},
-    {day:"Saturday",type:"strength",label:"Strength B",isTraining:true,hasTimer:false,desc:"Warm-up: Cat-cow 10 reps · Hip flexor stretch 30s each side\nBird Dog 3×12 · Chest Press 3×12 · Glute Bridge 3×20\nLateral Raises 3×12 · Dead Hang 3×30s · Dead Bug 3×12\nPelvic Tilt 15 reps"},
-    {day:"Sunday",type:"run",label:"Run",isTraining:true,hasTimer:true,desc:"Run to pool or around park 🏊‍♀️\nSame as Tuesday. You know you can do this.",workout:{name:"Week 4 — Sunday Run",run:180,walk:120,rounds:6,bpm:0}}
-  ]},
   // WEEK 5
   {label:"Week 5 — Aerobic Base",phase:"Phase 2 — Build the engine",days:[
     {day:"Monday",type:"rest",label:"Rest Day",isTraining:false,hasTimer:false,desc:"Recovery is training. Rest, stretch, hydrate. 💧"},
@@ -488,7 +448,9 @@ const WEEKS=[
 // ═══ STATE ═══
 let workoutLog=JSON.parse(localStorage.getItem('tatiana_log')||'[]');
 let currentWeek=parseInt(localStorage.getItem('tatiana_week')||'0');
-let viewingWeek=currentWeek;
+if(currentWeek<0||currentWeek>=WEEKS.length)currentWeek=0;
+let viewingWeek=parseInt(localStorage.getItem('tatiana_viewing_week')||currentWeek);
+if(viewingWeek<0||viewingWeek>=WEEKS.length)viewingWeek=currentWeek;
 let currentDayIdx=-1;
 let activeWorkout=null;
 let timer=null,isRunning=false,currentInterval='run',currentRound=0,timeLeft=0,totalElapsed=0;
@@ -555,9 +517,9 @@ function buildWeekSelect(){
   const sel=document.getElementById('weekSelect');sel.innerHTML='';
   WEEKS.forEach((w,i)=>{const o=document.createElement('option');o.value=i;o.textContent=w.label;if(i===viewingWeek)o.selected=true;sel.appendChild(o);});
 }
-function onWeekChange(){viewingWeek=parseInt(document.getElementById('weekSelect').value);renderPlan();}
+function onWeekChange(){viewingWeek=parseInt(document.getElementById('weekSelect').value);localStorage.setItem('tatiana_viewing_week',viewingWeek);renderPlan();}
 function advanceWeek(){
-  if(currentWeek<WEEKS.length-1){currentWeek++;viewingWeek=currentWeek;localStorage.setItem('tatiana_week',currentWeek);buildWeekSelect();renderPlan();}
+  if(currentWeek<WEEKS.length-1){currentWeek++;viewingWeek=currentWeek;localStorage.setItem('tatiana_week',currentWeek);localStorage.setItem('tatiana_viewing_week',viewingWeek);buildWeekSelect();renderPlan();}
 }
 function confirmResetWeek(){
   if(confirm(`Reset Week ${viewingWeek+1}? Your workout history will be kept — only this week's progress will be cleared.`)){
