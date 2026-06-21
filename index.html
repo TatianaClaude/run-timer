@@ -6,7 +6,7 @@
 <title>Tatiana — Run Timer</title>
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
-:root{--run:#E94560;--walk:#4ECDC4;--strength:#F9CA24;--bike:#6C63FF;--dark:#0A0A0F;--card:#14141E;--card2:#1C1C2A;--text:#F0F0F5;--muted:#555570;--border:#222235;--green:#27AE60;}
+:root{--run:#E94560;--walk:#4ECDC4;--strength:#F9CA24;--bike:#6C63FF;--dark:#0A0A0F;--card:#14141E;--card2:#1C1C2A;--text:#F0F0F5;--muted:#9A9AB8;--border:#2E2E44;--green:#27AE60;}
 *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
 body{background:var(--dark);color:var(--text);font-family:'DM Sans',sans-serif;min-height:100vh;padding-bottom:50px;overflow-x:hidden;}
 .bg-ring{position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);width:600px;height:600px;border-radius:50%;opacity:0.04;background:var(--run);transition:background 0.8s;pointer-events:none;z-index:0;}
@@ -444,44 +444,44 @@ const WEEKS=[
     {day:"Sunday",type:"run",label:"Run",isTraining:true,hasTimer:true,desc:"Run to pool or around park 🏊‍♀️\nSame as Tuesday. You know you can do this.",workout:{name:"Week 4 — Sunday Run",run:180,walk:120,rounds:6,bpm:0}}
   ]},
   // WEEK 5
-  {label:"Week 5 — Easy Run Begins",phase:"Phase 1 — Build the habit",days:[
+  {label:"Week 5 — Aerobic Base",phase:"Phase 2 — Build the engine",days:[
     {day:"Monday",type:"rest",label:"Rest Day",isTraining:false,hasTimer:false,desc:"Recovery is training. Rest, stretch, hydrate. 💧"},
-    {day:"Tuesday",type:"run",label:"Run / Walk",isTraining:true,hasTimer:true,desc:"Warm-up: Hip flexor stretch 30s each side · Cat-cow 10 reps\nRun 3 min · Walk 2 min · 6 rounds · ~30 min\nMetronome at 175 BPM — let it guide your steps.",workout:{name:"Week 5 — Run",run:180,walk:120,rounds:6,bpm:175}},
+    {day:"Tuesday",type:"run",label:"Run / Walk Intervals",isTraining:true,hasTimer:true,desc:"Warm-up: Hip flexor stretch 30s each side · Cat-cow 10 reps\nRun 3 min · Walk 2 min · 6 rounds · ~30 min\nThis is your hard day — effort can climb, that's the point.\nMetronome at 175 BPM on the run segments.",workout:{name:"Week 5 — Run",run:180,walk:120,rounds:6,bpm:175}},
     {day:"Wednesday",type:"bike",label:"Bike · iFit",isTraining:true,hasTimer:false,desc:"Active recovery after Tuesday run 🚴\nNordicTrack · 40 min · moderate effort"},
-    {day:"Thursday",type:"run",label:"Easy Run 🆕",isTraining:true,hasTimer:'easy',easyMins:15,desc:"NEW — your first easy continuous run! 🎉\n15 minutes · no walk breaks · embarrassingly slow pace\nPick landmarks not the clock. Feel your abs engage.\nNo metronome — just you and Versailles."},
-    {day:"Friday",type:"strength",label:"Strength A",isTraining:true,hasTimer:false,desc:"Warm-up: Cat-cow 10 reps · Hip flexor stretch 30s each side\nRDL 3×12 · Dumbbell Row 3×15 · Goblet Squat 3×15\nOverhead Press 3×12 · Dead Bug 3×12 · Side Leg Lift 3×15\nPlank 3×45s"},
-    {day:"Saturday",type:"strength",label:"Strength B",isTraining:true,hasTimer:false,desc:"Warm-up: Cat-cow 10 reps · Hip flexor stretch 30s each side\nBird Dog 3×12 · Chest Press 3×15 · Glute Bridge 3×20\nLateral Raises 3×15 · Dead Hang 3×30s · Dead Bug 3×12\nPelvic Tilt 15 reps"},
-    {day:"Sunday",type:"run",label:"Run",isTraining:true,hasTimer:true,desc:"Run to pool or around park 🏊‍♀️\nSame as Tuesday with metronome at 175 BPM.",workout:{name:"Week 5 — Sunday Run",run:180,walk:120,rounds:6,bpm:175}}
+    {day:"Thursday",type:"run",label:"Easy Run",isTraining:true,hasTimer:'easy',easyMins:21,desc:"21 minutes continuous · no walk breaks unless HR climbs\nTarget HR: 120–135 bpm · light quick steps, short strides\nConversation test: you should be able to speak in full sentences.\nWalk briefly if HR creeps past 135, then ease back in.",workout:{name:"Week 5 — Easy Run"}},
+    {day:"Friday",type:"strength",label:"Strength A",isTraining:true,hasTimer:false,desc:"Warm-up: Cat-cow 10 reps · Hip flexor stretch 30s each side\nRDL 3×12 · Dumbbell Row 3×15 · Goblet Squat 3×15\nOverhead Press 3×12 · Side Leg Lift 3×15 · Clamshells 3×15\nSingle-Leg Glute Bridge 3×12 · Dead Bug 3×12 · Plank 3×45s"},
+    {day:"Saturday",type:"strength",label:"Strength B",isTraining:true,hasTimer:false,desc:"Warm-up: Cat-cow 10 reps · Hip flexor stretch 30s each side\nBird Dog 3×12 · Chest Press 3×15 · Glute Bridge 3×20\nLateral Raises 3×15 · Banded Lateral Walk 3×15\nDead Hang 3×30s · Dead Bug 3×12 · Pelvic Tilt 15 reps"},
+    {day:"Sunday",type:"run",label:"Easy Run",isTraining:true,hasTimer:'easy',easyMins:29,desc:"29 minutes continuous · your long run for the week\nTarget HR: 120–135 bpm · light quick steps\nWalk breaks are a tool, not a failure — use them to stay in zone.\nCycle to the pool after if legs feel good.",workout:{name:"Week 5 — Sunday Run"}}
   ]},
   // WEEK 6
-  {label:"Week 6 — Building Endurance",phase:"Phase 1 — Build the habit",days:[
+  {label:"Week 6 — Building Endurance",phase:"Phase 2 — Build the engine",days:[
     {day:"Monday",type:"rest",label:"Rest Day",isTraining:false,hasTimer:false,desc:"Recovery is training. Rest, stretch, hydrate. 💧"},
-    {day:"Tuesday",type:"run",label:"Run / Walk",isTraining:true,hasTimer:true,desc:"Warm-up: Hip flexor stretch 30s each side · Cat-cow 10 reps\nRun 3 min · Walk 2 min · 6 rounds\nMetronome 175 BPM — getting familiar now.",workout:{name:"Week 6 — Run",run:180,walk:120,rounds:6,bpm:175}},
+    {day:"Tuesday",type:"run",label:"Run / Walk Intervals",isTraining:true,hasTimer:true,desc:"Warm-up: Hip flexor stretch 30s each side · Cat-cow 10 reps\nRun 3 min · Walk 2 min · 7 rounds · ~35 min\nMetronome 175 BPM — getting familiar now.",workout:{name:"Week 6 — Run",run:180,walk:120,rounds:7,bpm:175}},
     {day:"Wednesday",type:"bike",label:"Bike · iFit",isTraining:true,hasTimer:false,desc:"Active recovery after Tuesday run 🚴\nNordicTrack · 40 min · moderate effort"},
-    {day:"Thursday",type:"run",label:"Easy Run",isTraining:true,hasTimer:'easy',easyMins:18,desc:"18 minutes continuous · slow and steady\nFocus: tall spine, lower abs engaged, landmarks not clock.\nYou should be able to speak a sentence while running."},
-    {day:"Friday",type:"strength",label:"Strength A",isTraining:true,hasTimer:false,desc:"Warm-up: Cat-cow 10 reps · Hip flexor stretch 30s each side\nRDL 3×12 · Dumbbell Row 3×15 · Goblet Squat 3×15\nOverhead Press 3×12 · Dead Bug 3×12 · Side Leg Lift 3×20\nPlank 3×50s"},
-    {day:"Saturday",type:"strength",label:"Strength B",isTraining:true,hasTimer:false,desc:"Warm-up: Cat-cow 10 reps · Hip flexor stretch 30s each side\nBird Dog 3×12 · Chest Press 3×15 · Glute Bridge 3×20\nLateral Raises 3×15 · Dead Hang 3×30s · Dead Bug 3×12\nPelvic Tilt 15 reps"},
-    {day:"Sunday",type:"run",label:"Run",isTraining:true,hasTimer:true,desc:"Run to pool or around park 🏊‍♀️\nMetronome 175 BPM.",workout:{name:"Week 6 — Sunday Run",run:180,walk:120,rounds:6,bpm:175}}
+    {day:"Thursday",type:"run",label:"Easy Run",isTraining:true,hasTimer:'easy',easyMins:23,desc:"23 minutes continuous\nTarget HR: 120–135 bpm · light quick steps, short strides\nFocus: tall spine, lower abs engaged, landmarks not clock.",workout:{name:"Week 6 — Easy Run"}},
+    {day:"Friday",type:"strength",label:"Strength A",isTraining:true,hasTimer:false,desc:"Warm-up: Cat-cow 10 reps · Hip flexor stretch 30s each side\nRDL 3×12 · Dumbbell Row 3×15 · Goblet Squat 3×15\nOverhead Press 3×12 · Side Leg Lift 3×20 · Clamshells 3×15\nSingle-Leg Glute Bridge 3×12 · Dead Bug 3×12 · Plank 3×50s"},
+    {day:"Saturday",type:"strength",label:"Strength B",isTraining:true,hasTimer:false,desc:"Warm-up: Cat-cow 10 reps · Hip flexor stretch 30s each side\nBird Dog 3×12 · Chest Press 3×15 · Glute Bridge 3×20\nLateral Raises 3×15 · Banded Lateral Walk 3×15\nDead Hang 3×30s · Dead Bug 3×12 · Pelvic Tilt 15 reps"},
+    {day:"Sunday",type:"run",label:"Easy Run",isTraining:true,hasTimer:'easy',easyMins:32,desc:"32 minutes continuous · long run for the week\nTarget HR: 120–135 bpm · walk if it creeps past 135\nCycle to the pool after if legs feel good.",workout:{name:"Week 6 — Sunday Run"}}
   ]},
   // WEEK 7
-  {label:"Week 7 — Longer Intervals",phase:"Phase 1 — Build the habit",days:[
+  {label:"Week 7 — Recovery Week",phase:"Phase 2 — Build the engine",days:[
     {day:"Monday",type:"rest",label:"Rest Day",isTraining:false,hasTimer:false,desc:"Recovery is training. Rest, stretch, hydrate. 💧"},
-    {day:"Tuesday",type:"run",label:"Run / Walk",isTraining:true,hasTimer:true,desc:"Warm-up: Hip flexor stretch 30s each side · Cat-cow 10 reps\nRun 5 min · Walk 2 min · 5 rounds · ~35 min\nMetronome 178 BPM. Big jump — start round 1 slow!",workout:{name:"Week 7 — Run",run:300,walk:120,rounds:5,bpm:178}},
-    {day:"Wednesday",type:"bike",label:"Bike · iFit",isTraining:true,hasTimer:false,desc:"Active recovery after Tuesday run 🚴\nNordicTrack · 40 min · moderate effort"},
-    {day:"Thursday",type:"run",label:"Easy Run",isTraining:true,hasTimer:'easy',easyMins:20,desc:"20 minutes continuous · your landmark run\nThis is your aerobic base building session.\nSlow. Steady. Consistent."},
-    {day:"Friday",type:"strength",label:"Strength A",isTraining:true,hasTimer:false,desc:"Warm-up: Cat-cow 10 reps · Hip flexor stretch 30s each side\nRDL 3×15 · Dumbbell Row 3×15 · Goblet Squat 3×15\nOverhead Press 3×12 · Dead Bug 3×12 · Side Leg Lift 3×20\nPlank 3×50s"},
-    {day:"Saturday",type:"strength",label:"Strength B",isTraining:true,hasTimer:false,desc:"Warm-up: Cat-cow 10 reps · Hip flexor stretch 30s each side\nBird Dog 3×15 · Chest Press 3×15 · Glute Bridge 3×20\nLateral Raises 3×15 · Dead Hang 3×30s · Dead Bug 3×15\nPelvic Tilt 15 reps"},
-    {day:"Sunday",type:"run",label:"Run",isTraining:true,hasTimer:true,desc:"Run to pool or around park 🏊‍♀️\nMetronome 178 BPM.",workout:{name:"Week 7 — Sunday Run",run:300,walk:120,rounds:5,bpm:178}}
+    {day:"Tuesday",type:"run",label:"Run / Walk Intervals",isTraining:true,hasTimer:true,desc:"Warm-up: Hip flexor stretch 30s each side · Cat-cow 10 reps\nRun 3 min · Walk 2 min · 5 rounds · ~25 min\nEvery 4th week is lighter on purpose — let the body absorb.\nMetronome 175 BPM.",workout:{name:"Week 7 — Run",run:180,walk:120,rounds:5,bpm:175}},
+    {day:"Wednesday",type:"bike",label:"Bike · iFit",isTraining:true,hasTimer:false,desc:"Active recovery after Tuesday run 🚴\nNordicTrack · 30 min · easy effort"},
+    {day:"Thursday",type:"run",label:"Easy Run",isTraining:true,hasTimer:'easy',easyMins:18,desc:"18 minutes continuous · shorter on purpose this week\nTarget HR: 120–135 bpm · keep it light and easy.",workout:{name:"Week 7 — Easy Run"}},
+    {day:"Friday",type:"strength",label:"Strength A",isTraining:true,hasTimer:false,desc:"Warm-up: Cat-cow 10 reps · Hip flexor stretch 30s each side\nRDL 3×10 · Dumbbell Row 3×12 · Goblet Squat 3×12\nOverhead Press 3×10 · Side Leg Lift 3×15 · Clamshells 3×15\nSingle-Leg Glute Bridge 3×10 · Dead Bug 3×10 · Plank 3×40s"},
+    {day:"Saturday",type:"strength",label:"Strength B",isTraining:true,hasTimer:false,desc:"Warm-up: Cat-cow 10 reps · Hip flexor stretch 30s each side\nBird Dog 3×10 · Chest Press 3×12 · Glute Bridge 3×15\nLateral Raises 3×12 · Banded Lateral Walk 3×12\nDead Hang 3×25s · Dead Bug 3×10 · Pelvic Tilt 15 reps"},
+    {day:"Sunday",type:"run",label:"Easy Run",isTraining:true,hasTimer:'easy',easyMins:24,desc:"24 minutes continuous · recovery-week long run\nTarget HR: 120–135 bpm · this week is about absorbing, not pushing.",workout:{name:"Week 7 — Sunday Run"}}
   ]},
   // WEEK 8
-  {label:"Week 8 — Consolidating",phase:"Phase 1 — Build the habit",days:[
+  {label:"Week 8 — Pushing Forward",phase:"Phase 2 — Build the engine",days:[
     {day:"Monday",type:"rest",label:"Rest Day",isTraining:false,hasTimer:false,desc:"Recovery is training. Rest, stretch, hydrate. 💧"},
-    {day:"Tuesday",type:"run",label:"Run / Walk",isTraining:true,hasTimer:true,desc:"Warm-up: Hip flexor stretch 30s each side · Cat-cow 10 reps\nRun 5 min · Walk 2 min · 5 rounds\nMetronome 178 BPM — Week 7 pace but smoother now.",workout:{name:"Week 8 — Run",run:300,walk:120,rounds:5,bpm:178}},
+    {day:"Tuesday",type:"run",label:"Run / Walk Intervals",isTraining:true,hasTimer:true,desc:"Warm-up: Hip flexor stretch 30s each side · Cat-cow 10 reps\nRun 4 min · Walk 2 min · 6 rounds · ~36 min\nMetronome 178 BPM — bigger push after the recovery week.",workout:{name:"Week 8 — Run",run:240,walk:120,rounds:6,bpm:178}},
     {day:"Wednesday",type:"bike",label:"Bike · iFit",isTraining:true,hasTimer:false,desc:"Active recovery after Tuesday run 🚴\nNordicTrack · 40 min · moderate effort"},
-    {day:"Thursday",type:"run",label:"Easy Run",isTraining:true,hasTimer:'easy',easyMins:22,desc:"22 minutes continuous\nBy now the first 10 minutes should feel easier.\nThat's the aerobic base establishing itself. 💪"},
-    {day:"Friday",type:"strength",label:"Strength A",isTraining:true,hasTimer:false,desc:"Warm-up: Cat-cow 10 reps · Hip flexor stretch 30s each side\nRDL 3×15 · Dumbbell Row 3×15 · Goblet Squat 3×15\nOverhead Press 3×15 · Dead Bug 3×15 · Side Leg Lift 3×20\nPlank 3×50s"},
-    {day:"Saturday",type:"strength",label:"Strength B",isTraining:true,hasTimer:false,desc:"Warm-up: Cat-cow 10 reps · Hip flexor stretch 30s each side\nBird Dog 3×15 · Chest Press 3×15 · Glute Bridge 3×20\nLateral Raises 3×15 · Dead Hang 3×30s · Dead Bug 3×15\nPelvic Tilt 15 reps"},
-    {day:"Sunday",type:"run",label:"Run",isTraining:true,hasTimer:true,desc:"Run to pool or around park 🏊‍♀️\nMetronome 178 BPM — consolidating your rhythm.",workout:{name:"Week 8 — Sunday Run",run:300,walk:120,rounds:5,bpm:178}}
+    {day:"Thursday",type:"run",label:"Easy Run",isTraining:true,hasTimer:'easy',easyMins:26,desc:"26 minutes continuous\nTarget HR: 120–135 bpm · by now the first 10 minutes should feel easier.\nThat's the aerobic base establishing itself. 💪",workout:{name:"Week 8 — Easy Run"}},
+    {day:"Friday",type:"strength",label:"Strength A",isTraining:true,hasTimer:false,desc:"Warm-up: Cat-cow 10 reps · Hip flexor stretch 30s each side\nRDL 3×15 · Dumbbell Row 3×15 · Goblet Squat 3×15\nOverhead Press 3×15 · Side Leg Lift 3×20 · Clamshells 3×20\nSingle-Leg Glute Bridge 3×12 · Dead Bug 3×15 · Plank 3×55s"},
+    {day:"Saturday",type:"strength",label:"Strength B",isTraining:true,hasTimer:false,desc:"Warm-up: Cat-cow 10 reps · Hip flexor stretch 30s each side\nBird Dog 3×15 · Chest Press 3×15 · Glute Bridge 3×20\nLateral Raises 3×15 · Banded Lateral Walk 3×15\nDead Hang 3×30s · Dead Bug 3×15 · Pelvic Tilt 15 reps"},
+    {day:"Sunday",type:"run",label:"Easy Run",isTraining:true,hasTimer:'easy',easyMins:35,desc:"35 minutes continuous · long run for the week\nTarget HR: 120–135 bpm · steady effort, light quick steps.\nCycle to the pool after if legs feel good.",workout:{name:"Week 8 — Sunday Run"}}
   ]}
 ];
 
