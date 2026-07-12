@@ -71,6 +71,14 @@ body.walk-active .bg-ring{background:var(--walk);animation:pulse 2s ease-in-out 
 .btn-easy-sec{width:52px;height:52px;border-radius:50%;border:1px solid var(--border);background:var(--card);color:var(--muted);font-size:18px;cursor:pointer;display:flex;align-items:center;justify-content:center;}
 .easy-progress-bar{width:100%;max-width:300px;height:6px;background:var(--card2);border-radius:3px;overflow:hidden;}
 .easy-progress-fill{height:100%;background:var(--strength);border-radius:3px;transition:width 1s linear;}
+.hold-timer-screen{display:none;position:fixed;inset:0;background:var(--dark);z-index:160;flex-direction:column;align-items:center;justify-content:center;gap:20px;padding:30px;}
+.hold-timer-screen.show{display:flex;}
+.hold-timer-title{font-family:'Bebas Neue';font-size:26px;letter-spacing:4px;color:var(--strength);text-align:center;}
+.hold-timer-display{font-family:'Bebas Neue';font-size:120px;line-height:1;color:var(--text);letter-spacing:4px;}
+.hold-timer-desc{font-size:14px;color:var(--muted);text-align:center;line-height:1.6;max-width:300px;}
+.hold-preset-row{display:flex;gap:10px;flex-wrap:wrap;justify-content:center;margin-top:6px;}
+.hold-preset{padding:8px 16px;border-radius:20px;border:1px solid var(--border);background:var(--card);color:var(--text);font-size:14px;cursor:pointer;}
+.hold-preset.active{background:var(--strength);color:var(--dark);border-color:var(--strength);}
 /* EXERCISE LIBRARY */
 .ex-section{margin-bottom:20px;}
 .ex-section-title{font-size:10px;letter-spacing:3px;color:var(--muted);text-transform:uppercase;margin-bottom:10px;}
@@ -218,6 +226,19 @@ body.walk-active .btn-main{background:var(--walk);box-shadow:0 0 24px rgba(78,20
     <button class="btn-easy-main" id="easyMainBtn" onclick="toggleEasyTimer()">▶</button>
     <button class="btn-easy-sec" onclick="closeEasyTimer()">✕</button>
   </div>
+</div>
+
+<!-- HOLD TIMER (plank, dead hang, timed holds) -->
+<div class="hold-timer-screen" id="holdTimerScreen">
+  <div class="hold-timer-title" id="holdTimerTitle">⏱ HOLD</div>
+  <div class="hold-timer-display" id="holdTimeDisplay">0:30</div>
+  <div class="hold-timer-desc" id="holdTimerDesc">Hold steady. Stop if form breaks.</div>
+  <div class="easy-timer-controls">
+    <button class="btn-easy-sec" onclick="resetHoldTimer()">↺</button>
+    <button class="btn-easy-main" id="holdMainBtn" onclick="toggleHoldTimer()">▶</button>
+    <button class="btn-easy-sec" onclick="closeHoldTimer()">✕</button>
+  </div>
+  <div class="hold-preset-row" id="holdPresetRow"></div>
 </div>
 
 <!-- EXERCISE OVERLAY -->
@@ -403,45 +424,65 @@ const EXERCISES=[
 
 // ═══ WEEK PLANS ═══
 const WEEKS=[
-  // WEEK 5
-  {label:"Week 5 — Aerobic Base",phase:"Phase 2 — Build the engine",days:[
-    {day:"Monday",type:"rest",label:"Rest Day",isTraining:false,hasTimer:false,desc:"Recovery is training. Rest, stretch, hydrate. 💧"},
-    {day:"Tuesday",type:"run",label:"Run / Walk Intervals",isTraining:true,hasTimer:true,desc:"Warm-up: Hip flexor stretch 30s each side · Cat-cow 10 reps\nRun 3 min · Walk 2 min · 6 rounds · ~30 min\nThis is your hard day — effort can climb, that's the point.\nMetronome at 175 BPM on the run segments.",workout:{name:"Week 5 — Run",run:180,walk:120,rounds:6,bpm:175}},
-    {day:"Wednesday",type:"bike",label:"Bike · iFit",isTraining:true,hasTimer:false,desc:"Active recovery after Tuesday run 🚴\nNordicTrack · 40 min · moderate effort"},
-    {day:"Thursday",type:"run",label:"Easy Run",isTraining:true,hasTimer:'easy',easyMins:21,desc:"21 minutes continuous · no walk breaks unless HR climbs\nTarget HR: 120–135 bpm · light quick steps, short strides\nConversation test: you should be able to speak in full sentences.\nWalk briefly if HR creeps past 135, then ease back in.",workout:{name:"Week 5 — Easy Run"}},
-    {day:"Friday",type:"strength",label:"Strength A",isTraining:true,hasTimer:false,desc:"Warm-up: Cat-cow 10 reps · Hip flexor stretch 30s each side\nRDL 3×12 · Dumbbell Row 3×15 · Goblet Squat 3×15\nOverhead Press 3×12 · Side Leg Lift 3×15 · Clamshells 3×15\nSingle-Leg Glute Bridge 3×12 · Dead Bug 3×12 · Plank 3×45s"},
-    {day:"Saturday",type:"strength",label:"Strength B",isTraining:true,hasTimer:false,desc:"Warm-up: Cat-cow 10 reps · Hip flexor stretch 30s each side\nBird Dog 3×12 · Chest Press 3×15 · Glute Bridge 3×20\nLateral Raises 3×15 · Banded Lateral Walk 3×15\nDead Hang 3×30s · Dead Bug 3×12 · Pelvic Tilt 15 reps"},
-    {day:"Sunday",type:"run",label:"Easy Run",isTraining:true,hasTimer:'easy',easyMins:29,desc:"29 minutes continuous · your long run for the week\nTarget HR: 120–135 bpm · light quick steps\nWalk breaks are a tool, not a failure — use them to stay in zone.\nCycle to the pool after if legs feel good.",workout:{name:"Week 5 — Sunday Run"}}
-  ]},
-  // WEEK 6
-  {label:"Week 6 — Building Endurance",phase:"Phase 2 — Build the engine",days:[
-    {day:"Monday",type:"rest",label:"Rest Day",isTraining:false,hasTimer:false,desc:"Recovery is training. Rest, stretch, hydrate. 💧"},
-    {day:"Tuesday",type:"run",label:"Run / Walk Intervals",isTraining:true,hasTimer:true,desc:"Warm-up: Hip flexor stretch 30s each side · Cat-cow 10 reps\nRun 3 min · Walk 2 min · 7 rounds · ~35 min\nMetronome 175 BPM — getting familiar now.",workout:{name:"Week 6 — Run",run:180,walk:120,rounds:7,bpm:175}},
-    {day:"Wednesday",type:"bike",label:"Bike · iFit",isTraining:true,hasTimer:false,desc:"Active recovery after Tuesday run 🚴\nNordicTrack · 40 min · moderate effort"},
-    {day:"Thursday",type:"run",label:"Easy Run",isTraining:true,hasTimer:'easy',easyMins:23,desc:"23 minutes continuous\nTarget HR: 120–135 bpm · light quick steps, short strides\nFocus: tall spine, lower abs engaged, landmarks not clock.",workout:{name:"Week 6 — Easy Run"}},
-    {day:"Friday",type:"strength",label:"Strength A",isTraining:true,hasTimer:false,desc:"Warm-up: Cat-cow 10 reps · Hip flexor stretch 30s each side\nRDL 3×12 · Dumbbell Row 3×15 · Goblet Squat 3×15\nOverhead Press 3×12 · Side Leg Lift 3×20 · Clamshells 3×15\nSingle-Leg Glute Bridge 3×12 · Dead Bug 3×12 · Plank 3×50s"},
-    {day:"Saturday",type:"strength",label:"Strength B",isTraining:true,hasTimer:false,desc:"Warm-up: Cat-cow 10 reps · Hip flexor stretch 30s each side\nBird Dog 3×12 · Chest Press 3×15 · Glute Bridge 3×20\nLateral Raises 3×15 · Banded Lateral Walk 3×15\nDead Hang 3×30s · Dead Bug 3×12 · Pelvic Tilt 15 reps"},
-    {day:"Sunday",type:"run",label:"Easy Run",isTraining:true,hasTimer:'easy',easyMins:32,desc:"32 minutes continuous · long run for the week\nTarget HR: 120–135 bpm · walk if it creeps past 135\nCycle to the pool after if legs feel good.",workout:{name:"Week 6 — Sunday Run"}}
-  ]},
-  // WEEK 7
-  {label:"Week 7 — Recovery Week",phase:"Phase 2 — Build the engine",days:[
-    {day:"Monday",type:"rest",label:"Rest Day",isTraining:false,hasTimer:false,desc:"Recovery is training. Rest, stretch, hydrate. 💧"},
-    {day:"Tuesday",type:"run",label:"Run / Walk Intervals",isTraining:true,hasTimer:true,desc:"Warm-up: Hip flexor stretch 30s each side · Cat-cow 10 reps\nRun 3 min · Walk 2 min · 5 rounds · ~25 min\nEvery 4th week is lighter on purpose — let the body absorb.\nMetronome 175 BPM.",workout:{name:"Week 7 — Run",run:180,walk:120,rounds:5,bpm:175}},
-    {day:"Wednesday",type:"bike",label:"Bike · iFit",isTraining:true,hasTimer:false,desc:"Active recovery after Tuesday run 🚴\nNordicTrack · 30 min · easy effort"},
-    {day:"Thursday",type:"run",label:"Easy Run",isTraining:true,hasTimer:'easy',easyMins:18,desc:"18 minutes continuous · shorter on purpose this week\nTarget HR: 120–135 bpm · keep it light and easy.",workout:{name:"Week 7 — Easy Run"}},
-    {day:"Friday",type:"strength",label:"Strength A",isTraining:true,hasTimer:false,desc:"Warm-up: Cat-cow 10 reps · Hip flexor stretch 30s each side\nRDL 3×10 · Dumbbell Row 3×12 · Goblet Squat 3×12\nOverhead Press 3×10 · Side Leg Lift 3×15 · Clamshells 3×15\nSingle-Leg Glute Bridge 3×10 · Dead Bug 3×10 · Plank 3×40s"},
-    {day:"Saturday",type:"strength",label:"Strength B",isTraining:true,hasTimer:false,desc:"Warm-up: Cat-cow 10 reps · Hip flexor stretch 30s each side\nBird Dog 3×10 · Chest Press 3×12 · Glute Bridge 3×15\nLateral Raises 3×12 · Banded Lateral Walk 3×12\nDead Hang 3×25s · Dead Bug 3×10 · Pelvic Tilt 15 reps"},
-    {day:"Sunday",type:"run",label:"Easy Run",isTraining:true,hasTimer:'easy',easyMins:24,desc:"24 minutes continuous · recovery-week long run\nTarget HR: 120–135 bpm · this week is about absorbing, not pushing.",workout:{name:"Week 7 — Sunday Run"}}
-  ]},
   // WEEK 8
-  {label:"Week 8 — Pushing Forward",phase:"Phase 2 — Build the engine",days:[
-    {day:"Monday",type:"rest",label:"Rest Day",isTraining:false,hasTimer:false,desc:"Recovery is training. Rest, stretch, hydrate. 💧"},
-    {day:"Tuesday",type:"run",label:"Run / Walk Intervals",isTraining:true,hasTimer:true,desc:"Warm-up: Hip flexor stretch 30s each side · Cat-cow 10 reps\nRun 4 min · Walk 2 min · 6 rounds · ~36 min\nMetronome 178 BPM — bigger push after the recovery week.",workout:{name:"Week 8 — Run",run:240,walk:120,rounds:6,bpm:178}},
-    {day:"Wednesday",type:"bike",label:"Bike · iFit",isTraining:true,hasTimer:false,desc:"Active recovery after Tuesday run 🚴\nNordicTrack · 40 min · moderate effort"},
-    {day:"Thursday",type:"run",label:"Easy Run",isTraining:true,hasTimer:'easy',easyMins:26,desc:"26 minutes continuous\nTarget HR: 120–135 bpm · by now the first 10 minutes should feel easier.\nThat's the aerobic base establishing itself. 💪",workout:{name:"Week 8 — Easy Run"}},
-    {day:"Friday",type:"strength",label:"Strength A",isTraining:true,hasTimer:false,desc:"Warm-up: Cat-cow 10 reps · Hip flexor stretch 30s each side\nRDL 3×15 · Dumbbell Row 3×15 · Goblet Squat 3×15\nOverhead Press 3×15 · Side Leg Lift 3×20 · Clamshells 3×20\nSingle-Leg Glute Bridge 3×12 · Dead Bug 3×15 · Plank 3×55s"},
-    {day:"Saturday",type:"strength",label:"Strength B",isTraining:true,hasTimer:false,desc:"Warm-up: Cat-cow 10 reps · Hip flexor stretch 30s each side\nBird Dog 3×15 · Chest Press 3×15 · Glute Bridge 3×20\nLateral Raises 3×15 · Banded Lateral Walk 3×15\nDead Hang 3×30s · Dead Bug 3×15 · Pelvic Tilt 15 reps"},
-    {day:"Sunday",type:"run",label:"Easy Run",isTraining:true,hasTimer:'easy',easyMins:35,desc:"35 minutes continuous · long run for the week\nTarget HR: 120–135 bpm · steady effort, light quick steps.\nCycle to the pool after if legs feel good.",workout:{name:"Week 8 — Sunday Run"}}
+  {label:"Week 8 — Building Load",phase:"Phase 2 — Build the engine",days:[
+    {day:"Monday",type:"rest",label:"Rest Day",isTraining:false,hasTimer:false,desc:"Full rest. Recovery is where muscle is built. 💧\nWeigh-in morning — one data point, no drama."},
+    {day:"Tuesday",type:"run",label:"Run Intervals + Strength 1",isTraining:true,hasTimer:true,desc:"MORNING — Run intervals (hard day, back to full volume)\nWarm-up: Hip flexor stretch 30s each side · Cat-cow 10\nRun 3 min · Walk 2 min · 6 rounds · Metronome 175 BPM\nPush the effort — recovery week is behind you.\n\nEVENING — Strength 1 · Upper + Core (~30 min)\nRest 60–90s between sets · use the ⏱ hold timer\nChest Press 3×12 @6kg\nBand Lat Pulldown 3×12\nOverhead Press 3×12 @5kg\nDead Bug 3×12 slow\nPlank 3× hold (aim to beat Week 6's best)\nDead Hang 3× hold (build past 10s)",workout:{name:"Week 8 — Run",run:180,walk:120,rounds:6,bpm:175}},
+    {day:"Wednesday",type:"bike",label:"Bike + Strength 2",isTraining:true,hasTimer:false,desc:"MORNING — Bike active recovery 🚴\nNordicTrack · 35–40 min · HR 120–130 (push resistance to reach it)\n\nEVENING — Strength 2 · Posterior Chain + LEFT LEG (~30 min)\nThis is your most important session for the DEXA gap.\nRDL 3×12 @ bar+5kg each side\nDouble-Leg Glute Bridge 3×15 (squeeze glutes at top)\nClamshells 3×15 each — 4th set on LEFT only\nBanded Lateral Walk 3×12 each direction\nBird Dog 3×10 each side"},
+    {day:"Thursday",type:"run",label:"Easy Run",isTraining:true,hasTimer:'easy',easyMins:24,desc:"TARGET: 4 km · aerobic base\nHR CAP 135 bpm — walk if it climbs past 135, resume under 125.\nLight quick steps, short strides. Conversation test: full sentences while running.",workout:{name:"Week 8 — Easy Run"}},
+    {day:"Friday",type:"strength",label:"Strength 3",isTraining:true,hasTimer:false,desc:"Strength 3 · Full Body + LEFT LEG (~30 min)\nRest 60–90s between sets · use the ⏱ hold timer\nGoblet Squat 3×12 @4kg\nReverse Lunge 3×10 each — extra set on LEFT\nMarching Glute Bridge 3×12\nSide Leg Lift 3×15 each\nPelvic Tilt 15 reps\nPlank 3× hold"},
+    {day:"Saturday",type:"rest",label:"Free / Optional",isTraining:false,hasTimer:false,desc:"Free day. Extra walk, museum, or full rest — your call. 🖼️"},
+    {day:"Sunday",type:"run",label:"Long Run",isTraining:true,hasTimer:'easy',easyMins:28,desc:"TARGET: 5 km · long run of the week\nHR CAP 135 bpm — non-negotiable. Walk breaks to stay in zone.\nCarry vest, fill only what you'll drink. Check left knee before/after.\nGap to Thursday narrowed on purpose — safer ramp for the left leg.",workout:{name:"Week 8 — Long Run"}}
+  ]},
+  // WEEK 9
+  {label:"Week 9 — Progressive Overload",phase:"Phase 2 — Build the engine",days:[
+    {day:"Monday",type:"rest",label:"Rest Day",isTraining:false,hasTimer:false,desc:"Full rest. 💧 Weigh-in morning."},
+    {day:"Tuesday",type:"run",label:"Run Intervals + Strength 1",isTraining:true,hasTimer:true,desc:"MORNING — Run intervals (hard day)\nWarm-up: Hip flexor stretch 30s each side · Cat-cow 10\nRun 3 min · Walk 2 min · 7 rounds · Metronome 175 BPM\n\nEVENING — Strength 1 · Upper + Core (~30 min)\nRest 60–90s · progressive overload week\nChest Press 3×12 @6kg (try 3×14 if last set felt easy)\nBand Lat Pulldown 3×12\nOverhead Press 3×12 @5kg\nDead Bug 3×14 slow\nPlank 3× hold (aim +5s vs Week 8)\nDead Hang 3× hold (build toward 12–15s)",workout:{name:"Week 9 — Run",run:180,walk:120,rounds:7,bpm:175}},
+    {day:"Wednesday",type:"bike",label:"Bike + Strength 2",isTraining:true,hasTimer:false,desc:"MORNING — Bike active recovery 🚴\nNordicTrack · 40 min · HR 120–130\n\nEVENING — Strength 2 · Posterior Chain + LEFT LEG (~30 min)\nRDL 3×12 @ bar+6kg each side (up 1kg/side — challenge)\nDouble-Leg Glute Bridge 3×15\nClamshells 3×15 each + 4th set LEFT (add light band)\nBanded Lateral Walk 3×14 each direction\nBird Dog 3×10 each side"},
+    {day:"Thursday",type:"run",label:"Easy Run",isTraining:true,hasTimer:'easy',easyMins:26,desc:"TARGET: 4.5 km · aerobic base\nHR CAP 135 bpm — walk if it climbs past 135, resume under 125.\nTall spine, lower abs engaged.",workout:{name:"Week 9 — Easy Run"}},
+    {day:"Friday",type:"strength",label:"Strength 3",isTraining:true,hasTimer:false,desc:"Strength 3 · Full Body + LEFT LEG (~30 min)\nGoblet Squat 3×12 @5kg (up from 4kg — challenge)\nReverse Lunge 3×10 each — extra set LEFT\nMarching Glute Bridge 3×14\nSide Leg Lift 3×15 each\nPelvic Tilt 15 reps\nPlank 3× hold"},
+    {day:"Saturday",type:"rest",label:"Free / Optional",isTraining:false,hasTimer:false,desc:"Free day — extra movement or rest. 🖼️"},
+    {day:"Sunday",type:"run",label:"Long Run",isTraining:true,hasTimer:'easy',easyMins:31,desc:"TARGET: 5.5 km · long run of the week\nHR CAP 135 bpm — non-negotiable, walk to reset under 125.\nSteady effort, check in with the left knee.",workout:{name:"Week 9 — Long Run"}}
+  ]},
+  // WEEK 10
+  {label:"Week 10 — Pushing Forward",phase:"Phase 3 — Consolidate",days:[
+    {day:"Monday",type:"rest",label:"Rest Day",isTraining:false,hasTimer:false,desc:"Full rest. 💧 Weigh-in morning."},
+    {day:"Tuesday",type:"run",label:"Run Intervals + Strength 1",isTraining:true,hasTimer:true,desc:"MORNING — Run intervals (hard day)\nWarm-up: Hip flexor stretch 30s each side · Cat-cow 10\nRun 4 min · Walk 2 min · 6 rounds · Metronome 178 BPM\nCadence steps up to 178 — start round 1 relaxed.\n\nEVENING — Strength 1 · Upper + Core (~30 min)\nProgression week — challenge the loads\nChest Press 3×12 @7kg (up 1kg — challenge)\nBand Lat Pulldown 3×14\nOverhead Press 3×12 @5kg (try 6kg on set 1)\nDead Bug 3×14 slow\nPlank 3× hold (aim 50s+)\nDead Hang 3× hold (build toward 15–20s)",workout:{name:"Week 10 — Run",run:240,walk:120,rounds:6,bpm:178}},
+    {day:"Wednesday",type:"bike",label:"Bike + Strength 2",isTraining:true,hasTimer:false,desc:"MORNING — Bike active recovery 🚴\nNordicTrack · 40 min · HR 120–130\n\nEVENING — Strength 2 · Posterior Chain + LEFT LEG (~35 min)\nRDL 3×12 @ bar+6kg each side\nGlute Bridge → try first ELEVATED SINGLE-LEG on LEFT (foot on low step, small range) 3×8 left, 3×10 double right\nClamshells 3×15 each + 4th set LEFT\nBanded Lateral Walk 3×15 each\nBird Dog 3×12 each"},
+    {day:"Thursday",type:"run",label:"Easy Run",isTraining:true,hasTimer:'easy',easyMins:28,desc:"TARGET: 5 km · aerobic base\nHR CAP 135 bpm — walk if it climbs past 135, resume under 125.\nFirst part of the run should feel easier now — the aerobic base establishing. 💪",workout:{name:"Week 10 — Easy Run"}},
+    {day:"Friday",type:"strength",label:"Strength 3",isTraining:true,hasTimer:false,desc:"Strength 3 · Full Body + LEFT LEG (~35 min)\nGoblet Squat 3×12 @5kg (try 6kg set 1)\nReverse Lunge 3×12 each — extra set LEFT\nMarching Glute Bridge 3×15\nSide Leg Lift 3×20 each\nPelvic Tilt 15 reps\nPlank 3× hold (aim 50s+)"},
+    {day:"Saturday",type:"rest",label:"Free / Optional",isTraining:false,hasTimer:false,desc:"Free day — extra movement or rest. 🖼️"},
+    {day:"Sunday",type:"run",label:"Long Run",isTraining:true,hasTimer:'easy',easyMins:34,desc:"TARGET: 6 km · longest of the block so far\nHR CAP 135 bpm — non-negotiable. Steady, light quick steps.\n10km is still the goal — timeline now prioritizes the left knee over the calendar. 💪",workout:{name:"Week 10 — Long Run"}}
+  ]},
+  // WEEK 11
+  {label:"Week 11 — Steady Build",phase:"Phase 3 — Consolidate",days:[
+    {day:"Monday",type:"rest",label:"Rest Day",isTraining:false,hasTimer:false,desc:"Full rest. 💧 Weigh-in morning.\nCheck in honestly: left knee, right ankle — any change from last week's push?"},
+    {day:"Tuesday",type:"run",label:"Run Intervals + Strength 1",isTraining:true,hasTimer:true,desc:"MORNING — Run intervals (hard day)\nWarm-up: Hip flexor stretch 30s each side · Cat-cow 10\nRun 4 min · Walk 2 min · 7 rounds · Metronome 178 BPM\n\nEVENING — Strength 1 · Upper + Core (~30 min)\nChest Press 3×12 @7kg (try 3×14 if last set felt easy)\nBand Lat Pulldown 3×14\nOverhead Press 3×12 @6kg\nDead Bug 3×15 slow\nPlank 3× hold (aim 55s+)\nDead Hang 3× hold (build toward 20s)",workout:{name:"Week 11 — Run",run:240,walk:120,rounds:7,bpm:178}},
+    {day:"Wednesday",type:"bike",label:"Bike + Strength 2",isTraining:true,hasTimer:false,desc:"MORNING — Bike active recovery 🚴\nNordicTrack · 40 min · HR 120–130\n\nEVENING — Strength 2 · Posterior Chain + LEFT LEG (~35 min)\nRDL 3×12 @ bar+7kg each side (up 1kg/side — challenge)\nElevated Single-Leg Glute Bridge: 3×10 left, 3×12 double right\nClamshells 3×15 each + 4th set LEFT (add band if not already)\nBanded Lateral Walk 3×15 each\nBird Dog 3×12 each"},
+    {day:"Thursday",type:"run",label:"Easy Run",isTraining:true,hasTimer:'easy',easyMins:30,desc:"TARGET: 5.5 km · aerobic base\nHR CAP 135 bpm — walk if it climbs past 135, resume under 125.\nNotice how much of this now feels automatic vs conscious effort.",workout:{name:"Week 11 — Easy Run"}},
+    {day:"Friday",type:"strength",label:"Strength 3",isTraining:true,hasTimer:false,desc:"Strength 3 · Full Body + LEFT LEG (~35 min)\nGoblet Squat 3×12 @6kg (challenge — up from 5kg)\nReverse Lunge 3×12 each — extra set LEFT\nMarching Glute Bridge 3×15 → try single-leg attempt if ready\nSide Leg Lift 3×20 each\nPelvic Tilt 15 reps\nPlank 3× hold (aim 55s+)"},
+    {day:"Saturday",type:"rest",label:"Free / Optional",isTraining:false,hasTimer:false,desc:"Free day — extra movement or rest. 🖼️"},
+    {day:"Sunday",type:"run",label:"Long Run",isTraining:true,hasTimer:'easy',easyMins:37,desc:"TARGET: 6.7 km · steady growth, gap to Thursday kept modest\nHR CAP 135 bpm — non-negotiable. Walk breaks are a tool, not a failure.\nPatient pace toward 10km — no fixed date, the knee sets the schedule.",workout:{name:"Week 11 — Long Run"}}
+  ]},
+  // WEEK 12
+  {label:"Week 12 — Steady Build",phase:"Phase 3 — Consolidate",days:[
+    {day:"Monday",type:"rest",label:"Rest Day",isTraining:false,hasTimer:false,desc:"Full rest. 💧 Weigh-in morning."},
+    {day:"Tuesday",type:"run",label:"Run Intervals + Strength 1",isTraining:true,hasTimer:true,desc:"MORNING — Run intervals (hard day)\nWarm-up: Hip flexor stretch 30s each side · Cat-cow 10\nRun 4 min · Walk 2 min · 7 rounds · Metronome 178 BPM\n\nEVENING — Strength 1 · Upper + Core (~30 min)\nChest Press 3×12 @7kg (try 8kg set 1)\nBand Lat Pulldown 3×15\nOverhead Press 3×12 @6kg\nDead Bug 3×15 slow\nPlank 3× hold (aim 60s+)\nDead Hang 3× hold (build toward 20–25s)",workout:{name:"Week 12 — Run",run:240,walk:120,rounds:7,bpm:178}},
+    {day:"Wednesday",type:"bike",label:"Bike + Strength 2",isTraining:true,hasTimer:false,desc:"MORNING — Bike active recovery 🚴\nNordicTrack · 40 min · HR 120–130\n\nEVENING — Strength 2 · Posterior Chain + LEFT LEG (~35 min)\nRDL 3×12 @ bar+7kg each side\nElevated Single-Leg Glute Bridge: 3×12 left, 3×12 double right\nClamshells 3×15 each + 4th set LEFT\nBanded Lateral Walk 3×15 each\nBird Dog 3×12 each"},
+    {day:"Thursday",type:"run",label:"Easy Run",isTraining:true,hasTimer:'easy',easyMins:32,desc:"TARGET: 6 km · aerobic base\nHR CAP 135 bpm — walk if it climbs past 135, resume under 125.",workout:{name:"Week 12 — Easy Run"}},
+    {day:"Friday",type:"strength",label:"Strength 3",isTraining:true,hasTimer:false,desc:"Strength 3 · Full Body + LEFT LEG (~35 min)\nGoblet Squat 3×12 @6kg (try 7kg set 1)\nReverse Lunge 3×12 each — extra set LEFT\nMarching Glute Bridge → single-leg attempts if ready\nSide Leg Lift 3×20 each\nPelvic Tilt 15 reps\nPlank 3× hold (aim 60s+)"},
+    {day:"Saturday",type:"rest",label:"Free / Optional",isTraining:false,hasTimer:false,desc:"Free day — extra movement or rest. 🖼️"},
+    {day:"Sunday",type:"run",label:"Long Run",isTraining:true,hasTimer:'easy',easyMins:41,desc:"TARGET: 7.5 km\nHR CAP 135 bpm — non-negotiable. Steady, patient effort.\nCheck in with the left knee before and after — always the deciding vote.",workout:{name:"Week 12 — Long Run"}}
+  ]},
+  // WEEK 13
+  {label:"Week 13 — Recovery Week",phase:"Phase 3 — Consolidate",days:[
+    {day:"Monday",type:"rest",label:"Rest Day",isTraining:false,hasTimer:false,desc:"Full rest. 💧 Weigh-in morning.\nEvery 4th week is lighter on purpose — let the body absorb."},
+    {day:"Tuesday",type:"run",label:"Run Intervals + Strength 1",isTraining:true,hasTimer:true,desc:"MORNING — Run intervals (lighter)\nRun 4 min · Walk 2 min · 5 rounds · Metronome 178 BPM\n\nEVENING — Strength 1 · Upper + Core (~25 min, lighter)\nHold weights steady this week\nChest Press 3×10 @7kg\nBand Lat Pulldown 3×10\nOverhead Press 3×10 @6kg\nDead Bug 3×12\nPlank 3× hold (comfortable, not max)\nDead Hang 3× hold",workout:{name:"Week 13 — Run",run:240,walk:120,rounds:5,bpm:178}},
+    {day:"Wednesday",type:"bike",label:"Bike + Strength 2",isTraining:true,hasTimer:false,desc:"MORNING — Bike easy 🚴\nNordicTrack · 30 min · HR 115–125\n\nEVENING — Strength 2 · Posterior Chain + LEFT LEG (~25 min)\nRDL 3×10 @ bar+6kg each side (back off slightly)\nElevated Single-Leg Glute Bridge: 3×10 left, 3×10 double right\nClamshells 3×12 each + 4th set LEFT\nBanded Lateral Walk 3×12 each\nBird Dog 3×10 each"},
+    {day:"Thursday",type:"run",label:"Easy Run",isTraining:true,hasTimer:'easy',easyMins:26,desc:"TARGET: 5 km · shorter, recovery week\nHR CAP 135 bpm — keep it genuinely easy this week.",workout:{name:"Week 13 — Easy Run"}},
+    {day:"Friday",type:"strength",label:"Strength 3",isTraining:true,hasTimer:false,desc:"Strength 3 · Full Body + LEFT LEG (~25 min, lighter)\nGoblet Squat 3×10 @6kg\nReverse Lunge 3×8 each — extra set LEFT\nMarching Glute Bridge 3×12\nSide Leg Lift 3×12 each\nPelvic Tilt 15 reps\nPlank 3× hold"},
+    {day:"Saturday",type:"rest",label:"Free / Optional",isTraining:false,hasTimer:false,desc:"Free day — lean toward rest this week. 🖼️"},
+    {day:"Sunday",type:"run",label:"Long Run",isTraining:true,hasTimer:'easy',easyMins:35,desc:"TARGET: 6.3 km · recovery-week long run, shorter than last week's 7.5 on purpose\nHR CAP 135 bpm — this week is about absorbing, not building.",workout:{name:"Week 13 — Long Run"}}
   ]}
 ];
 
@@ -474,10 +515,18 @@ function tone(freq,dur,vol=0.5,type='square',delay=0){
   const t=ctx.currentTime+delay;g.gain.setValueAtTime(0,t);g.gain.linearRampToValueAtTime(vol,t+0.01);
   g.gain.exponentialRampToValueAtTime(0.001,t+dur);o.start(t);o.stop(t+dur+0.05);}catch(e){}
 }
+// Crisp metronome click — holds full volume for the whole tick, then a fast cutoff.
+// No long exponential fade, so every beat is equally loud and audible outdoors.
+function click(freq,vol,dur){
+  try{const ctx=getCtx(),o=ctx.createOscillator(),g=ctx.createGain();
+  o.connect(g);g.connect(ctx.destination);o.frequency.value=freq;o.type='square';
+  const t=ctx.currentTime;g.gain.setValueAtTime(vol,t);g.gain.setValueAtTime(vol,t+dur);
+  g.gain.linearRampToValueAtTime(0,t+dur+0.008);o.start(t);o.stop(t+dur+0.02);}catch(e){}
+}
 function beepRun(){tone(523,.12,.7,'square',0);tone(659,.12,.7,'square',.14);tone(880,.35,.9,'square',.28);}
 function beepWalk(){tone(659,.12,.6,'square',0);tone(440,.35,.8,'square',.14);}
 function beepDone(){tone(523,.1,.6,'square',0);tone(659,.1,.6,'square',.12);tone(784,.1,.6,'square',.24);tone(1047,.5,.8,'square',.36);}
-function beepTick(){tone(880,.07,.5,'square');}
+function beepTick(){click(1000,0.9,0.05);}
 function beepMetronome(){tone(1200,.04,.2,'sine');}
 
 function startMetronome(bpm){
@@ -526,7 +575,15 @@ function confirmResetWeek(){
     localStorage.removeItem(getDoneKey(viewingWeek));renderPlan();
   }
 }
-function getDoneKey(w){return `tatiana_done_w${w}`;}
+function getDoneKey(w){
+  // Keyed on the week's label text, not its array index.
+  // Array position shifts whenever old weeks are removed (as happened going
+  // from Weeks 5-8 to 7-10, and now 8-10) — a label-based key means a past
+  // week's stored progress can never bleed into a different week after a
+  // renumbering, which is the bug that hit the Week 1-4 removal.
+  const lbl=(WEEKS[w]&&WEEKS[w].label)?WEEKS[w].label:('idx'+w);
+  return `tatiana_done_${lbl.replace(/[^a-zA-Z0-9]/g,'_')}`;
+}
 function getDoneDays(w){return JSON.parse(localStorage.getItem(getDoneKey(w))||'[]');}
 function saveDoneDay(w,d){const days=getDoneDays(w);if(!days.includes(d)){days.push(d);localStorage.setItem(getDoneKey(w),JSON.stringify(days));}}
 function getTrainingDays(w){return WEEKS[w].days.map((d,i)=>d.isTraining&&d.hasTimer!=='easy'?i:-1).filter(i=>i>=0);}
@@ -586,7 +643,9 @@ function renderPlan(){
       }
     } else {
       const isDoneState=isDone?' done-state':'';
+      const timerBtn=session.type==='strength'?`<button class="btn-repeat" onclick="openHoldTimer(30,'HOLD');event.stopPropagation();">⏱ Hold timer</button>`:'';
       actions=`<button class="btn-done-full${isDoneState}" onclick="quickDone(${idx},event)">${isDone?'✅ Done':'✓ Mark as done'}</button>
+        ${timerBtn}
         <button class="btn-repeat" onclick="logExtra(${idx},event)">+ Log extra session</button>`;
     }
     card.innerHTML=`
@@ -676,6 +735,53 @@ function completeEasyRun(){
 function closeEasyTimer(){
   clearInterval(easyTimer);easyRunning=false;
   document.getElementById('easyTimerScreen').classList.remove('show');
+  releaseWakeLock();
+}
+
+// ═══ HOLD TIMER (plank, dead hang, timed holds) ═══
+let holdTimer=null,holdRunning=false,holdSecs=30,holdLeft=30;
+function openHoldTimer(secs,title){
+  holdSecs=secs;holdLeft=secs;holdRunning=false;
+  document.getElementById('holdTimerTitle').textContent='⏱ '+(title||'HOLD');
+  document.getElementById('holdTimeDisplay').textContent=fmtT(holdLeft);
+  document.getElementById('holdMainBtn').textContent='▶';
+  // preset buttons let you pick the hold length for whatever you can manage today
+  const presets=[10,15,20,30,45,60];
+  document.getElementById('holdPresetRow').innerHTML=presets.map(p=>
+    `<button class="hold-preset${p===secs?' active':''}" onclick="setHoldPreset(${p})">${p}s</button>`).join('');
+  document.getElementById('holdTimerScreen').classList.add('show');
+  requestWakeLock();
+}
+function setHoldPreset(p){
+  clearInterval(holdTimer);holdRunning=false;holdSecs=p;holdLeft=p;
+  document.getElementById('holdTimeDisplay').textContent=fmtT(holdLeft);
+  document.getElementById('holdMainBtn').textContent='▶';
+  document.querySelectorAll('.hold-preset').forEach(b=>b.classList.toggle('active',b.textContent===p+'s'));
+}
+function toggleHoldTimer(){
+  if(!holdRunning){
+    holdRunning=true;document.getElementById('holdMainBtn').textContent='⏸';
+    beepTick();
+    holdTimer=setInterval(()=>{
+      holdLeft--;
+      document.getElementById('holdTimeDisplay').textContent=fmtT(Math.max(0,holdLeft));
+      if(holdLeft<=3&&holdLeft>0)beepTick();
+      if(holdLeft<=0){clearInterval(holdTimer);holdRunning=false;beepDone();
+        speak('Done! Rest now.',300);document.getElementById('holdMainBtn').textContent='▶';holdLeft=holdSecs;
+        setTimeout(()=>{document.getElementById('holdTimeDisplay').textContent=fmtT(holdSecs);},1500);}
+    },1000);
+  } else {
+    holdRunning=false;clearInterval(holdTimer);document.getElementById('holdMainBtn').textContent='▶';
+  }
+}
+function resetHoldTimer(){
+  clearInterval(holdTimer);holdRunning=false;holdLeft=holdSecs;
+  document.getElementById('holdTimeDisplay').textContent=fmtT(holdSecs);
+  document.getElementById('holdMainBtn').textContent='▶';
+}
+function closeHoldTimer(){
+  clearInterval(holdTimer);holdRunning=false;
+  document.getElementById('holdTimerScreen').classList.remove('show');
   releaseWakeLock();
 }
 
