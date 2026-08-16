@@ -424,65 +424,65 @@ const EXERCISES=[
 
 // ═══ WEEK PLANS ═══
 const WEEKS=[
-  // WEEK 8
-  {label:"Week 8 — Building Load",phase:"Phase 2 — Build the engine",days:[
-    {day:"Monday",type:"rest",label:"Rest Day",isTraining:false,hasTimer:false,desc:"Full rest. Recovery is where muscle is built. 💧\nWeigh-in morning — one data point, no drama."},
-    {day:"Tuesday",type:"run",label:"Run Intervals + Strength 1",isTraining:true,hasTimer:true,desc:"MORNING — Run intervals (hard day, back to full volume)\nWarm-up: Hip flexor stretch 30s each side · Cat-cow 10\nRun 3 min · Walk 2 min · 6 rounds · Metronome 175 BPM\nPush the effort — recovery week is behind you.\n\nEVENING — Strength 1 · Upper + Core (~30 min)\nRest 60–90s between sets · use the ⏱ hold timer\nChest Press 3×12 @6kg\nBand Lat Pulldown 3×12\nOverhead Press 3×12 @5kg\nDead Bug 3×12 slow\nPlank 3× hold (aim to beat Week 6's best)\nDead Hang 3× hold (build past 10s)",workout:{name:"Week 8 — Run",run:180,walk:120,rounds:6,bpm:175}},
-    {day:"Wednesday",type:"bike",label:"Bike + Strength 2",isTraining:true,hasTimer:false,desc:"MORNING — Bike active recovery 🚴\nNordicTrack · 35–40 min · HR 120–130 (push resistance to reach it)\n\nEVENING — Strength 2 · Posterior Chain + LEFT LEG (~30 min)\nThis is your most important session for the DEXA gap.\nRDL 3×12 @ bar+5kg each side\nDouble-Leg Glute Bridge 3×15 (squeeze glutes at top)\nClamshells 3×15 each — 4th set on LEFT only\nBanded Lateral Walk 3×12 each direction\nBird Dog 3×10 each side"},
-    {day:"Thursday",type:"run",label:"Easy Run",isTraining:true,hasTimer:'easy',easyMins:24,desc:"TARGET: 4 km · aerobic base\nHR CAP 135 bpm — walk if it climbs past 135, resume under 125.\nLight quick steps, short strides. Conversation test: full sentences while running.",workout:{name:"Week 8 — Easy Run"}},
-    {day:"Friday",type:"strength",label:"Strength 3",isTraining:true,hasTimer:false,desc:"Strength 3 · Full Body + LEFT LEG (~30 min)\nRest 60–90s between sets · use the ⏱ hold timer\nGoblet Squat 3×12 @4kg\nReverse Lunge 3×10 each — extra set on LEFT\nMarching Glute Bridge 3×12\nSide Leg Lift 3×15 each\nPelvic Tilt 15 reps\nPlank 3× hold"},
-    {day:"Saturday",type:"rest",label:"Free / Optional",isTraining:false,hasTimer:false,desc:"Free day. Extra walk, museum, or full rest — your call. 🖼️"},
-    {day:"Sunday",type:"run",label:"Long Run",isTraining:true,hasTimer:'easy',easyMins:28,desc:"TARGET: 5 km · long run of the week\nHR CAP 135 bpm — non-negotiable. Walk breaks to stay in zone.\nCarry vest, fill only what you'll drink. Check left knee before/after.\nGap to Thursday narrowed on purpose — safer ramp for the left leg.",workout:{name:"Week 8 — Long Run"}}
-  ]},
-  // WEEK 9
-  {label:"Week 9 — Progressive Overload",phase:"Phase 2 — Build the engine",days:[
+  // WEEK 14 — Strength now handled in separate app. This app: running + bike only.
+  {label:"Week 14 — Rebuild",phase:"Phase 4 — Toward 10K",days:[
     {day:"Monday",type:"rest",label:"Rest Day",isTraining:false,hasTimer:false,desc:"Full rest. 💧 Weigh-in morning."},
-    {day:"Tuesday",type:"run",label:"Run Intervals + Strength 1",isTraining:true,hasTimer:true,desc:"MORNING — Run intervals (hard day)\nWarm-up: Hip flexor stretch 30s each side · Cat-cow 10\nRun 3 min · Walk 2 min · 7 rounds · Metronome 175 BPM\n\nEVENING — Strength 1 · Upper + Core (~30 min)\nRest 60–90s · progressive overload week\nChest Press 3×12 @6kg (try 3×14 if last set felt easy)\nBand Lat Pulldown 3×12\nOverhead Press 3×12 @5kg\nDead Bug 3×14 slow\nPlank 3× hold (aim +5s vs Week 8)\nDead Hang 3× hold (build toward 12–15s)",workout:{name:"Week 9 — Run",run:180,walk:120,rounds:7,bpm:175}},
-    {day:"Wednesday",type:"bike",label:"Bike + Strength 2",isTraining:true,hasTimer:false,desc:"MORNING — Bike active recovery 🚴\nNordicTrack · 40 min · HR 120–130\n\nEVENING — Strength 2 · Posterior Chain + LEFT LEG (~30 min)\nRDL 3×12 @ bar+6kg each side (up 1kg/side — challenge)\nDouble-Leg Glute Bridge 3×15\nClamshells 3×15 each + 4th set LEFT (add light band)\nBanded Lateral Walk 3×14 each direction\nBird Dog 3×10 each side"},
-    {day:"Thursday",type:"run",label:"Easy Run",isTraining:true,hasTimer:'easy',easyMins:26,desc:"TARGET: 4.5 km · aerobic base\nHR CAP 135 bpm — walk if it climbs past 135, resume under 125.\nTall spine, lower abs engaged.",workout:{name:"Week 9 — Easy Run"}},
-    {day:"Friday",type:"strength",label:"Strength 3",isTraining:true,hasTimer:false,desc:"Strength 3 · Full Body + LEFT LEG (~30 min)\nGoblet Squat 3×12 @5kg (up from 4kg — challenge)\nReverse Lunge 3×10 each — extra set LEFT\nMarching Glute Bridge 3×14\nSide Leg Lift 3×15 each\nPelvic Tilt 15 reps\nPlank 3× hold"},
-    {day:"Saturday",type:"rest",label:"Free / Optional",isTraining:false,hasTimer:false,desc:"Free day — extra movement or rest. 🖼️"},
-    {day:"Sunday",type:"run",label:"Long Run",isTraining:true,hasTimer:'easy',easyMins:31,desc:"TARGET: 5.5 km · long run of the week\nHR CAP 135 bpm — non-negotiable, walk to reset under 125.\nSteady effort, check in with the left knee.",workout:{name:"Week 9 — Long Run"}}
+    {day:"Tuesday",type:"run",label:"Run Intervals",isTraining:true,hasTimer:true,desc:"Warm-up: Hip flexor stretch 30s each side · Cat-cow 10\nRun 4 min · Walk 2 min · 7 rounds · Metronome 178 BPM\nPush the effort — this is your hard day.",workout:{name:"Week 14 — Run",run:240,walk:120,rounds:7,bpm:178}},
+    {day:"Wednesday",type:"bike",label:"Bike · Recovery",isTraining:true,hasTimer:false,desc:"Active recovery 🚴\nNordicTrack · 40 min · HR 120–130"},
+    {day:"Thursday",type:"run",label:"Easy Run",isTraining:true,hasTimer:'easy',easyMins:33,desc:"TARGET: 6 km · aerobic base\nHR CAP 135 bpm — walk if it climbs past 135, resume under 125.",workout:{name:"Week 14 — Easy Run"}},
+    {day:"Friday",type:"bike",label:"Bike · Recovery",isTraining:true,hasTimer:false,desc:"Active recovery 🚴\nNordicTrack · 35 min · HR 115–125, easy"},
+    {day:"Saturday",type:"run",label:"4th Run · Easy",isTraining:true,hasTimer:'easy',easyMins:18,desc:"TARGET: 3.5 km · genuinely easy, HR CAP 130 bpm\nShort, frequent running — this is the run that builds durability.",workout:{name:"Week 14 — 4th Run"}},
+    {day:"Sunday",type:"run",label:"Long Run",isTraining:true,hasTimer:'easy',easyMins:44,desc:"TARGET: 8 km · rebuilding past last week's recovery dip\nHR CAP 135 bpm — non-negotiable. Walk breaks are a tool, not a failure.\nCheck in with the left knee before and after.",workout:{name:"Week 14 — Long Run"}}
   ]},
-  // WEEK 10
-  {label:"Week 10 — Pushing Forward",phase:"Phase 3 — Consolidate",days:[
+  // WEEK 15
+  {label:"Week 15 — Build",phase:"Phase 4 — Toward 10K",days:[
     {day:"Monday",type:"rest",label:"Rest Day",isTraining:false,hasTimer:false,desc:"Full rest. 💧 Weigh-in morning."},
-    {day:"Tuesday",type:"run",label:"Run Intervals + Strength 1",isTraining:true,hasTimer:true,desc:"MORNING — Run intervals (hard day)\nWarm-up: Hip flexor stretch 30s each side · Cat-cow 10\nRun 4 min · Walk 2 min · 6 rounds · Metronome 178 BPM\nCadence steps up to 178 — start round 1 relaxed.\n\nEVENING — Strength 1 · Upper + Core (~30 min)\nProgression week — challenge the loads\nChest Press 3×12 @7kg (up 1kg — challenge)\nBand Lat Pulldown 3×14\nOverhead Press 3×12 @5kg (try 6kg on set 1)\nDead Bug 3×14 slow\nPlank 3× hold (aim 50s+)\nDead Hang 3× hold (build toward 15–20s)",workout:{name:"Week 10 — Run",run:240,walk:120,rounds:6,bpm:178}},
-    {day:"Wednesday",type:"bike",label:"Bike + Strength 2",isTraining:true,hasTimer:false,desc:"MORNING — Bike active recovery 🚴\nNordicTrack · 40 min · HR 120–130\n\nEVENING — Strength 2 · Posterior Chain + LEFT LEG (~35 min)\nRDL 3×12 @ bar+6kg each side\nGlute Bridge → try first ELEVATED SINGLE-LEG on LEFT (foot on low step, small range) 3×8 left, 3×10 double right\nClamshells 3×15 each + 4th set LEFT\nBanded Lateral Walk 3×15 each\nBird Dog 3×12 each"},
-    {day:"Thursday",type:"run",label:"Easy Run",isTraining:true,hasTimer:'easy',easyMins:28,desc:"TARGET: 5 km · aerobic base\nHR CAP 135 bpm — walk if it climbs past 135, resume under 125.\nFirst part of the run should feel easier now — the aerobic base establishing. 💪",workout:{name:"Week 10 — Easy Run"}},
-    {day:"Friday",type:"strength",label:"Strength 3",isTraining:true,hasTimer:false,desc:"Strength 3 · Full Body + LEFT LEG (~35 min)\nGoblet Squat 3×12 @5kg (try 6kg set 1)\nReverse Lunge 3×12 each — extra set LEFT\nMarching Glute Bridge 3×15\nSide Leg Lift 3×20 each\nPelvic Tilt 15 reps\nPlank 3× hold (aim 50s+)"},
-    {day:"Saturday",type:"rest",label:"Free / Optional",isTraining:false,hasTimer:false,desc:"Free day — extra movement or rest. 🖼️"},
-    {day:"Sunday",type:"run",label:"Long Run",isTraining:true,hasTimer:'easy',easyMins:34,desc:"TARGET: 6 km · longest of the block so far\nHR CAP 135 bpm — non-negotiable. Steady, light quick steps.\n10km is still the goal — timeline now prioritizes the left knee over the calendar. 💪",workout:{name:"Week 10 — Long Run"}}
+    {day:"Tuesday",type:"run",label:"Run Intervals",isTraining:true,hasTimer:true,desc:"Warm-up: Hip flexor stretch 30s each side · Cat-cow 10\nRun 4 min · Walk 2 min · 7 rounds · Metronome 178 BPM",workout:{name:"Week 15 — Run",run:240,walk:120,rounds:7,bpm:178}},
+    {day:"Wednesday",type:"bike",label:"Bike · Recovery",isTraining:true,hasTimer:false,desc:"Active recovery 🚴\nNordicTrack · 40 min · HR 120–130"},
+    {day:"Thursday",type:"run",label:"Easy Run",isTraining:true,hasTimer:'easy',easyMins:35,desc:"TARGET: 6.5 km · aerobic base\nHR CAP 135 bpm — walk if it climbs past 135, resume under 125.",workout:{name:"Week 15 — Easy Run"}},
+    {day:"Friday",type:"bike",label:"Bike · Recovery",isTraining:true,hasTimer:false,desc:"Active recovery 🚴\nNordicTrack · 35 min · HR 115–125, easy"},
+    {day:"Saturday",type:"run",label:"4th Run · Easy",isTraining:true,hasTimer:'easy',easyMins:20,desc:"TARGET: 4 km · genuinely easy, HR CAP 130 bpm",workout:{name:"Week 15 — 4th Run"}},
+    {day:"Sunday",type:"run",label:"Long Run",isTraining:true,hasTimer:'easy',easyMins:47,desc:"TARGET: 8.5 km\nHR CAP 135 bpm — non-negotiable. Steady, patient effort.\nLeft knee is always the deciding vote on next week's target.",workout:{name:"Week 15 — Long Run"}}
   ]},
-  // WEEK 11
-  {label:"Week 11 — Steady Build",phase:"Phase 3 — Consolidate",days:[
-    {day:"Monday",type:"rest",label:"Rest Day",isTraining:false,hasTimer:false,desc:"Full rest. 💧 Weigh-in morning.\nCheck in honestly: left knee, right ankle — any change from last week's push?"},
-    {day:"Tuesday",type:"run",label:"Run Intervals + Strength 1",isTraining:true,hasTimer:true,desc:"MORNING — Run intervals (hard day)\nWarm-up: Hip flexor stretch 30s each side · Cat-cow 10\nRun 4 min · Walk 2 min · 7 rounds · Metronome 178 BPM\n\nEVENING — Strength 1 · Upper + Core (~30 min)\nChest Press 3×12 @7kg (try 3×14 if last set felt easy)\nBand Lat Pulldown 3×14\nOverhead Press 3×12 @6kg\nDead Bug 3×15 slow\nPlank 3× hold (aim 55s+)\nDead Hang 3× hold (build toward 20s)",workout:{name:"Week 11 — Run",run:240,walk:120,rounds:7,bpm:178}},
-    {day:"Wednesday",type:"bike",label:"Bike + Strength 2",isTraining:true,hasTimer:false,desc:"MORNING — Bike active recovery 🚴\nNordicTrack · 40 min · HR 120–130\n\nEVENING — Strength 2 · Posterior Chain + LEFT LEG (~35 min)\nRDL 3×12 @ bar+7kg each side (up 1kg/side — challenge)\nElevated Single-Leg Glute Bridge: 3×10 left, 3×12 double right\nClamshells 3×15 each + 4th set LEFT (add band if not already)\nBanded Lateral Walk 3×15 each\nBird Dog 3×12 each"},
-    {day:"Thursday",type:"run",label:"Easy Run",isTraining:true,hasTimer:'easy',easyMins:30,desc:"TARGET: 5.5 km · aerobic base\nHR CAP 135 bpm — walk if it climbs past 135, resume under 125.\nNotice how much of this now feels automatic vs conscious effort.",workout:{name:"Week 11 — Easy Run"}},
-    {day:"Friday",type:"strength",label:"Strength 3",isTraining:true,hasTimer:false,desc:"Strength 3 · Full Body + LEFT LEG (~35 min)\nGoblet Squat 3×12 @6kg (challenge — up from 5kg)\nReverse Lunge 3×12 each — extra set LEFT\nMarching Glute Bridge 3×15 → try single-leg attempt if ready\nSide Leg Lift 3×20 each\nPelvic Tilt 15 reps\nPlank 3× hold (aim 55s+)"},
-    {day:"Saturday",type:"rest",label:"Free / Optional",isTraining:false,hasTimer:false,desc:"Free day — extra movement or rest. 🖼️"},
-    {day:"Sunday",type:"run",label:"Long Run",isTraining:true,hasTimer:'easy',easyMins:37,desc:"TARGET: 6.7 km · steady growth, gap to Thursday kept modest\nHR CAP 135 bpm — non-negotiable. Walk breaks are a tool, not a failure.\nPatient pace toward 10km — no fixed date, the knee sets the schedule.",workout:{name:"Week 11 — Long Run"}}
-  ]},
-  // WEEK 12
-  {label:"Week 12 — Steady Build",phase:"Phase 3 — Consolidate",days:[
+  // WEEK 16
+  {label:"Week 16 — Build",phase:"Phase 4 — Toward 10K",days:[
     {day:"Monday",type:"rest",label:"Rest Day",isTraining:false,hasTimer:false,desc:"Full rest. 💧 Weigh-in morning."},
-    {day:"Tuesday",type:"run",label:"Run Intervals + Strength 1",isTraining:true,hasTimer:true,desc:"MORNING — Run intervals (hard day)\nWarm-up: Hip flexor stretch 30s each side · Cat-cow 10\nRun 4 min · Walk 2 min · 7 rounds · Metronome 178 BPM\n\nEVENING — Strength 1 · Upper + Core (~30 min)\nChest Press 3×12 @7kg (try 8kg set 1)\nBand Lat Pulldown 3×15\nOverhead Press 3×12 @6kg\nDead Bug 3×15 slow\nPlank 3× hold (aim 60s+)\nDead Hang 3× hold (build toward 20–25s)",workout:{name:"Week 12 — Run",run:240,walk:120,rounds:7,bpm:178}},
-    {day:"Wednesday",type:"bike",label:"Bike + Strength 2",isTraining:true,hasTimer:false,desc:"MORNING — Bike active recovery 🚴\nNordicTrack · 40 min · HR 120–130\n\nEVENING — Strength 2 · Posterior Chain + LEFT LEG (~35 min)\nRDL 3×12 @ bar+7kg each side\nElevated Single-Leg Glute Bridge: 3×12 left, 3×12 double right\nClamshells 3×15 each + 4th set LEFT\nBanded Lateral Walk 3×15 each\nBird Dog 3×12 each"},
-    {day:"Thursday",type:"run",label:"Easy Run",isTraining:true,hasTimer:'easy',easyMins:32,desc:"TARGET: 6 km · aerobic base\nHR CAP 135 bpm — walk if it climbs past 135, resume under 125.",workout:{name:"Week 12 — Easy Run"}},
-    {day:"Friday",type:"strength",label:"Strength 3",isTraining:true,hasTimer:false,desc:"Strength 3 · Full Body + LEFT LEG (~35 min)\nGoblet Squat 3×12 @6kg (try 7kg set 1)\nReverse Lunge 3×12 each — extra set LEFT\nMarching Glute Bridge → single-leg attempts if ready\nSide Leg Lift 3×20 each\nPelvic Tilt 15 reps\nPlank 3× hold (aim 60s+)"},
-    {day:"Saturday",type:"rest",label:"Free / Optional",isTraining:false,hasTimer:false,desc:"Free day — extra movement or rest. 🖼️"},
-    {day:"Sunday",type:"run",label:"Long Run",isTraining:true,hasTimer:'easy',easyMins:41,desc:"TARGET: 7.5 km\nHR CAP 135 bpm — non-negotiable. Steady, patient effort.\nCheck in with the left knee before and after — always the deciding vote.",workout:{name:"Week 12 — Long Run"}}
+    {day:"Tuesday",type:"run",label:"Run Intervals",isTraining:true,hasTimer:true,desc:"Warm-up: Hip flexor stretch 30s each side · Cat-cow 10\nRun 4 min · Walk 2 min · 8 rounds · Metronome 178 BPM\nLongest interval session yet — pace yourself into it.",workout:{name:"Week 16 — Run",run:240,walk:120,rounds:8,bpm:178}},
+    {day:"Wednesday",type:"bike",label:"Bike · Recovery",isTraining:true,hasTimer:false,desc:"Active recovery 🚴\nNordicTrack · 40 min · HR 120–130"},
+    {day:"Thursday",type:"run",label:"Easy Run",isTraining:true,hasTimer:'easy',easyMins:38,desc:"TARGET: 7 km · aerobic base\nHR CAP 135 bpm — walk if it climbs past 135, resume under 125.",workout:{name:"Week 16 — Easy Run"}},
+    {day:"Friday",type:"bike",label:"Bike · Recovery",isTraining:true,hasTimer:false,desc:"Active recovery 🚴\nNordicTrack · 35 min · HR 115–125, easy"},
+    {day:"Saturday",type:"run",label:"4th Run · Easy",isTraining:true,hasTimer:'easy',easyMins:22,desc:"TARGET: 4.5 km · genuinely easy, HR CAP 130 bpm",workout:{name:"Week 16 — 4th Run"}},
+    {day:"Sunday",type:"run",label:"Long Run",isTraining:true,hasTimer:'easy',easyMins:52,desc:"TARGET: 9.5 km · biggest jump of the block, right before recovery week\nHR CAP 135 bpm — non-negotiable. Fuel beforehand this time — small carb snack 30-45 min prior.\nStop and shorten if the knee says anything beyond its usual quiet awareness.",workout:{name:"Week 16 — Long Run"}}
   ]},
-  // WEEK 13
-  {label:"Week 13 — Recovery Week",phase:"Phase 3 — Consolidate",days:[
-    {day:"Monday",type:"rest",label:"Rest Day",isTraining:false,hasTimer:false,desc:"Full rest. 💧 Weigh-in morning.\nEvery 4th week is lighter on purpose — let the body absorb."},
-    {day:"Tuesday",type:"run",label:"Run Intervals + Strength 1",isTraining:true,hasTimer:true,desc:"MORNING — Run intervals (lighter)\nRun 4 min · Walk 2 min · 5 rounds · Metronome 178 BPM\n\nEVENING — Strength 1 · Upper + Core (~25 min, lighter)\nHold weights steady this week\nChest Press 3×10 @7kg\nBand Lat Pulldown 3×10\nOverhead Press 3×10 @6kg\nDead Bug 3×12\nPlank 3× hold (comfortable, not max)\nDead Hang 3× hold",workout:{name:"Week 13 — Run",run:240,walk:120,rounds:5,bpm:178}},
-    {day:"Wednesday",type:"bike",label:"Bike + Strength 2",isTraining:true,hasTimer:false,desc:"MORNING — Bike easy 🚴\nNordicTrack · 30 min · HR 115–125\n\nEVENING — Strength 2 · Posterior Chain + LEFT LEG (~25 min)\nRDL 3×10 @ bar+6kg each side (back off slightly)\nElevated Single-Leg Glute Bridge: 3×10 left, 3×10 double right\nClamshells 3×12 each + 4th set LEFT\nBanded Lateral Walk 3×12 each\nBird Dog 3×10 each"},
-    {day:"Thursday",type:"run",label:"Easy Run",isTraining:true,hasTimer:'easy',easyMins:26,desc:"TARGET: 5 km · shorter, recovery week\nHR CAP 135 bpm — keep it genuinely easy this week.",workout:{name:"Week 13 — Easy Run"}},
-    {day:"Friday",type:"strength",label:"Strength 3",isTraining:true,hasTimer:false,desc:"Strength 3 · Full Body + LEFT LEG (~25 min, lighter)\nGoblet Squat 3×10 @6kg\nReverse Lunge 3×8 each — extra set LEFT\nMarching Glute Bridge 3×12\nSide Leg Lift 3×12 each\nPelvic Tilt 15 reps\nPlank 3× hold"},
-    {day:"Saturday",type:"rest",label:"Free / Optional",isTraining:false,hasTimer:false,desc:"Free day — lean toward rest this week. 🖼️"},
-    {day:"Sunday",type:"run",label:"Long Run",isTraining:true,hasTimer:'easy',easyMins:35,desc:"TARGET: 6.3 km · recovery-week long run, shorter than last week's 7.5 on purpose\nHR CAP 135 bpm — this week is about absorbing, not building.",workout:{name:"Week 13 — Long Run"}}
+  // WEEK 17 — RECOVERY
+  {label:"Week 17 — Recovery Week",phase:"Phase 4 — Toward 10K",days:[
+    {day:"Monday",type:"rest",label:"Rest Day",isTraining:false,hasTimer:false,desc:"Full rest. 💧 Weigh-in morning.\nEvery 4th week is lighter on purpose — let the body absorb three build weeks."},
+    {day:"Tuesday",type:"run",label:"Run Intervals",isTraining:true,hasTimer:true,desc:"Warm-up: Hip flexor stretch 30s each side · Cat-cow 10\nRun 4 min · Walk 2 min · 5 rounds · Metronome 178 BPM\nLighter on purpose this week.",workout:{name:"Week 17 — Run",run:240,walk:120,rounds:5,bpm:178}},
+    {day:"Wednesday",type:"bike",label:"Bike · Recovery",isTraining:true,hasTimer:false,desc:"Easy 🚴\nNordicTrack · 30 min · HR 115–125"},
+    {day:"Thursday",type:"run",label:"Easy Run",isTraining:true,hasTimer:'easy',easyMins:28,desc:"TARGET: 5 km · shorter, recovery week\nHR CAP 135 bpm — keep it genuinely easy this week.",workout:{name:"Week 17 — Easy Run"}},
+    {day:"Friday",type:"bike",label:"Bike · Recovery",isTraining:true,hasTimer:false,desc:"Easy 🚴\nNordicTrack · 25 min · HR 110–120"},
+    {day:"Saturday",type:"run",label:"4th Run · Easy",isTraining:true,hasTimer:'easy',easyMins:15,desc:"TARGET: 3 km · recovery week, back off the 4th run too\nHR CAP 125 bpm. Skip if it's not feeling right — no pressure this week.",workout:{name:"Week 17 — 4th Run"}},
+    {day:"Sunday",type:"run",label:"Long Run",isTraining:true,hasTimer:'easy',easyMins:41,desc:"TARGET: 7.5 km · recovery-week long run, well below last week's 9.5 on purpose\nHR CAP 135 bpm — this week is about absorbing, not building.",workout:{name:"Week 17 — Long Run"}}
+  ]},
+  // WEEK 18
+  {label:"Week 18 — 10K Week",phase:"Phase 4 — Toward 10K",days:[
+    {day:"Monday",type:"rest",label:"Rest Day",isTraining:false,hasTimer:false,desc:"Full rest. 💧 Weigh-in morning."},
+    {day:"Tuesday",type:"run",label:"Run Intervals",isTraining:true,hasTimer:true,desc:"Warm-up: Hip flexor stretch 30s each side · Cat-cow 10\nRun 4 min · Walk 2 min · 8 rounds · Metronome 178–180 BPM",workout:{name:"Week 18 — Run",run:240,walk:120,rounds:8,bpm:180}},
+    {day:"Wednesday",type:"bike",label:"Bike · Recovery",isTraining:true,hasTimer:false,desc:"Active recovery 🚴\nNordicTrack · 40 min · HR 120–130"},
+    {day:"Thursday",type:"run",label:"Easy Run",isTraining:true,hasTimer:'easy',easyMins:39,desc:"TARGET: 7.5 km · aerobic base\nHR CAP 135 bpm — walk if it climbs past 135, resume under 125.",workout:{name:"Week 18 — Easy Run"}},
+    {day:"Friday",type:"bike",label:"Bike · Recovery",isTraining:true,hasTimer:false,desc:"Active recovery 🚴\nNordicTrack · 35 min · HR 115–125, easy"},
+    {day:"Saturday",type:"run",label:"4th Run · Easy",isTraining:true,hasTimer:'easy',easyMins:24,desc:"TARGET: 5 km · genuinely easy, HR CAP 130 bpm",workout:{name:"Week 18 — 4th Run"}},
+    {day:"Sunday",type:"run",label:"Long Run · 10K 🎉",isTraining:true,hasTimer:'easy',easyMins:55,desc:"TARGET: 10 km — the milestone!\nHR CAP 135 bpm — non-negotiable. Fuel beforehand — small carb snack 30-45 min prior.\nPatient pace. Walk breaks are a tool. Enjoy this one — it's been a long, well-earned road here.",workout:{name:"Week 18 — Long Run"}}
+  ]},
+  // WEEK 19
+  {label:"Week 19 — Consolidate",phase:"Phase 4 — Toward 10K",days:[
+    {day:"Monday",type:"rest",label:"Rest Day",isTraining:false,hasTimer:false,desc:"Full rest. 💧 Weigh-in morning."},
+    {day:"Tuesday",type:"run",label:"Run Intervals",isTraining:true,hasTimer:true,desc:"Warm-up: Hip flexor stretch 30s each side · Cat-cow 10\nRun 4 min · Walk 2 min · 8 rounds · Metronome 180 BPM",workout:{name:"Week 19 — Run",run:240,walk:120,rounds:8,bpm:180}},
+    {day:"Wednesday",type:"bike",label:"Bike · Recovery",isTraining:true,hasTimer:false,desc:"Active recovery 🚴\nNordicTrack · 40 min · HR 120–130"},
+    {day:"Thursday",type:"run",label:"Easy Run",isTraining:true,hasTimer:'easy',easyMins:40,desc:"TARGET: 7.5 km · aerobic base, holding steady\nHR CAP 135 bpm — walk if it climbs past 135, resume under 125.",workout:{name:"Week 19 — Easy Run"}},
+    {day:"Friday",type:"bike",label:"Bike · Recovery",isTraining:true,hasTimer:false,desc:"Active recovery 🚴\nNordicTrack · 35 min · HR 115–125, easy"},
+    {day:"Saturday",type:"run",label:"4th Run · Easy",isTraining:true,hasTimer:'easy',easyMins:25,desc:"TARGET: 5 km · genuinely easy, HR CAP 130 bpm",workout:{name:"Week 19 — 4th Run"}},
+    {day:"Sunday",type:"run",label:"Long Run",isTraining:true,hasTimer:'easy',easyMins:58,desc:"TARGET: 10.5 km · consolidating past the 10K milestone\nHR CAP 135 bpm — non-negotiable. Fuel beforehand.\nThis is now genuinely marathon-building territory. Steady does it.",workout:{name:"Week 19 — Long Run"}}
   ]}
 ];
 
