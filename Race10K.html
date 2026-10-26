@@ -1,0 +1,1026 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<title>Tatiana — 10K Race Prep</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root{--run:#E94560;--walk:#4ECDC4;--strength:#F9CA24;--bike:#6C63FF;--dark:#0A0A0F;--card:#14141E;--card2:#1C1C2A;--text:#F0F0F5;--muted:#9A9AB8;--border:#2E2E44;--green:#27AE60;}
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
+body{background:var(--dark);color:var(--text);font-family:'DM Sans',sans-serif;min-height:100vh;padding-bottom:50px;overflow-x:hidden;}
+.bg-ring{position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);width:600px;height:600px;border-radius:50%;opacity:0.04;background:var(--run);transition:background 0.8s;pointer-events:none;z-index:0;}
+body.run-active .bg-ring{background:var(--run);animation:pulse 2s ease-in-out infinite;}
+body.walk-active .bg-ring{background:var(--walk);animation:pulse 2s ease-in-out infinite;}
+@keyframes pulse{0%,100%{transform:translate(-50%,-50%) scale(1);opacity:0.04}50%{transform:translate(-50%,-50%) scale(1.15);opacity:0.09}}
+.page{position:relative;z-index:1;max-width:440px;margin:0 auto;padding:0 16px;}
+.app-header{display:flex;justify-content:space-between;align-items:center;padding:20px 0 10px;}
+.logo{font-family:'Bebas Neue';font-size:20px;letter-spacing:4px;color:var(--run);}
+.phase-label{font-size:10px;letter-spacing:2px;color:var(--muted);text-transform:uppercase;}
+.week-bar{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:12px 16px;margin-bottom:10px;}
+.week-bar-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;}
+.week-bar-label{font-size:10px;letter-spacing:2px;color:var(--muted);text-transform:uppercase;}
+.week-bar-right{display:flex;align-items:center;gap:8px;}
+.week-select{background:var(--card2);border:1px solid var(--border);color:var(--text);font-family:'Bebas Neue';font-size:15px;letter-spacing:2px;padding:4px 10px;border-radius:8px;cursor:pointer;outline:none;}
+.week-select option{background:var(--card2);}
+.btn-reset-week{padding:4px 10px;border-radius:8px;border:1px solid var(--muted);background:transparent;color:var(--muted);font-size:11px;cursor:pointer;font-family:'DM Sans';}
+.week-progress-row{display:flex;align-items:center;gap:10px;}
+.week-progress-bar{flex:1;height:5px;background:var(--card2);border-radius:3px;overflow:hidden;}
+.week-progress-fill{height:100%;background:var(--run);border-radius:3px;transition:width 0.5s;}
+.week-progress-text{font-size:11px;color:var(--muted);white-space:nowrap;}
+.advance-banner{background:rgba(78,205,196,0.08);border:1px solid rgba(78,205,196,0.25);border-radius:12px;padding:12px 14px;margin-bottom:12px;display:none;gap:10px;align-items:center;}
+.advance-banner.show{display:flex;}
+.advance-text{font-size:13px;color:var(--walk);flex:1;line-height:1.5;}
+.btn-advance{padding:8px 16px;border-radius:20px;border:1px solid var(--walk);background:transparent;color:var(--walk);font-size:12px;cursor:pointer;font-family:'DM Sans';white-space:nowrap;}
+.tabs{display:flex;gap:6px;margin-bottom:16px;}
+.tab{flex:1;padding:9px 4px;border-radius:12px;border:1px solid var(--border);background:var(--card);color:var(--muted);font-size:11px;letter-spacing:1px;text-transform:uppercase;cursor:pointer;text-align:center;font-family:'DM Sans';transition:all 0.2s;}
+.tab.active{background:var(--run);color:#fff;border-color:var(--run);}
+.week-plan{display:flex;flex-direction:column;gap:8px;}
+.day-card{background:var(--card);border:1px solid var(--border);border-radius:16px;overflow:hidden;transition:all 0.3s;}
+.day-card.today{border-color:var(--run);box-shadow:0 0 20px rgba(233,69,96,0.15);}
+.day-card.done{opacity:0.45;}
+.day-header{display:flex;justify-content:space-between;align-items:center;padding:14px 16px;cursor:pointer;}
+.day-left{display:flex;align-items:center;gap:10px;}
+.day-name{font-size:13px;font-weight:500;color:var(--text);}
+.type-badge{font-size:10px;letter-spacing:2px;text-transform:uppercase;padding:3px 10px;border-radius:20px;font-weight:500;}
+.badge-run{background:rgba(233,69,96,0.15);color:var(--run);}
+.badge-strength{background:rgba(249,202,36,0.15);color:var(--strength);}
+.badge-bike{background:rgba(108,99,255,0.15);color:var(--bike);}
+.badge-swim{background:rgba(78,205,196,0.15);color:var(--walk);}
+.badge-rest{background:rgba(85,85,112,0.15);color:var(--muted);}
+.today-pill{font-size:10px;letter-spacing:2px;color:var(--run);text-transform:uppercase;font-weight:500;}
+.day-body{padding:0 16px 16px;display:none;}
+.day-card.today .day-body,.day-card.expanded .day-body{display:block;}
+.day-desc{font-size:13px;color:var(--muted);line-height:1.7;margin-bottom:14px;font-style:italic;}
+.session-actions{display:flex;gap:8px;flex-wrap:wrap;}
+.btn-start{flex:1;padding:13px;border-radius:30px;border:none;background:var(--run);color:#fff;font-family:'Bebas Neue';font-size:16px;letter-spacing:3px;cursor:pointer;min-width:120px;}
+.btn-start:active{transform:scale(0.96);}
+.btn-start-timer{flex:1;padding:13px;border-radius:30px;border:none;background:var(--strength);color:var(--dark);font-family:'Bebas Neue';font-size:16px;letter-spacing:3px;cursor:pointer;}
+.btn-done-day{padding:13px 20px;border-radius:30px;border:1px solid var(--border);background:var(--card2);color:var(--muted);font-size:13px;cursor:pointer;white-space:nowrap;}
+.btn-done-day.done-state,.btn-done-full.done-state{border-color:var(--green);color:var(--green);}
+.btn-done-full{width:100%;padding:14px;border-radius:30px;border:1px solid var(--border);background:var(--card2);color:var(--muted);font-size:13px;cursor:pointer;}
+.btn-repeat{padding:8px 14px;border-radius:20px;border:1px solid var(--border);background:transparent;color:var(--muted);font-size:11px;cursor:pointer;margin-top:8px;}
+/* EASY RUN TIMER */
+.easy-timer-screen{display:none;position:fixed;inset:0;background:var(--dark);z-index:150;flex-direction:column;align-items:center;justify-content:center;gap:20px;padding:30px;}
+.easy-timer-screen.show{display:flex;}
+.easy-timer-title{font-family:'Bebas Neue';font-size:24px;letter-spacing:4px;color:var(--strength);}
+.easy-timer-display{font-family:'Bebas Neue';font-size:100px;line-height:1;color:var(--text);letter-spacing:4px;}
+.easy-timer-desc{font-size:14px;color:var(--muted);text-align:center;line-height:1.6;max-width:300px;}
+.easy-timer-controls{display:flex;gap:14px;align-items:center;}
+.btn-easy-main{width:80px;height:80px;border-radius:50%;border:none;background:var(--strength);color:var(--dark);font-size:28px;cursor:pointer;display:flex;align-items:center;justify-content:center;}
+.btn-easy-sec{width:52px;height:52px;border-radius:50%;border:1px solid var(--border);background:var(--card);color:var(--muted);font-size:18px;cursor:pointer;display:flex;align-items:center;justify-content:center;}
+.easy-progress-bar{width:100%;max-width:300px;height:6px;background:var(--card2);border-radius:3px;overflow:hidden;}
+.easy-progress-fill{height:100%;background:var(--strength);border-radius:3px;transition:width 1s linear;}
+.hold-timer-screen{display:none;position:fixed;inset:0;background:var(--dark);z-index:160;flex-direction:column;align-items:center;justify-content:center;gap:20px;padding:30px;}
+.hold-timer-screen.show{display:flex;}
+.hold-timer-title{font-family:'Bebas Neue';font-size:26px;letter-spacing:4px;color:var(--strength);text-align:center;}
+.hold-timer-display{font-family:'Bebas Neue';font-size:120px;line-height:1;color:var(--text);letter-spacing:4px;}
+.hold-timer-desc{font-size:14px;color:var(--muted);text-align:center;line-height:1.6;max-width:300px;}
+.hold-preset-row{display:flex;gap:10px;flex-wrap:wrap;justify-content:center;margin-top:6px;}
+.hold-preset{padding:8px 16px;border-radius:20px;border:1px solid var(--border);background:var(--card);color:var(--text);font-size:14px;cursor:pointer;}
+.hold-preset.active{background:var(--strength);color:var(--dark);border-color:var(--strength);}
+/* EXERCISE LIBRARY */
+.ex-section{margin-bottom:20px;}
+.ex-section-title{font-size:10px;letter-spacing:3px;color:var(--muted);text-transform:uppercase;margin-bottom:10px;}
+.ex-card{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:14px 16px;margin-bottom:8px;display:flex;align-items:center;gap:14px;cursor:pointer;}
+.ex-card:active{background:var(--card2);}
+.ex-icon{width:58px;height:58px;flex-shrink:0;border-radius:12px;background:var(--card2);display:flex;align-items:center;justify-content:center;}
+.ex-info{flex:1;}
+.ex-name{font-size:14px;font-weight:500;color:var(--text);margin-bottom:3px;}
+.ex-meta{font-size:11px;color:var(--muted);}
+.ex-tag{display:inline-block;font-size:9px;letter-spacing:2px;text-transform:uppercase;padding:2px 8px;border-radius:10px;margin-top:5px;}
+.ex-tag-warmup{background:rgba(78,205,196,0.15);color:var(--walk);}
+.ex-tag-posture{background:rgba(233,69,96,0.15);color:var(--run);}
+.ex-tag-strength{background:rgba(249,202,36,0.15);color:var(--strength);}
+.ex-overlay{display:none;position:fixed;inset:0;background:var(--dark);z-index:200;overflow-y:auto;}
+.ex-overlay.show{display:block;}
+.ex-overlay-inner{max-width:440px;margin:0 auto;padding:20px 16px 60px;}
+.ex-detail-title{font-family:'Bebas Neue';font-size:26px;letter-spacing:3px;color:var(--text);}
+.ex-detail-meta{font-size:11px;color:var(--muted);letter-spacing:2px;margin-top:2px;margin-bottom:18px;}
+.ex-illus-box{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:20px;margin-bottom:14px;display:flex;flex-direction:column;align-items:center;gap:12px;}
+.ex-phases{display:flex;gap:16px;justify-content:center;width:100%;}
+.ex-phase{display:flex;flex-direction:column;align-items:center;gap:6px;flex:1;}
+.ex-phase-lbl{font-size:9px;letter-spacing:3px;color:var(--run);text-transform:uppercase;}
+.ex-phase-desc{font-size:10px;color:var(--muted);text-align:center;line-height:1.4;}
+.ex-steps-box{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:16px;margin-bottom:12px;}
+.ex-steps-box h3{font-size:10px;letter-spacing:3px;color:var(--muted);text-transform:uppercase;margin-bottom:12px;}
+.ex-why{font-size:13px;color:var(--muted);line-height:1.7;margin-bottom:14px;}
+.ex-step{display:flex;gap:12px;margin-bottom:12px;align-items:flex-start;}
+.ex-step:last-child{margin-bottom:0;}
+.ex-step-n{width:26px;height:26px;border-radius:50%;background:var(--run);color:#fff;font-size:12px;font-weight:500;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px;}
+.ex-step-t{font-size:13px;color:var(--text);line-height:1.7;}
+.ex-tip{background:rgba(249,202,36,0.06);border:1px solid rgba(249,202,36,0.2);border-radius:12px;padding:14px;font-size:13px;color:var(--strength);line-height:1.7;}
+.ex-tip strong{display:block;font-size:10px;letter-spacing:3px;text-transform:uppercase;margin-bottom:6px;}
+/* TIMER */
+#timerScreen{display:none;}
+.timer-header{display:flex;align-items:center;gap:12px;padding:20px 0 14px;}
+.btn-back{width:40px;height:40px;border-radius:50%;border:1px solid var(--border);background:var(--card);color:var(--text);font-size:18px;cursor:pointer;display:flex;align-items:center;justify-content:center;}
+.timer-title{font-family:'Bebas Neue';font-size:18px;letter-spacing:3px;}
+.t-phase{display:inline-block;font-family:'Bebas Neue';font-size:12px;letter-spacing:4px;padding:5px 18px;border-radius:30px;background:var(--run);color:#fff;transition:all 0.5s;}
+body.walk-active .t-phase{background:var(--walk);color:var(--dark);}
+body.idle .t-phase{background:var(--card2);color:var(--muted);}
+.timer-center{display:flex;justify-content:center;margin:14px 0;}
+.timer-wrap{position:relative;width:240px;height:240px;}
+.timer-svg{position:absolute;top:0;left:0;transform:rotate(-90deg);}
+.t-track{fill:none;stroke:var(--card2);stroke-width:8;}
+.t-prog{fill:none;stroke:var(--run);stroke-width:8;stroke-linecap:round;stroke-dasharray:691;stroke-dashoffset:0;transition:stroke-dashoffset 1s linear,stroke 0.5s;}
+body.walk-active .t-prog{stroke:var(--walk);}
+.timer-inner{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;}
+.t-time{font-family:'Bebas Neue';font-size:68px;line-height:1;letter-spacing:2px;color:var(--run);transition:color 0.5s;}
+body.walk-active .t-time{color:var(--walk);}
+body.idle .t-time{color:var(--text);}
+.t-lbl{font-size:10px;letter-spacing:3px;color:var(--muted);text-transform:uppercase;}
+.stats-row{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-bottom:14px;}
+.stat-card{background:var(--card2);border:1px solid var(--border);border-radius:12px;padding:12px 8px;text-align:center;}
+.stat-val{font-family:'Bebas Neue';font-size:24px;letter-spacing:1px;}
+.stat-lbl{font-size:10px;letter-spacing:2px;color:var(--muted);text-transform:uppercase;margin-top:2px;}
+.lap-dots{display:flex;gap:5px;flex-wrap:wrap;justify-content:center;margin-bottom:16px;padding:0 8px;}
+.dot{width:9px;height:9px;border-radius:50%;background:var(--card2);border:1px solid var(--border);transition:all 0.3s;}
+.dot.run-done{background:var(--run);border-color:var(--run);}
+.dot.walk-done{background:var(--walk);border-color:var(--walk);}
+.dot.active{transform:scale(1.4);}
+.controls{display:flex;gap:12px;align-items:center;justify-content:center;margin-bottom:14px;}
+.btn-main{width:72px;height:72px;border-radius:50%;border:none;background:var(--run);color:#fff;font-size:24px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all 0.2s;box-shadow:0 0 24px rgba(233,69,96,0.4);}
+body.walk-active .btn-main{background:var(--walk);box-shadow:0 0 24px rgba(78,205,196,0.4);}
+.btn-main:active{transform:scale(0.94);}
+.btn-sec{width:48px;height:48px;border-radius:50%;border:1px solid var(--border);background:var(--card);color:var(--muted);font-size:16px;cursor:pointer;display:flex;align-items:center;justify-content:center;}
+.btn-photo{padding:8px 16px;border-radius:20px;border:1px solid var(--strength);background:transparent;color:var(--strength);font-size:12px;cursor:pointer;font-family:'DM Sans';}
+.next-preview{text-align:center;font-size:11px;color:var(--muted);letter-spacing:2px;text-transform:uppercase;margin-bottom:10px;}
+.next-preview span{color:var(--text);}
+/* COMPLETE */
+.complete-overlay{display:none;position:fixed;inset:0;background:var(--dark);z-index:100;flex-direction:column;align-items:center;justify-content:center;gap:16px;padding:30px;text-align:center;}
+.complete-overlay.show{display:flex;}
+.c-title{font-family:'Bebas Neue';font-size:52px;color:var(--run);letter-spacing:4px;}
+.c-time{font-family:'Bebas Neue';font-size:52px;color:var(--walk);}
+.c-sub{font-size:14px;color:var(--muted);line-height:1.7;}
+.btn-done-final{padding:16px 48px;border-radius:30px;border:2px solid var(--walk);background:transparent;color:var(--walk);font-family:'Bebas Neue';font-size:20px;letter-spacing:4px;cursor:pointer;}
+.btn-done-final.synced{border-color:var(--green);color:var(--green);}
+.btn-done-final.syncing{border-color:var(--strength);color:var(--strength);}
+.btn-back-plan{padding:12px 32px;border-radius:30px;border:1px solid var(--border);background:var(--card);color:var(--muted);font-size:13px;cursor:pointer;}
+/* LOG */
+.log-panel{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:16px;}
+.log-panel h3{font-size:10px;letter-spacing:3px;color:var(--muted);text-transform:uppercase;margin-bottom:12px;}
+.log-streak{font-size:12px;color:var(--muted);margin-bottom:10px;}
+.log-streak strong{font-family:'Bebas Neue';font-size:18px;color:var(--run);}
+.log-empty{font-size:12px;color:var(--muted);text-align:center;padding:8px 0;line-height:1.6;}
+.log-entry{display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid var(--border);animation:fadeIn 0.3s ease;}
+.log-entry:last-child{border-bottom:none;}
+.log-left{display:flex;flex-direction:column;gap:2px;}
+.log-name{font-size:13px;color:var(--text);font-weight:500;}
+.log-date{font-size:11px;color:var(--muted);}
+.log-time{font-family:'Bebas Neue';font-size:18px;color:var(--walk);letter-spacing:1px;}
+@keyframes fadeIn{from{opacity:0;transform:translateY(-5px)}to{opacity:1;transform:translateY(0)}}
+</style>
+</head>
+<body class="idle">
+<div class="bg-ring"></div>
+
+<!-- PLAN SCREEN -->
+<div class="page" id="planScreen">
+  <div class="app-header">
+    <div class="logo">TATIANA</div>
+    <div class="phase-label" id="phaseLabel">Phase 1 — Build the habit</div>
+  </div>
+  <div class="week-bar">
+    <div class="week-bar-top">
+      <div class="week-bar-label">Current week</div>
+      <div class="week-bar-right">
+        <select class="week-select" id="weekSelect" onchange="onWeekChange()"></select>
+        <button class="btn-reset-week" onclick="confirmResetWeek()">↺ Reset</button>
+      </div>
+    </div>
+    <div class="week-progress-row">
+      <div class="week-progress-bar"><div class="week-progress-fill" id="progressFill"></div></div>
+      <div class="week-progress-text" id="progressText"></div>
+    </div>
+  </div>
+  <div class="advance-banner" id="advanceBanner">
+    <div class="advance-text">🎉 Week complete! Ready for the next one?</div>
+    <button class="btn-advance" onclick="advanceWeek()">Next week →</button>
+  </div>
+  <div class="tabs">
+    <div class="tab active" onclick="showTab('plan')">Week</div>
+    <div class="tab" onclick="showTab('exercises')">Exercises</div>
+    <div class="tab" onclick="showTab('log')">History</div>
+  </div>
+  <div id="planTab"><div class="week-plan" id="weekPlan"></div></div>
+  <div id="exercisesTab" style="display:none;"></div>
+  <div id="logTab" style="display:none;">
+    <div class="log-panel">
+      <h3>🏅 Workout history</h3>
+      <div class="log-streak" id="logStreak"></div>
+      <div id="logList"><div class="log-empty">No workouts logged yet.</div></div>
+      <button onclick="exportCSV()" id="exportBtn" style="display:none;margin-top:14px;width:100%;padding:12px;border-radius:30px;border:1px solid var(--border);background:var(--card2);color:var(--muted);font-size:13px;cursor:pointer;">⬇ Export as CSV</button>
+    </div>
+  </div>
+</div>
+
+<!-- EASY RUN TIMER -->
+<div class="easy-timer-screen" id="easyTimerScreen">
+  <div class="easy-timer-title">🏃 EASY RUN</div>
+  <div class="easy-timer-display" id="easyTimeDisplay">20:00</div>
+  <div class="easy-progress-bar"><div class="easy-progress-fill" id="easyProgressFill" style="width:100%"></div></div>
+  <div class="easy-timer-desc" id="easyTimerDesc">Slow and steady. No walk breaks.<br>Pick landmarks, not the clock.<br>Feel your abs engage.</div>
+  <div class="easy-timer-controls">
+    <button class="btn-easy-sec" onclick="resetEasyTimer()">↺</button>
+    <button class="btn-easy-main" id="easyMainBtn" onclick="toggleEasyTimer()">▶</button>
+    <button class="btn-easy-sec" onclick="closeEasyTimer()">✕</button>
+  </div>
+</div>
+
+<!-- HOLD TIMER (plank, dead hang, timed holds) -->
+<div class="hold-timer-screen" id="holdTimerScreen">
+  <div class="hold-timer-title" id="holdTimerTitle">⏱ HOLD</div>
+  <div class="hold-timer-display" id="holdTimeDisplay">0:30</div>
+  <div class="hold-timer-desc" id="holdTimerDesc">Hold steady. Stop if form breaks.</div>
+  <div class="easy-timer-controls">
+    <button class="btn-easy-sec" onclick="resetHoldTimer()">↺</button>
+    <button class="btn-easy-main" id="holdMainBtn" onclick="toggleHoldTimer()">▶</button>
+    <button class="btn-easy-sec" onclick="closeHoldTimer()">✕</button>
+  </div>
+  <div class="hold-preset-row" id="holdPresetRow"></div>
+</div>
+
+<!-- EXERCISE OVERLAY -->
+<div class="ex-overlay" id="exOverlay">
+  <div class="ex-overlay-inner">
+    <div style="display:flex;align-items:center;gap:12px;margin-bottom:18px;">
+      <button class="btn-back" onclick="closeExercise()">←</button>
+      <div>
+        <div class="ex-detail-title" id="exTitle"></div>
+        <div class="ex-detail-meta" id="exMeta"></div>
+      </div>
+    </div>
+    <div id="exContent"></div>
+  </div>
+</div>
+
+<!-- INTERVAL TIMER SCREEN -->
+<div class="page" id="timerScreen">
+  <div class="timer-header">
+    <button class="btn-back" onclick="backToPlan()">←</button>
+    <div class="timer-title" id="timerTitle">RUN</div>
+  </div>
+  <div style="text-align:center;margin-bottom:4px;">
+    <div class="t-phase" id="tPhase">READY</div>
+  </div>
+  <div class="timer-center">
+    <div class="timer-wrap">
+      <svg class="timer-svg" width="240" height="240" viewBox="0 0 240 240">
+        <circle class="t-track" cx="120" cy="120" r="110"/>
+        <circle class="t-prog" id="tProg" cx="120" cy="120" r="110"/>
+      </svg>
+      <div class="timer-inner">
+        <div class="t-time" id="tTime">00</div>
+        <div class="t-lbl" id="tLbl">ready</div>
+      </div>
+    </div>
+  </div>
+  <div class="stats-row">
+    <div class="stat-card"><div class="stat-val" id="tRound">0</div><div class="stat-lbl">Round</div></div>
+    <div class="stat-card"><div class="stat-val" id="tTotal">00:00</div><div class="stat-lbl">Total</div></div>
+    <div class="stat-card"><div class="stat-val" id="tLeft">—</div><div class="stat-lbl">Left</div></div>
+  </div>
+  <div class="lap-dots" id="lapDots"></div>
+  <div class="controls">
+    <button class="btn-sec" onclick="resetTimer()">↺</button>
+    <button class="btn-main" id="mainBtn" onclick="toggleTimer()">▶</button>
+    <button class="btn-sec" onclick="skipInterval()">⏭</button>
+  </div>
+  <div class="next-preview" id="nextPreview">Press play to start</div>
+  <div style="text-align:center;margin-top:4px;">
+    <button class="btn-photo" onclick="pauseForPhoto()">📸 Photo break</button>
+  </div>
+</div>
+
+<!-- COMPLETE OVERLAY -->
+<div class="complete-overlay" id="completeScreen">
+  <div class="c-title">DONE! 🔥</div>
+  <div class="c-time" id="cStat"></div>
+  <div class="c-sub">Workout complete.<br><strong style="color:var(--text)">You showed up. That's what counts.</strong></div>
+  <button class="btn-done-final" id="doneFinalBtn" onclick="logAndSync()">✓ MARK AS DONE</button>
+  <button class="btn-back-plan" onclick="backToPlanFromComplete()">← Back to plan</button>
+</div>
+
+<script>
+const SHEET_URL="https://script.google.com/macros/s/AKfycbzzegszVRmHJpa9a0B9ubvsztPC1oeGrez7X1iQZqfSL4ckQDWPFkfERv8_MVnPM6SixQ/exec";
+
+// ═══ SVG ILLUSTRATIONS ═══
+const SVG={
+  catCat:`<svg width="120" height="80" viewBox="0 0 130 90" fill="none"><path d="M25 55 Q65 30 105 55" stroke="#4ECDC4" stroke-width="4" stroke-linecap="round" fill="none"/><circle cx="18" cy="60" r="9" fill="none" stroke="#4ECDC4" stroke-width="3"/><line x1="25" y1="55" x2="18" y2="52" stroke="#4ECDC4" stroke-width="3" stroke-linecap="round"/><path d="M105 55 Q115 40 112 30" stroke="#4ECDC4" stroke-width="3" stroke-linecap="round" fill="none"/><line x1="35" y1="52" x2="30" y2="75" stroke="#4ECDC4" stroke-width="3" stroke-linecap="round"/><line x1="95" y1="52" x2="92" y2="75" stroke="#4ECDC4" stroke-width="3" stroke-linecap="round"/><path d="M65 28 L65 20 L60 25 M65 20 L70 25" stroke="#E94560" stroke-width="2" stroke-linecap="round" fill="none"/></svg>`,
+  catCow:`<svg width="120" height="80" viewBox="0 0 130 90" fill="none"><path d="M25 45 Q65 68 105 45" stroke="#F9CA24" stroke-width="4" stroke-linecap="round" fill="none"/><circle cx="14" cy="38" r="9" fill="none" stroke="#F9CA24" stroke-width="3"/><line x1="22" y1="42" x2="25" y2="45" stroke="#F9CA24" stroke-width="3" stroke-linecap="round"/><path d="M105 45 Q118 35 115 22" stroke="#F9CA24" stroke-width="3" stroke-linecap="round" fill="none"/><line x1="35" y1="48" x2="30" y2="75" stroke="#F9CA24" stroke-width="3" stroke-linecap="round"/><line x1="95" y1="48" x2="92" y2="75" stroke="#F9CA24" stroke-width="3" stroke-linecap="round"/><path d="M65 70 L65 78 L60 73 M65 78 L70 73" stroke="#E94560" stroke-width="2" stroke-linecap="round" fill="none"/></svg>`,
+  hipStart:`<svg width="100" height="110" viewBox="0 0 110 110" fill="none"><circle cx="55" cy="12" r="9" fill="none" stroke="#4ECDC4" stroke-width="3"/><line x1="55" y1="21" x2="55" y2="55" stroke="#4ECDC4" stroke-width="3.5" stroke-linecap="round"/><line x1="55" y1="30" x2="42" y2="48" stroke="#4ECDC4" stroke-width="3" stroke-linecap="round"/><line x1="55" y1="30" x2="68" y2="48" stroke="#4ECDC4" stroke-width="3" stroke-linecap="round"/><line x1="55" y1="55" x2="72" y2="70" stroke="#4ECDC4" stroke-width="3.5" stroke-linecap="round"/><line x1="72" y1="70" x2="82" y2="55" stroke="#4ECDC4" stroke-width="3.5" stroke-linecap="round"/><line x1="55" y1="55" x2="40" y2="70" stroke="#4ECDC4" stroke-width="3.5" stroke-linecap="round"/><line x1="40" y1="70" x2="38" y2="95" stroke="#4ECDC4" stroke-width="3.5" stroke-linecap="round"/><circle cx="40" cy="70" r="4" fill="#4ECDC4" opacity="0.4"/><line x1="15" y1="95" x2="95" y2="95" stroke="#555570" stroke-width="2"/></svg>`,
+  hipDeep:`<svg width="100" height="110" viewBox="0 0 110 110" fill="none"><circle cx="50" cy="12" r="9" fill="none" stroke="#F9CA24" stroke-width="3"/><line x1="50" y1="21" x2="52" y2="55" stroke="#F9CA24" stroke-width="3.5" stroke-linecap="round"/><line x1="51" y1="32" x2="68" y2="52" stroke="#F9CA24" stroke-width="3" stroke-linecap="round"/><line x1="51" y1="32" x2="40" y2="50" stroke="#F9CA24" stroke-width="3" stroke-linecap="round"/><line x1="52" y1="55" x2="75" y2="68" stroke="#F9CA24" stroke-width="3.5" stroke-linecap="round"/><line x1="75" y1="68" x2="88" y2="52" stroke="#F9CA24" stroke-width="3.5" stroke-linecap="round"/><line x1="52" y1="55" x2="35" y2="68" stroke="#F9CA24" stroke-width="3.5" stroke-linecap="round"/><line x1="35" y1="68" x2="32" y2="95" stroke="#F9CA24" stroke-width="3.5" stroke-linecap="round"/><circle cx="35" cy="68" r="4" fill="#F9CA24" opacity="0.4"/><line x1="15" y1="95" x2="95" y2="95" stroke="#555570" stroke-width="2"/></svg>`,
+  gbDown:`<svg width="130" height="70" viewBox="0 0 140 80" fill="none"><circle cx="12" cy="40" r="9" fill="none" stroke="#4ECDC4" stroke-width="3"/><line x1="20" y1="40" x2="75" y2="40" stroke="#4ECDC4" stroke-width="4" stroke-linecap="round"/><line x1="35" y1="40" x2="30" y2="55" stroke="#4ECDC4" stroke-width="3" stroke-linecap="round"/><line x1="55" y1="40" x2="50" y2="55" stroke="#4ECDC4" stroke-width="3" stroke-linecap="round"/><line x1="75" y1="40" x2="95" y2="58" stroke="#4ECDC4" stroke-width="4" stroke-linecap="round"/><line x1="95" y1="58" x2="110" y2="40" stroke="#4ECDC4" stroke-width="4" stroke-linecap="round"/><line x1="105" y1="40" x2="125" y2="40" stroke="#4ECDC4" stroke-width="4" stroke-linecap="round"/><line x1="5" y1="65" x2="135" y2="65" stroke="#555570" stroke-width="2"/></svg>`,
+  gbUp:`<svg width="130" height="70" viewBox="0 0 140 80" fill="none"><circle cx="12" cy="52" r="9" fill="none" stroke="#F9CA24" stroke-width="3"/><line x1="20" y1="52" x2="60" y2="30" stroke="#F9CA24" stroke-width="4" stroke-linecap="round"/><line x1="35" y1="47" x2="28" y2="62" stroke="#F9CA24" stroke-width="3" stroke-linecap="round"/><line x1="48" y1="40" x2="42" y2="55" stroke="#F9CA24" stroke-width="3" stroke-linecap="round"/><line x1="60" y1="30" x2="85" y2="52" stroke="#F9CA24" stroke-width="4" stroke-linecap="round"/><line x1="85" y1="52" x2="110" y2="52" stroke="#F9CA24" stroke-width="4" stroke-linecap="round"/><line x1="105" y1="52" x2="125" y2="52" stroke="#F9CA24" stroke-width="4" stroke-linecap="round"/><line x1="5" y1="65" x2="135" y2="65" stroke="#555570" stroke-width="2"/><path d="M65 28 L65 18 L60 23 M65 18 L70 23" stroke="#E94560" stroke-width="2" stroke-linecap="round" fill="none"/></svg>`,
+  dbStart:`<svg width="130" height="75" viewBox="0 0 140 85" fill="none"><circle cx="12" cy="35" r="9" fill="none" stroke="#4ECDC4" stroke-width="3"/><line x1="20" y1="35" x2="75" y2="35" stroke="#4ECDC4" stroke-width="4" stroke-linecap="round"/><line x1="35" y1="35" x2="35" y2="15" stroke="#4ECDC4" stroke-width="3" stroke-linecap="round"/><line x1="55" y1="35" x2="55" y2="15" stroke="#4ECDC4" stroke-width="3" stroke-linecap="round"/><line x1="75" y1="35" x2="85" y2="18" stroke="#4ECDC4" stroke-width="3.5" stroke-linecap="round"/><line x1="85" y1="18" x2="105" y2="18" stroke="#4ECDC4" stroke-width="3.5" stroke-linecap="round"/><line x1="5" y1="55" x2="135" y2="55" stroke="#555570" stroke-width="2"/></svg>`,
+  dbExtend:`<svg width="130" height="75" viewBox="0 0 140 85" fill="none"><circle cx="12" cy="38" r="9" fill="none" stroke="#F9CA24" stroke-width="3"/><line x1="20" y1="38" x2="75" y2="38" stroke="#F9CA24" stroke-width="4" stroke-linecap="round"/><line x1="35" y1="38" x2="15" y2="25" stroke="#F9CA24" stroke-width="3" stroke-linecap="round"/><line x1="55" y1="38" x2="55" y2="18" stroke="#F9CA24" stroke-width="3" stroke-linecap="round"/><line x1="75" y1="38" x2="118" y2="38" stroke="#F9CA24" stroke-width="3.5" stroke-linecap="round"/><line x1="75" y1="38" x2="85" y2="20" stroke="#F9CA24" stroke-width="3.5" stroke-linecap="round"/><line x1="85" y1="20" x2="100" y2="20" stroke="#F9CA24" stroke-width="3.5" stroke-linecap="round"/><line x1="5" y1="58" x2="135" y2="58" stroke="#555570" stroke-width="2"/></svg>`,
+  ptBefore:`<svg width="70" height="110" viewBox="0 0 80 120" fill="none"><circle cx="40" cy="12" r="9" fill="none" stroke="#E94560" stroke-width="3"/><path d="M40 21 Q32 50 38 65" stroke="#E94560" stroke-width="3.5" stroke-linecap="round" fill="none"/><line x1="38" y1="65" x2="30" y2="100" stroke="#E94560" stroke-width="3.5" stroke-linecap="round"/><line x1="38" y1="65" x2="46" y2="100" stroke="#E94560" stroke-width="3.5" stroke-linecap="round"/></svg>`,
+  ptAfter:`<svg width="70" height="110" viewBox="0 0 80 120" fill="none"><circle cx="40" cy="12" r="9" fill="none" stroke="#27AE60" stroke-width="3"/><line x1="40" y1="21" x2="40" y2="65" stroke="#27AE60" stroke-width="3.5" stroke-linecap="round"/><line x1="40" y1="65" x2="32" y2="100" stroke="#27AE60" stroke-width="3.5" stroke-linecap="round"/><line x1="40" y1="65" x2="48" y2="100" stroke="#27AE60" stroke-width="3.5" stroke-linecap="round"/></svg>`,
+  plank:`<svg width="140" height="65" viewBox="0 0 150 75" fill="none"><circle cx="12" cy="28" r="9" fill="none" stroke="#4ECDC4" stroke-width="3"/><line x1="20" y1="30" x2="105" y2="45" stroke="#4ECDC4" stroke-width="4" stroke-linecap="round"/><line x1="28" y1="32" x2="22" y2="50" stroke="#4ECDC4" stroke-width="3.5" stroke-linecap="round"/><line x1="22" y1="50" x2="45" y2="50" stroke="#4ECDC4" stroke-width="3.5" stroke-linecap="round"/><line x1="105" y1="45" x2="120" y2="50" stroke="#4ECDC4" stroke-width="3.5" stroke-linecap="round"/><line x1="5" y1="58" x2="145" y2="58" stroke="#555570" stroke-width="2"/></svg>`,
+  rdl:`<svg width="130" height="110" viewBox="0 0 140 120" fill="none"><circle cx="30" cy="12" r="9" fill="none" stroke="#F9CA24" stroke-width="3"/><path d="M30 21 Q28 50 50 70" stroke="#F9CA24" stroke-width="3.5" stroke-linecap="round" fill="none"/><line x1="35" y1="35" x2="15" y2="50" stroke="#F9CA24" stroke-width="3" stroke-linecap="round"/><line x1="35" y1="35" x2="55" y2="55" stroke="#F9CA24" stroke-width="3" stroke-linecap="round"/><line x1="50" y1="70" x2="35" y2="105" stroke="#F9CA24" stroke-width="3.5" stroke-linecap="round"/><line x1="50" y1="70" x2="65" y2="105" stroke="#F9CA24" stroke-width="3.5" stroke-linecap="round"/><line x1="15" y1="55" x2="105" y2="55" stroke="#4ECDC4" stroke-width="2" stroke-dasharray="4,3" opacity="0.6"/><text x="108" y="58" font-size="9" fill="#4ECDC4" font-family="DM Sans">flat!</text></svg>`,
+  row:`<svg width="130" height="90" viewBox="0 0 140 100" fill="none"><circle cx="20" cy="30" r="9" fill="none" stroke="#4ECDC4" stroke-width="3"/><line x1="20" y1="39" x2="20" y2="65" stroke="#4ECDC4" stroke-width="3.5" stroke-linecap="round"/><line x1="20" y1="50" x2="5" y2="65" stroke="#4ECDC4" stroke-width="3" stroke-linecap="round"/><line x1="20" y1="50" x2="40" y2="70" stroke="#4ECDC4" stroke-width="3" stroke-linecap="round"/><line x1="20" y1="65" x2="10" y2="95" stroke="#4ECDC4" stroke-width="3.5" stroke-linecap="round"/><line x1="20" y1="65" x2="30" y2="95" stroke="#4ECDC4" stroke-width="3.5" stroke-linecap="round"/><rect x="45" y="55" width="60" height="12" rx="4" fill="none" stroke="#555570" stroke-width="2"/><path d="M40 68 Q50 50 65 58" stroke="#F9CA24" stroke-width="2.5" stroke-linecap="round" fill="none"/><path d="M62 55 L67 58 L62 61" stroke="#F9CA24" stroke-width="2" stroke-linecap="round" fill="none"/></svg>`,
+  birddog:`<svg width="130" height="90" viewBox="0 0 140 100" fill="none"><path d="M25 55 Q65 50 105 55" stroke="#4ECDC4" stroke-width="4" stroke-linecap="round" fill="none"/><circle cx="18" cy="50" r="9" fill="none" stroke="#4ECDC4" stroke-width="3"/><line x1="35" y1="53" x2="30" y2="78" stroke="#4ECDC4" stroke-width="3" stroke-linecap="round"/><line x1="95" y1="53" x2="92" y2="78" stroke="#4ECDC4" stroke-width="3" stroke-linecap="round"/><line x1="18" y1="42" x2="5" y2="28" stroke="#F9CA24" stroke-width="3" stroke-linecap="round"/><line x1="105" y1="55" x2="125" y2="45" stroke="#F9CA24" stroke-width="3" stroke-linecap="round"/><path d="M3 26 L7 20" stroke="#E94560" stroke-width="2" stroke-linecap="round"/><path d="M127 43 L133 40" stroke="#E94560" stroke-width="2" stroke-linecap="round"/></svg>`,
+  press:`<svg width="110" height="110" viewBox="0 0 120 120" fill="none"><circle cx="60" cy="15" r="9" fill="none" stroke="#F9CA24" stroke-width="3"/><line x1="60" y1="24" x2="60" y2="65" stroke="#F9CA24" stroke-width="3.5" stroke-linecap="round"/><line x1="60" y1="38" x2="30" y2="20" stroke="#F9CA24" stroke-width="3" stroke-linecap="round"/><line x1="60" y1="38" x2="90" y2="20" stroke="#F9CA24" stroke-width="3" stroke-linecap="round"/><circle cx="22" cy="18" r="5" fill="none" stroke="#F9CA24" stroke-width="2.5"/><circle cx="98" cy="18" r="5" fill="none" stroke="#F9CA24" stroke-width="2.5"/><line x1="60" y1="65" x2="45" y2="100" stroke="#F9CA24" stroke-width="3.5" stroke-linecap="round"/><line x1="60" y1="65" x2="75" y2="100" stroke="#F9CA24" stroke-width="3.5" stroke-linecap="round"/><path d="M28 16 L28 6 L24 10 M28 6 L32 10" stroke="#E94560" stroke-width="2" stroke-linecap="round" fill="none"/><path d="M92 16 L92 6 L88 10 M92 6 L96 10" stroke="#E94560" stroke-width="2" stroke-linecap="round" fill="none"/></svg>`,
+  lateral:`<svg width="110" height="100" viewBox="0 0 120 110" fill="none"><circle cx="60" cy="15" r="9" fill="none" stroke="#4ECDC4" stroke-width="3"/><line x1="60" y1="24" x2="60" y2="65" stroke="#4ECDC4" stroke-width="3.5" stroke-linecap="round"/><line x1="60" y1="42" x2="25" y2="55" stroke="#4ECDC4" stroke-width="3" stroke-linecap="round"/><line x1="60" y1="42" x2="95" y2="55" stroke="#4ECDC4" stroke-width="3" stroke-linecap="round"/><circle cx="20" cy="53" r="5" fill="none" stroke="#4ECDC4" stroke-width="2.5"/><circle cx="100" cy="53" r="5" fill="none" stroke="#4ECDC4" stroke-width="2.5"/><line x1="60" y1="65" x2="45" y2="100" stroke="#4ECDC4" stroke-width="3.5" stroke-linecap="round"/><line x1="60" y1="65" x2="75" y2="100" stroke="#4ECDC4" stroke-width="3.5" stroke-linecap="round"/></svg>`,
+  hang:`<svg width="110" height="110" viewBox="0 0 120 120" fill="none"><line x1="10" y1="10" x2="110" y2="10" stroke="#555570" stroke-width="4" stroke-linecap="round"/><line x1="60" y1="10" x2="60" y2="28" stroke="#4ECDC4" stroke-width="3" stroke-linecap="round"/><circle cx="60" cy="37" r="9" fill="none" stroke="#4ECDC4" stroke-width="3"/><line x1="60" y1="46" x2="60" y2="78" stroke="#4ECDC4" stroke-width="3.5" stroke-linecap="round"/><line x1="60" y1="55" x2="35" y2="68" stroke="#4ECDC4" stroke-width="3" stroke-linecap="round"/><line x1="60" y1="55" x2="85" y2="68" stroke="#4ECDC4" stroke-width="3" stroke-linecap="round"/><line x1="60" y1="78" x2="50" y2="108" stroke="#4ECDC4" stroke-width="3.5" stroke-linecap="round"/><line x1="60" y1="78" x2="70" y2="108" stroke="#4ECDC4" stroke-width="3.5" stroke-linecap="round"/></svg>`,
+  sideleg:`<svg width="130" height="80" viewBox="0 0 140 90" fill="none"><circle cx="15" cy="35" r="9" fill="none" stroke="#4ECDC4" stroke-width="3"/><line x1="15" y1="44" x2="15" y2="65" stroke="#4ECDC4" stroke-width="3.5" stroke-linecap="round"/><line x1="15" y1="55" x2="5" y2="65" stroke="#4ECDC4" stroke-width="3" stroke-linecap="round"/><line x1="15" y1="65" x2="55" y2="65" stroke="#4ECDC4" stroke-width="3.5" stroke-linecap="round"/><line x1="55" y1="65" x2="80" y2="65" stroke="#F9CA24" stroke-width="3.5" stroke-linecap="round"/><line x1="15" y1="65" x2="55" y2="80" stroke="#4ECDC4" stroke-width="3.5" stroke-linecap="round"/><path d="M78 63 L84 65 L78 67" stroke="#E94560" stroke-width="2" stroke-linecap="round" fill="none"/><line x1="5" y1="85" x2="120" y2="85" stroke="#555570" stroke-width="2"/></svg>`,
+  chest:`<svg width="130" height="90" viewBox="0 0 140 100" fill="none"><rect x="20" y="55" width="100" height="12" rx="4" fill="none" stroke="#555570" stroke-width="2"/><circle cx="70" cy="30" r="9" fill="none" stroke="#F9CA24" stroke-width="3"/><line x1="70" y1="39" x2="70" y2="58" stroke="#F9CA24" stroke-width="3.5" stroke-linecap="round"/><line x1="70" y1="48" x2="40" y2="40" stroke="#F9CA24" stroke-width="3" stroke-linecap="round"/><line x1="70" y1="48" x2="100" y2="40" stroke="#F9CA24" stroke-width="3" stroke-linecap="round"/><circle cx="35" cy="38" r="5" fill="none" stroke="#F9CA24" stroke-width="2.5"/><circle cx="105" cy="38" r="5" fill="none" stroke="#F9CA24" stroke-width="2.5"/><path d="M38 38 L38 30 L34 34 M38 30 L42 34" stroke="#E94560" stroke-width="2" stroke-linecap="round" fill="none"/><path d="M102 38 L102 30 L98 34 M102 30 L106 34" stroke="#E94560" stroke-width="2" stroke-linecap="round" fill="none"/></svg>`
+};
+
+// ═══ EXERCISE LIBRARY ═══
+const EXERCISES=[
+  {id:'cat-cow',name:'Cat-Cow',category:'warmup',tag:'warm-up · posture',tagClass:'ex-tag-warmup',meta:'10 slow reps · before every session',
+   icon:`<svg width="40" height="32" viewBox="0 0 130 90" fill="none"><path d="M25 55 Q65 30 105 55" stroke="#4ECDC4" stroke-width="5" stroke-linecap="round" fill="none"/><circle cx="18" cy="60" r="8" fill="none" stroke="#4ECDC4" stroke-width="4"/><line x1="35" y1="52" x2="30" y2="75" stroke="#4ECDC4" stroke-width="4"/><line x1="95" y1="52" x2="92" y2="75" stroke="#4ECDC4" stroke-width="4"/></svg>`,
+   why:'Cat-Cow mobilises your entire spine and directly targets your anterior pelvic tilt. It teaches each vertebra to move and activates the deep core muscles that hold your pelvis neutral.',
+   phases:[{label:'CAT',svg:SVG.catCat,desc:'Back arched UP · head drops · belly pulls in'},{label:'COW',svg:SVG.catCow,desc:'Back sags DOWN · head lifts · belly relaxes'}],
+   steps:['Start on all fours — wrists under shoulders, knees under hips.','CAT: Breathe out, round your back UP to the ceiling. Head drops down. Pull belly button toward spine.','COW: Breathe in, let your back sag down. Lift your head and tailbone up.','Move slowly and continuously between the two. 10 full rounds.'],
+   tip:'Go slow — feel each vertebra moving individually. Never rush this.'},
+  {id:'hip-flexor',name:'Hip Flexor Stretch',category:'warmup',tag:'warm-up · posture fix',tagClass:'ex-tag-warmup',meta:'30 seconds each side · before every run',
+   icon:`<svg width="38" height="40" viewBox="0 0 110 110" fill="none"><circle cx="55" cy="12" r="8" fill="none" stroke="#4ECDC4" stroke-width="4"/><line x1="55" y1="20" x2="55" y2="52" stroke="#4ECDC4" stroke-width="4"/><line x1="55" y1="52" x2="75" y2="68" stroke="#4ECDC4" stroke-width="4"/><line x1="75" y1="68" x2="85" y2="52" stroke="#4ECDC4" stroke-width="4"/><line x1="55" y1="52" x2="38" y2="68" stroke="#4ECDC4" stroke-width="4"/><line x1="38" y1="68" x2="36" y2="90" stroke="#4ECDC4" stroke-width="4"/></svg>`,
+   why:'Tight hip flexors from sitting are the #1 cause of your anterior pelvic tilt. This stretch directly releases that tension.',
+   phases:[{label:'POSITION',svg:SVG.hipStart,desc:'Kneeling lunge · back knee on floor'},{label:'STRETCH',svg:SVG.hipDeep,desc:'Push hips forward · feel it in front of back hip'}],
+   steps:['Kneel on your right knee, left foot forward with knee at 90°.','Keep your torso upright — do not lean forward.','Push hips forward until you feel a stretch at the FRONT of your right hip.','Hold for 30 seconds. Breathe normally.','Switch legs and repeat.'],
+   tip:'The stretch must be felt at the FRONT of the back hip — not in the knee.'},
+  {id:'pelvic-tilt',name:'Posterior Pelvic Tilt',category:'posture',tag:'posture fix',tagClass:'ex-tag-posture',meta:'15 reps · Strength A & B',
+   icon:`<svg width="28" height="40" viewBox="0 0 80 120" fill="none"><circle cx="40" cy="12" r="8" fill="none" stroke="#E94560" stroke-width="4"/><line x1="40" y1="20" x2="40" y2="62" stroke="#E94560" stroke-width="4"/><line x1="40" y1="62" x2="30" y2="95" stroke="#E94560" stroke-width="4"/><line x1="40" y1="62" x2="50" y2="95" stroke="#E94560" stroke-width="4"/></svg>`,
+   why:'Teaches your pelvis to find neutral position — directly correcting the forward tilt. Once you learn the feeling, apply it during your runs.',
+   phases:[{label:'BEFORE',svg:SVG.ptBefore,desc:'Anterior tilt · lower back arched'},{label:'AFTER',svg:SVG.ptAfter,desc:'Neutral · lower back flat · core engaged'}],
+   steps:['Stand with back against wall, feet 10cm from wall.','Notice the gap between lower back and wall — this is your tilt.','Tighten abs and squeeze glutes. This rocks your pelvis backwards.','Flatten your lower back against the wall. Hold 3 seconds.','Release and repeat. 15 reps.'],
+   tip:'Once you feel it, practice without the wall. This becomes your default running posture.'},
+  {id:'rdl',name:'Romanian Deadlift',category:'strength',tag:'strength A · legs & glutes',tagClass:'ex-tag-strength',meta:'3×10 reps · barbell or dumbbells · Strength A',
+   icon:`<svg width="44" height="36" viewBox="0 0 140 120" fill="none"><circle cx="30" cy="12" r="8" fill="none" stroke="#F9CA24" stroke-width="4"/><path d="M30 20 Q28 48 50 68" stroke="#F9CA24" stroke-width="4" stroke-linecap="round" fill="none"/><line x1="50" y1="68" x2="35" y2="100" stroke="#F9CA24" stroke-width="4" stroke-linecap="round"/><line x1="50" y1="68" x2="65" y2="100" stroke="#F9CA24" stroke-width="4" stroke-linecap="round"/></svg>`,
+   why:'The hip hinge pattern directly strengthens your glutes and hamstrings — the two most important running muscles. Also teaches you to move from the hips rather than the lower back, which corrects your pelvic tilt.',
+   phases:[{label:'START',svg:SVG.rdl,desc:'Soft knees · back flat · hips hinge back'},{label:'KEY',svg:SVG.rdl,desc:'Feel stretch in hamstrings · keep back neutral'}],
+   steps:['Stand with barbell or dumbbells in front of thighs. Feet hip-width apart.','Soft bend in knees — keep this throughout.','Hinge from hips — push your bottom backwards as you lower the weight.','Keep the bar close to your legs. Back stays flat — not rounded.','Lower until you feel a pull in your hamstrings. Stop there.','Drive hips forward to return to standing. Squeeze glutes at the top. 3×10.'],
+   tip:'Start light — 2×5kg plates on barbell or 5kg dumbbells. The movement matters more than the weight. If your lower back rounds, the weight is too heavy or you are going too low.'},
+  {id:'row',name:'Single Arm Dumbbell Row',category:'strength',tag:'strength A · upper back',tagClass:'ex-tag-strength',meta:'3×12 each side · 5kg dumbbell · Strength A',
+   why:'Directly targets the upper back muscles that counteract your desk posture and forward shoulder rounding. Essential for running arm drive and posture.',
+   icon:`<svg width="44" height="32" viewBox="0 0 140 100" fill="none"><circle cx="20" cy="30" r="8" fill="none" stroke="#4ECDC4" stroke-width="4"/><line x1="20" y1="38" x2="20" y2="65" stroke="#4ECDC4" stroke-width="4"/><line x1="20" y1="50" x2="40" y2="68" stroke="#4ECDC4" stroke-width="3.5"/><rect x="45" y="55" width="55" height="10" rx="3" fill="none" stroke="#555570" stroke-width="2"/></svg>`,
+   phases:[{label:'DOWN',svg:SVG.row,desc:'Arm extended · back flat · supported on bench'},{label:'UP',svg:SVG.row,desc:'Elbow drives up · shoulder blade squeezes'}],
+   steps:['Place left knee and left hand on flat bench. Right foot on floor.','Hold 5kg dumbbell in right hand, arm hanging straight down.','Keep your back flat and parallel to the floor.','Pull the dumbbell up by driving your elbow towards the ceiling.','Squeeze your shoulder blade at the top. Hold 1 second.','Lower slowly. 3×12 each side.'],
+   tip:'Think "elbow to ceiling" not "hand to hip." The elbow leads the movement. Your shoulder blade should move, not just your arm.'},
+  {id:'goblet',name:'Goblet Squat',category:'strength',tag:'strength A · legs & posture',tagClass:'ex-tag-strength',meta:'3×12 reps · 8kg kettlebell · Strength A',
+   why:'The goblet squat forces an upright torso which directly trains your posture. Holding the weight in front counteracts the pelvic tilt naturally. Builds the quads and glutes essential for running uphill.',
+   icon:`<svg width="36" height="40" viewBox="0 0 100 110" fill="none"><circle cx="50" cy="12" r="9" fill="none" stroke="#F9CA24" stroke-width="3"/><line x1="50" y1="21" x2="50" y2="45" stroke="#F9CA24" stroke-width="3.5"/><line x1="50" y1="30" x2="32" y2="42" stroke="#F9CA24" stroke-width="3"/><line x1="50" y1="30" x2="68" y2="42" stroke="#F9CA24" stroke-width="3"/><circle cx="50" cy="50" r="8" fill="none" stroke="#F9CA24" stroke-width="2.5"/><line x1="50" y1="45" x2="38" y2="80" stroke="#F9CA24" stroke-width="3.5"/><line x1="50" y1="45" x2="62" y2="80" stroke="#F9CA24" stroke-width="3.5"/></svg>`,
+   phases:[{label:'TOP',svg:SVG.gbUp,desc:'Kettlebell at chest · elbows inside knees'},{label:'BOTTOM',svg:SVG.gbDown,desc:'Deep squat · chest tall · knees tracking toes'}],
+   steps:['Hold 8kg kettlebell at chest height with both hands. Feet shoulder-width apart, toes slightly out.','Keep the kettlebell close to your chest throughout.','Squat down — chest stays tall, elbows brush inside your knees at the bottom.','Go as deep as comfortable while keeping your heel on the floor.','Drive through heels to stand. 3×12.'],
+   tip:'If your heels lift, your ankles lack mobility — place a small plate under each heel temporarily. The goal is chest tall and deep squat.'},
+  {id:'overhead-press',name:'Overhead Press',category:'strength',tag:'strength A · shoulders',tagClass:'ex-tag-strength',meta:'3×10 reps · 3kg dumbbells · Strength A',
+   why:'Builds shoulder stability and the upper back muscles that hold your posture upright during long runs. Also develops the arm drive that becomes important in longer races.',
+   icon:`<svg width="40" height="40" viewBox="0 0 120 120" fill="none"><circle cx="60" cy="15" r="9" fill="none" stroke="#F9CA24" stroke-width="3"/><line x1="60" y1="24" x2="60" y2="65" stroke="#F9CA24" stroke-width="3.5"/><line x1="60" y1="38" x2="30" y2="20" stroke="#F9CA24" stroke-width="3"/><line x1="60" y1="38" x2="90" y2="20" stroke="#F9CA24" stroke-width="3"/></svg>`,
+   phases:[{label:'START',svg:SVG.press,desc:'Dumbbells at shoulder height · elbows at 90°'},{label:'TOP',svg:SVG.press,desc:'Arms extended overhead · core engaged'}],
+   steps:['Hold 3kg dumbbells at shoulder height, palms facing forward, elbows at 90°.','Engage your core — do not let your lower back arch.','Press both dumbbells straight overhead until arms are fully extended.','Pause at the top. Lower slowly back to shoulder height.','3×10 reps.'],
+   tip:'Start at 3kg. If you feel it in your lower back rather than your shoulders, your core is not engaged enough. Tighten your abs before every rep.'},
+  {id:'dead-bug',name:'Dead Bug',category:'strength',tag:'strength A&B · core',tagClass:'ex-tag-strength',meta:'3×10 reps · mat · both sessions',
+   why:'Trains your deep core to keep the spine stable while limbs move — exactly what running demands. Reinforces neutral pelvis under load.',
+   icon:`<svg width="44" height="28" viewBox="0 0 140 85" fill="none"><circle cx="12" cy="35" r="8" fill="none" stroke="#F9CA24" stroke-width="4"/><line x1="20" y1="35" x2="75" y2="35" stroke="#F9CA24" stroke-width="5"/><line x1="35" y1="35" x2="35" y2="15" stroke="#F9CA24" stroke-width="3.5"/><line x1="55" y1="35" x2="55" y2="15" stroke="#F9CA24" stroke-width="3.5"/><line x1="75" y1="35" x2="95" y2="18" stroke="#F9CA24" stroke-width="3.5"/><line x1="95" y1="18" x2="115" y2="18" stroke="#F9CA24" stroke-width="3.5"/></svg>`,
+   phases:[{label:'START',svg:SVG.dbStart,desc:'Arms up · knees at 90° · back flat on floor'},{label:'EXTEND',svg:SVG.dbExtend,desc:'Opposite arm + leg · back stays flat!'}],
+   steps:['Lie on your back. Press lower back firmly into the floor — keep it there always.','Arms straight up, both knees at 90° (tabletop).','Breathe out. Extend RIGHT arm back and LEFT leg out simultaneously.','Go only as far as lower back stays flat.','Return to start. Switch sides. That is 1 rep. Do 10.'],
+   tip:'Lower back on the floor is NON-NEGOTIABLE. If it lifts, make the movement smaller.'},
+  {id:'side-leg',name:'Side Lying Leg Lift',category:'strength',tag:'strength A · hip stability',tagClass:'ex-tag-strength',meta:'3×15 each side · mat · Strength A',
+   why:'Strengthens the gluteus medius — the hip stabiliser that prevents your pelvis from dropping with each running stride. Weakness here causes knee pain and IT band issues.',
+   icon:`<svg width="44" height="28" viewBox="0 0 140 90" fill="none"><circle cx="15" cy="35" r="8" fill="none" stroke="#4ECDC4" stroke-width="4"/><line x1="15" y1="43" x2="15" y2="65" stroke="#4ECDC4" stroke-width="4"/><line x1="15" y1="65" x2="55" y2="65" stroke="#4ECDC4" stroke-width="4"/><line x1="55" y1="65" x2="80" y2="55" stroke="#F9CA24" stroke-width="4"/></svg>`,
+   phases:[{label:'DOWN',svg:SVG.sideleg,desc:'On side · legs stacked · body in straight line'},{label:'UP',svg:SVG.sideleg,desc:'Top leg lifts · foot flexed · hip stays forward'}],
+   steps:['Lie on your side, body in a straight line. Head resting on your bottom arm.','Stack your feet and hips directly on top of each other.','Flex your top foot (toes toward shin).','Lift the top leg to about 45° — no higher.','Hold 1 second at the top. Lower slowly. 3×15 each side.'],
+   tip:'Keep your hips stacked forward — do not let the top hip roll backwards. That rotation is cheating and removes all the benefit.'},
+  {id:'bird-dog',name:'Bird Dog',category:'strength',tag:'strength B · core & spine',tagClass:'ex-tag-strength',meta:'3×10 each side · mat · Strength B',
+   why:'Your favourite! Builds spinal stability and deep core control while training the opposite arm/leg coordination pattern — exactly like running. Also gently mobilises the lower back.',
+   icon:`<svg width="44" height="30" viewBox="0 0 140 100" fill="none"><path d="M25 55 Q65 50 105 55" stroke="#4ECDC4" stroke-width="4" stroke-linecap="round" fill="none"/><circle cx="18" cy="50" r="8" fill="none" stroke="#4ECDC4" stroke-width="3"/><line x1="35" y1="53" x2="30" y2="78" stroke="#4ECDC4" stroke-width="3"/><line x1="95" y1="53" x2="92" y2="78" stroke="#4ECDC4" stroke-width="3"/><line x1="18" y1="42" x2="5" y2="28" stroke="#F9CA24" stroke-width="3"/><line x1="105" y1="55" x2="125" y2="45" stroke="#F9CA24" stroke-width="3"/></svg>`,
+   phases:[{label:'START',svg:SVG.birddog,desc:'All fours · wrists under shoulders · back flat'},{label:'EXTEND',svg:SVG.birddog,desc:'Opposite arm + leg · hips stay level'}],
+   steps:['Start on all fours — wrists under shoulders, knees under hips.','Back flat like a table — no arching, no rounding.','Extend your RIGHT arm forward and LEFT leg back simultaneously.','Keep hips level — do not rotate or tilt.','Hold 2 seconds. Return to start. Switch sides. 3×10 each side.'],
+   tip:'Imagine a glass of water balanced on your lower back. If it would spill — you are rotating. Keep it still.'},
+  {id:'chest-press',name:'Dumbbell Chest Press',category:'strength',tag:'strength B · chest & arms',tagClass:'ex-tag-strength',meta:'3×12 reps · 3-5kg dumbbells · Strength B',
+   why:'Builds chest, shoulder and tricep strength for upper body balance. Running is not just legs — your arms drive your pace, especially in the later kilometres.',
+   icon:`<svg width="44" height="28" viewBox="0 0 140 100" fill="none"><rect x="20" y="55" width="100" height="10" rx="3" fill="none" stroke="#555570" stroke-width="2"/><circle cx="70" cy="30" r="8" fill="none" stroke="#F9CA24" stroke-width="3"/><line x1="70" y1="38" x2="70" y2="58" stroke="#F9CA24" stroke-width="3.5"/><line x1="70" y1="48" x2="40" y2="40" stroke="#F9CA24" stroke-width="3"/><line x1="70" y1="48" x2="100" y2="40" stroke="#F9CA24" stroke-width="3"/></svg>`,
+   phases:[{label:'DOWN',svg:SVG.chest,desc:'Dumbbells at chest · elbows at 45°'},{label:'UP',svg:SVG.chest,desc:'Press up · arms extended · controlled'}],
+   steps:['Lie on flat bench, feet flat on floor.','Hold 3kg dumbbells at chest height, elbows at 45° from body.','Press dumbbells up until arms are extended but not locked.','Lower slowly back to chest — 3 seconds down.','3×12 reps. Move to 5kg when 3kg feels easy.'],
+   tip:'Start with 3kg. The slow lowering is where the work happens — do not drop the weights down.'},
+  {id:'lateral-raise',name:'Lateral Raises',category:'strength',tag:'strength B · shoulders',tagClass:'ex-tag-strength',meta:'3×12 reps · 2kg dumbbells · Strength B',
+   why:'Builds the medial deltoid — the shoulder muscle that creates that elegant defined shoulder shape. Also improves shoulder stability for running arm drive. 2kg is enough, trust me. 😄',
+   icon:`<svg width="40" height="36" viewBox="0 0 120 110" fill="none"><circle cx="60" cy="15" r="9" fill="none" stroke="#4ECDC4" stroke-width="3"/><line x1="60" y1="24" x2="60" y2="65" stroke="#4ECDC4" stroke-width="3.5"/><line x1="60" y1="42" x2="25" y2="55" stroke="#4ECDC4" stroke-width="3"/><line x1="60" y1="42" x2="95" y2="55" stroke="#4ECDC4" stroke-width="3"/></svg>`,
+   phases:[{label:'DOWN',svg:SVG.lateral,desc:'Arms by sides · slight bend in elbows'},{label:'UP',svg:SVG.lateral,desc:'Arms raise to shoulder height · no higher'}],
+   steps:['Stand holding 2kg dumbbells by your sides. Slight bend in elbows.','Raise both arms out to the sides simultaneously.','Stop when arms reach shoulder height — no higher.','Pause 1 second. Lower slowly — 3 seconds down.','3×12 reps.'],
+   tip:'2kg will feel embarrassingly light for the first 5 reps and embarrassingly heavy for the last 3. That is correct. Do not go heavier yet.'},
+  {id:'dead-hang',name:'Dead Hang',category:'strength',tag:'strength B · spine & lats',tagClass:'ex-tag-strength',meta:'3×20-30 seconds · pull up bar · Strength B',
+   why:'Decompresses your spine after running — essentially undoing the compression of each footstrike. Also stretches your lats and improves shoulder mobility. Secretly one of the best things you can do for your back.',
+   icon:`<svg width="36" height="44" viewBox="0 0 120 120" fill="none"><line x1="10" y1="10" x2="110" y2="10" stroke="#555570" stroke-width="4" stroke-linecap="round"/><line x1="60" y1="10" x2="60" y2="28" stroke="#4ECDC4" stroke-width="3"/><circle cx="60" cy="37" r="9" fill="none" stroke="#4ECDC4" stroke-width="3"/><line x1="60" y1="46" x2="60" y2="78" stroke="#4ECDC4" stroke-width="3.5"/><line x1="60" y1="55" x2="35" y2="68" stroke="#4ECDC4" stroke-width="3"/><line x1="60" y1="55" x2="85" y2="68" stroke="#4ECDC4" stroke-width="3"/></svg>`,
+   phases:[{label:'HANG',svg:SVG.hang,desc:'Grip bar · let body hang fully · relax shoulders'}],
+   steps:['Grip the pull up bar with both hands, shoulder-width apart.','Let your body hang completely — feet off the floor.','Relax your shoulders — let them rise toward your ears (passive hang).','Breathe deeply. Feel your spine lengthen.','Hold 20-30 seconds. Rest and repeat 3 times.'],
+   tip:'This should feel like relief, not effort. You are not trying to pull up — just hang and decompress. Your spine will thank you after every run.'},
+  {id:'glute-bridge',name:'Glute Bridge',category:'strength',tag:'strength B · glutes',tagClass:'ex-tag-strength',meta:'3×15 reps · mat · Strength B',
+   why:'Weak glutes cannot hold the pelvis neutral — so it tips forward. Glute bridges directly build the strength needed to stabilise your hips during running.',
+   icon:`<svg width="44" height="28" viewBox="0 0 140 80" fill="none"><circle cx="12" cy="52" r="8" fill="none" stroke="#F9CA24" stroke-width="4"/><line x1="20" y1="52" x2="60" y2="30" stroke="#F9CA24" stroke-width="5"/><line x1="60" y1="30" x2="85" y2="52" stroke="#F9CA24" stroke-width="5"/><line x1="85" y1="52" x2="115" y2="52" stroke="#F9CA24" stroke-width="5"/></svg>`,
+   phases:[{label:'DOWN',svg:SVG.gbDown,desc:'On back · knees bent · feet flat · arms by sides'},{label:'UP',svg:SVG.gbUp,desc:'Drive hips up · squeeze glutes · 2 seconds'}],
+   steps:['Lie on your back, knees bent, feet flat on floor hip-width apart.','Press lower back gently into the floor.','Breathe out, drive hips up by squeezing glutes. Straight line shoulders to knees.','Squeeze hard at the top for 2 full seconds.','Lower slowly. 3×15.'],
+   tip:'"Squeeze a coin between your bum cheeks" at the top of every rep. If you feel it in your lower back — your glutes are not firing. Go slower.'},
+  {id:'plank',name:'Plank',category:'strength',tag:'strength A · core endurance',tagClass:'ex-tag-strength',meta:'3×30-50 seconds · mat · Strength A',
+   why:'Builds endurance of your core stabilisers — the muscles that hold your spine neutral during long runs. Trains neutral pelvis under fatigue.',
+   icon:`<svg width="44" height="22" viewBox="0 0 150 75" fill="none"><circle cx="12" cy="28" r="8" fill="none" stroke="#4ECDC4" stroke-width="4"/><line x1="20" y1="30" x2="105" y2="45" stroke="#4ECDC4" stroke-width="5"/><line x1="28" y1="32" x2="22" y2="52" stroke="#4ECDC4" stroke-width="4"/><line x1="22" y1="52" x2="45" y2="52" stroke="#4ECDC4" stroke-width="4"/><line x1="105" y1="45" x2="122" y2="52" stroke="#4ECDC4" stroke-width="4"/></svg>`,
+   phases:[{label:'FORM',svg:SVG.plank,desc:'Forearms on floor · body in straight line head to heels'}],
+   steps:['Forearms and toes on the floor. Elbows directly under shoulders.','Straight line from head to heels — no hips up, no sagging.','Pull belly button in. Squeeze glutes. Neck neutral.','Hold and breathe normally.','Stop the moment your hips drop — rest and go again.'],
+   tip:'A perfect 15-second plank beats 40 seconds with sagging hips every time.'}
+];
+
+// ═══ WEEK PLANS ═══
+const WEEKS=[
+  {label:"Week 1 — Restart · 26 Oct",phase:"Race Prep — 10K, 22 Nov",days:[
+    {day:"Monday",type:"rest",label:"Rest Day",isTraining:false,hasTimer:false,desc:"Full rest. 💧 Weigh-in morning."},
+    {day:"Tuesday",type:"run",label:"Run Intervals",isTraining:true,hasTimer:true,desc:"10 min brisk walk warm-up · then 5 × (Run 4 min · Walk 2 min) · 5 min walk cool-down\nMetronome 176 BPM on run segments only. Go by effort, not pace. Puffer first.",workout:{name:"Week 1 — Intervals",warm:600,run:240,walk:120,rounds:5,cool:300,bpm:176}},
+    {day:"Wednesday",type:"bike",label:"Bike · Recovery",isTraining:true,hasTimer:false,desc:"Active recovery 🚴\nNordicTrack · 35 min · HR 115–125, easy"},
+    {day:"Thursday",type:"run",label:"Easy Run",isTraining:true,hasTimer:'easy',easyMins:36,desc:"TARGET: 5 km · aerobic base\nHR CAP 135 bpm (or the talk test: full sentences) — walk if it climbs, resume once you can breathe easily.\nPuffer before you go.",workout:{name:"Week 1 — Easy Run"}},
+    {day:"Friday",type:"bike",label:"Bike · Recovery",isTraining:true,hasTimer:false,desc:"Active recovery 🚴\nNordicTrack · 30 min · HR 115–125, easy"},
+    {day:"Saturday",type:"run",label:"Easy Run",isTraining:true,hasTimer:'easy',easyMins:43,desc:"TARGET: 6 km · ~7'10\"/km\nHR CAP 135 bpm (or the talk test: full sentences) — walk if it climbs, resume once you can breathe easily.",workout:{name:"Week 1 — Easy Run Sat"}},
+    {day:"Sunday",type:"run",label:"Easy Run",isTraining:true,hasTimer:'easy',easyMins:36,desc:"TARGET: 5 km · easy, finish feeling you could do more\nHR CAP 135 bpm (or the talk test: full sentences) — walk if it climbs, resume once you can breathe easily.",workout:{name:"Week 1 — Easy Run Sun"}}
+  ]},
+  {label:"Week 2 — 10K Rehearsal · 2 Nov",phase:"Race Prep — 10K, 22 Nov",days:[
+    {day:"Monday",type:"rest",label:"Rest Day",isTraining:false,hasTimer:false,desc:"Full rest. 💧 Weigh-in morning."},
+    {day:"Tuesday",type:"run",label:"Run Intervals",isTraining:true,hasTimer:true,desc:"10 min brisk walk warm-up · then 6 × (Run 4 min · Walk 2 min) · 5 min walk cool-down\nMetronome 178 BPM on run segments only.",workout:{name:"Week 2 — Intervals",warm:600,run:240,walk:120,rounds:6,cool:300,bpm:178}},
+    {day:"Wednesday",type:"bike",label:"Bike · Recovery",isTraining:true,hasTimer:false,desc:"Active recovery 🚴\nNordicTrack · 35 min · HR 115–125, easy"},
+    {day:"Thursday",type:"run",label:"Easy Run",isTraining:true,hasTimer:'easy',easyMins:36,desc:"TARGET: 5 km · easy\nHR CAP 135 bpm (or the talk test: full sentences) — walk if it climbs, resume once you can breathe easily.",workout:{name:"Week 2 — Easy Run"}},
+    {day:"Friday",type:"bike",label:"Bike · Recovery",isTraining:true,hasTimer:false,desc:"Active recovery 🚴\nNordicTrack · 30 min · HR 115–125, easy"},
+    {day:"Saturday",type:"run",label:"10K Rehearsal",isTraining:true,hasTimer:'easy',easyMins:72,desc:"TARGET: 10 km · up to 11 km ONLY if the week's easy runs passed the talk test and you can still chat comfortably at km 8 · the dress rehearsal\nSame breakfast, shoes and kit as race day. Metronome 175 BPM in your ears if you like.\nStart slow: first 3 km at 7'10\" or slower. Fuel a snack 30–45 min before.",workout:{name:"Week 2 — Rehearsal"}},
+    {day:"Sunday",type:"run",label:"Recovery Run",isTraining:true,hasTimer:'easy',easyMins:29,desc:"TARGET: 4 km · very easy, HR CAP 130 bpm\nOr full rest if the legs say so.",workout:{name:"Week 2 — Recovery Sun"}}
+  ]},
+  {label:"Week 3 — Sharpen · 9 Nov",phase:"Race Prep — 10K, 22 Nov",days:[
+    {day:"Monday",type:"rest",label:"Rest Day",isTraining:false,hasTimer:false,desc:"Full rest. 💧 Weigh-in morning."},
+    {day:"Tuesday",type:"run",label:"Run Intervals",isTraining:true,hasTimer:true,desc:"10 min brisk walk warm-up · then 7 × (Run 4 min · Walk 2 min) · 5 min walk cool-down\nMetronome 178 BPM on run segments only. Last hard session before the race.",workout:{name:"Week 3 — Intervals",warm:600,run:240,walk:120,rounds:7,cool:300,bpm:178}},
+    {day:"Wednesday",type:"bike",label:"Bike · Recovery",isTraining:true,hasTimer:false,desc:"Active recovery 🚴\nNordicTrack · 30 min · HR 115–125, easy"},
+    {day:"Thursday",type:"run",label:"Easy Run",isTraining:true,hasTimer:'easy',easyMins:43,desc:"TARGET: 6 km · easy\nHR CAP 135 bpm (or the talk test: full sentences) — walk if it climbs, resume once you can breathe easily.",workout:{name:"Week 3 — Easy Run"}},
+    {day:"Friday",type:"bike",label:"Bike · Recovery",isTraining:true,hasTimer:false,desc:"Active recovery 🚴\nNordicTrack · 25 min · HR 115–125, easy"},
+    {day:"Saturday",type:"run",label:"Easy Run",isTraining:true,hasTimer:'easy',easyMins:43,desc:"TARGET: 6 km · race-day rehearsal for pace feel — last 1 km a touch quicker only if you feel great\nHR CAP 135 bpm (or the talk test: full sentences) — walk if it climbs, resume once you can breathe easily.",workout:{name:"Week 3 — Easy Run Sat"}},
+    {day:"Sunday",type:"run",label:"Easy Run",isTraining:true,hasTimer:'easy',easyMins:29,desc:"TARGET: 4 km · very easy, HR CAP 130 bpm",workout:{name:"Week 3 — Easy Run Sun"}}
+  ]},
+  {label:"Week 4 — Race Week · 16 Nov",phase:"Race Prep — 10K, 22 Nov",days:[
+    {day:"Monday",type:"rest",label:"Rest Day",isTraining:false,hasTimer:false,desc:"Full rest. 💧 Weigh-in morning."},
+    {day:"Tuesday",type:"run",label:"Run Intervals",isTraining:true,hasTimer:true,desc:"10 min brisk walk warm-up · then 4 × (Run 3 min · Walk 2 min) · 5 min walk cool-down\nMetronome 178 BPM. Short and light — you should finish wanting more.",workout:{name:"Week 4 — Intervals",warm:600,run:180,walk:120,rounds:4,cool:300,bpm:178}},
+    {day:"Wednesday",type:"bike",label:"Bike · Recovery",isTraining:true,hasTimer:false,desc:"Active recovery 🚴\nNordicTrack · 25 min · HR 115–120, very easy"},
+    {day:"Thursday",type:"run",label:"Easy Run",isTraining:true,hasTimer:'easy',easyMins:29,desc:"TARGET: 4 km · easy, then 4 × 20 s relaxed strides with walking recovery\nHR CAP 135 bpm (or the talk test: full sentences) — walk if it climbs, resume once you can breathe easily.",workout:{name:"Week 4 — Easy Run"}},
+    {day:"Friday",type:"rest",label:"Rest Day",isTraining:false,hasTimer:false,desc:"Full rest. Carbs at dinner, plenty of water, lay out kit and bib. Early night."},
+    {day:"Saturday",type:"run",label:"Shakeout",isTraining:true,hasTimer:'easy',easyMins:22,desc:"TARGET: 3 km · 20 min very easy + 3 short strides\nPuffer packed for tomorrow. Early night.",workout:{name:"Week 4 — Shakeout"}},
+    {day:"Sunday",type:"run",label:"RACE · Cardio Challenge Heroes 10K 🏁",isTraining:true,hasTimer:'easy',easyMins:65,desc:"TARGET: 10 km · estimated 62–67 min\nPuffer before the start. Breakfast you have rehearsed, 2–3 h before.\nKm 1–3: hold back, 6'40\" or slower. Km 4–7: settle at 6'25\"–6'35\". Km 8–10: give what is left.\nMetronome 180 BPM worked for your 5K — use it. Walk through water stops if needed. Enjoy it.",workout:{name:"Race — Cardio Challenge Heroes 10K"}}
+  ]}
+];
+
+// ═══ STATE ═══
+let workoutLog=JSON.parse(localStorage.getItem('tatiana_log')||'[]');
+const _def=Math.max(0,Math.min(WEEKS.length-1,Math.floor((new Date()-new Date('2026-10-26T00:00:00'))/604800000)));
+let currentWeek=parseInt(localStorage.getItem('race_week')||String(_def));
+if(currentWeek<0||currentWeek>=WEEKS.length)currentWeek=0;
+let viewingWeek=parseInt(localStorage.getItem('race_viewing_week')||currentWeek);
+if(viewingWeek<0||viewingWeek>=WEEKS.length)viewingWeek=currentWeek;
+let currentDayIdx=-1;
+let activeWorkout=null;
+let timer=null,isRunning=false,currentInterval='run',currentRound=0,timeLeft=0,totalElapsed=0;
+let easyTimer=null,easyRunning=false,easyTimeLeft=0,easyTotalSecs=0,easyDayIdx=-1;
+let metronomeInterval=null;
+let wakeLock=null;
+
+// ═══ WAKE LOCK ═══
+async function requestWakeLock(){
+  try{if('wakeLock' in navigator){wakeLock=await navigator.wakeLock.request('screen');}}catch(e){}
+}
+function releaseWakeLock(){try{if(wakeLock){wakeLock.release();wakeLock=null;}}catch(e){}}
+
+// ═══ AUDIO ═══
+const AudioCtx=window.AudioContext||window.webkitAudioContext;
+let audioCtx;
+function getCtx(){if(!audioCtx)audioCtx=new AudioCtx();if(audioCtx.state==='suspended')audioCtx.resume();return audioCtx;}
+function tone(freq,dur,vol=0.5,type='square',delay=0){
+  try{const ctx=getCtx(),o=ctx.createOscillator(),g=ctx.createGain();
+  o.connect(g);g.connect(ctx.destination);o.frequency.value=freq;o.type=type;
+  const t=ctx.currentTime+delay;g.gain.setValueAtTime(0,t);g.gain.linearRampToValueAtTime(vol,t+0.01);
+  g.gain.exponentialRampToValueAtTime(0.001,t+dur);o.start(t);o.stop(t+dur+0.05);}catch(e){}
+}
+// Crisp metronome click — holds full volume for the whole tick, then a fast cutoff.
+// No long exponential fade, so every beat is equally loud and audible outdoors.
+function click(freq,vol,dur){
+  try{const ctx=getCtx(),o=ctx.createOscillator(),g=ctx.createGain();
+  o.connect(g);g.connect(ctx.destination);o.frequency.value=freq;o.type='square';
+  const t=ctx.currentTime;g.gain.setValueAtTime(vol,t);g.gain.setValueAtTime(vol,t+dur);
+  g.gain.linearRampToValueAtTime(0,t+dur+0.008);o.start(t);o.stop(t+dur+0.02);}catch(e){}
+}
+function beepRun(){tone(523,.12,.7,'square',0);tone(659,.12,.7,'square',.14);tone(880,.35,.9,'square',.28);}
+function beepWalk(){tone(659,.12,.6,'square',0);tone(440,.35,.8,'square',.14);}
+function beepDone(){tone(523,.1,.6,'square',0);tone(659,.1,.6,'square',.12);tone(784,.1,.6,'square',.24);tone(1047,.5,.8,'square',.36);}
+function beepTick(){click(1000,0.9,0.05);}
+function beepMetronome(t){
+  try{const ctx=getCtx(),o=ctx.createOscillator(),g=ctx.createGain();
+  o.connect(g);g.connect(ctx.destination);o.frequency.value=1100;o.type='square';
+  g.gain.setValueAtTime(0.8,t);g.gain.setValueAtTime(0.8,t+0.035);g.gain.linearRampToValueAtTime(0,t+0.045);
+  o.start(t);o.stop(t+0.06);}catch(e){}
+}
+// Drift-free metronome: beats are scheduled on the audio clock with a short lookahead.
+let metroNext=0;
+function startMetronome(bpm){
+  stopMetronome();
+  if(!bpm||bpm===0)return;
+  const period=60/bpm,ctx=getCtx();
+  metroNext=ctx.currentTime+0.05;
+  const pump=()=>{while(metroNext<ctx.currentTime+0.2){beepMetronome(metroNext);metroNext+=period;}};
+  pump();metronomeInterval=setInterval(pump,40);
+}
+function stopMetronome(){if(metronomeInterval){clearInterval(metronomeInterval);metronomeInterval=null;}}
+
+// ═══ VOICE ═══
+let selectedVoice=null,speechUnlocked=false;
+function loadVoices(){const v=window.speechSynthesis?speechSynthesis.getVoices():[];if(!v.length)return false;
+  selectedVoice=v.find(x=>x.lang==='en-GB')||v.find(x=>x.lang==='en-US')||v.find(x=>x.lang.startsWith('en'))||v[0]||null;return true;}
+function unlockSpeech(){if(speechUnlocked||!window.speechSynthesis)return;speechUnlocked=true;
+  if(!loadVoices())speechSynthesis.addEventListener('voiceschanged',loadVoices,{once:true});
+  const w=new SpeechSynthesisUtterance('');w.volume=0;speechSynthesis.speak(w);}
+function speak(text,delay=0){
+  if(!window.speechSynthesis||!speechUnlocked)return;if(!selectedVoice)loadVoices();
+  setTimeout(()=>{try{speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(text);
+    if(selectedVoice){u.voice=selectedVoice;u.lang=selectedVoice.lang;}else u.lang='en-US';
+    u.rate=0.88;u.pitch=1.0;u.volume=1.0;speechSynthesis.speak(u);}catch(e){}},delay);}
+
+// ═══ TABS ═══
+function showTab(name){
+  document.getElementById('planTab').style.display=name==='plan'?'block':'none';
+  document.getElementById('exercisesTab').style.display=name==='exercises'?'block':'none';
+  document.getElementById('logTab').style.display=name==='log'?'block':'none';
+  document.querySelectorAll('.tab').forEach((t,i)=>t.classList.toggle('active',
+    (i===0&&name==='plan')||(i===1&&name==='exercises')||(i===2&&name==='log')));
+  if(name==='log')renderLog();
+  if(name==='exercises')renderExercises();
+}
+
+// ═══ WEEK MANAGEMENT ═══
+function buildWeekSelect(){
+  const sel=document.getElementById('weekSelect');sel.innerHTML='';
+  WEEKS.forEach((w,i)=>{const o=document.createElement('option');o.value=i;o.textContent=w.label;if(i===viewingWeek)o.selected=true;sel.appendChild(o);});
+}
+function onWeekChange(){viewingWeek=parseInt(document.getElementById('weekSelect').value);localStorage.setItem('race_viewing_week',viewingWeek);renderPlan();}
+function advanceWeek(){
+  if(currentWeek<WEEKS.length-1){currentWeek++;viewingWeek=currentWeek;localStorage.setItem('race_week',currentWeek);localStorage.setItem('race_viewing_week',viewingWeek);buildWeekSelect();renderPlan();}
+}
+function confirmResetWeek(){
+  if(confirm(`Reset Week ${viewingWeek+1}? Your workout history will be kept — only this week's progress will be cleared.`)){
+    localStorage.removeItem(getDoneKey(viewingWeek));renderPlan();
+  }
+}
+function getDoneKey(w){
+  // Keyed on the week's label text, not its array index.
+  // Array position shifts whenever old weeks are removed (as happened going
+  // from Weeks 5-8 to 7-10, and now 8-10) — a label-based key means a past
+  // week's stored progress can never bleed into a different week after a
+  // renumbering, which is the bug that hit the Week 1-4 removal.
+  const lbl=(WEEKS[w]&&WEEKS[w].label)?WEEKS[w].label:('idx'+w);
+  return `race_done_${lbl.replace(/[^a-zA-Z0-9]/g,'_')}`;
+}
+function getDoneDays(w){return JSON.parse(localStorage.getItem(getDoneKey(w))||'[]');}
+function saveDoneDay(w,d){const days=getDoneDays(w);if(!days.includes(d)){days.push(d);localStorage.setItem(getDoneKey(w),JSON.stringify(days));}}
+function getTrainingDays(w){return WEEKS[w].days.map((d,i)=>d.isTraining&&d.hasTimer!=='easy'?i:-1).filter(i=>i>=0);}
+
+// Thursday easy run counts if it has a real duration
+function getAllTrainingDays(w){return WEEKS[w].days.map((d,i)=>d.isTraining?i:-1).filter(i=>i>=0);}
+
+function isWeekComplete(w){
+  const td=getAllTrainingDays(w).filter(i=>{
+    const d=WEEKS[w].days[i];
+    if(d.hasTimer==='easy'&&(!d.easyMins||d.easyMins===0))return false;
+    return true;
+  });
+  const done=getDoneDays(w);
+  return td.every(i=>done.includes(i));
+}
+
+function updateWeekProgress(w){
+  const td=getAllTrainingDays(w).filter(i=>{const d=WEEKS[w].days[i];if(d.hasTimer==='easy'&&(!d.easyMins||d.easyMins===0))return false;return true;});
+  const done=getDoneDays(w).filter(i=>td.includes(i));
+  const pct=td.length?Math.round(done.length/td.length*100):0;
+  document.getElementById('progressFill').style.width=pct+'%';
+  document.getElementById('progressText').textContent=`${done.length}/${td.length} sessions`;
+  const banner=document.getElementById('advanceBanner');
+  if(w===currentWeek&&isWeekComplete(w)&&currentWeek<WEEKS.length-1)banner.classList.add('show');
+  else banner.classList.remove('show');
+}
+
+// ═══ PLAN RENDER ═══
+function getTodayIdx(){const js=new Date().getDay();return js===0?6:js-1;}
+
+function renderPlan(){
+  const todayIdx=getTodayIdx(),doneDays=getDoneDays(viewingWeek),weekData=WEEKS[viewingWeek];
+  document.getElementById('phaseLabel').textContent=weekData.phase;
+  updateWeekProgress(viewingWeek);
+  const container=document.getElementById('weekPlan');container.innerHTML='';
+  weekData.days.forEach((session,idx)=>{
+    const isToday=idx===todayIdx,isDone=doneDays.includes(idx);
+    const card=document.createElement('div');
+    card.className=`day-card${isToday?' today':''}${isDone?' done':''}`;
+    card.id=`day-${idx}`;
+    const badge=isDone?'<span style="font-size:18px;">✅</span>':isToday?'<span class="today-pill">TODAY</span>':'';
+    let actions='';
+    if(!session.isTraining){
+      actions=`<div style="font-size:12px;color:var(--muted);padding:4px 0;">Rest day — no logging needed 😌</div>`;
+    } else if(session.hasTimer===true){
+      const isDoneState=isDone?' done-state':'';
+      actions=`<button class="btn-start" onclick="startRunSession(${idx})">▶ START RUN</button>
+        <button class="btn-done-day${isDoneState}" onclick="quickDone(${idx},event)">${isDone?'✅ Done':'✓ Done'}</button>`;
+    } else if(session.hasTimer==='easy'){
+      if(!session.easyMins||session.easyMins===0){
+        actions=`<div style="font-size:12px;color:var(--muted);padding:4px 0;">Gentle walk or rest — activates Week 5 🚶</div>`;
+      } else {
+        const isDoneState=isDone?' done-state':'';
+        actions=`<button class="btn-start-timer" onclick="startEasyRun(${idx},${session.easyMins})">▶ START ${session.easyMins} MIN RUN</button>
+          <button class="btn-done-day${isDoneState}" onclick="quickDone(${idx},event)">${isDone?'✅ Done':'✓ Done'}</button>`;
+      }
+    } else {
+      const isDoneState=isDone?' done-state':'';
+      const timerBtn=session.type==='strength'?`<button class="btn-repeat" onclick="openHoldTimer(30,'HOLD');event.stopPropagation();">⏱ Hold timer</button>`:'';
+      actions=`<button class="btn-done-full${isDoneState}" onclick="quickDone(${idx},event)">${isDone?'✅ Done':'✓ Mark as done'}</button>
+        ${timerBtn}
+        <button class="btn-repeat" onclick="logExtra(${idx},event)">+ Log extra session</button>`;
+    }
+    card.innerHTML=`
+      <div class="day-header" onclick="toggleDay(${idx})">
+        <div class="day-left">
+          <span class="day-name">${session.day}</span>
+          <span class="type-badge badge-${session.type}">${session.label}</span>
+        </div>${badge}
+      </div>
+      <div class="day-body">
+        <div class="day-desc">${session.desc.replace(/\n/g,'<br>')}</div>
+        <div class="session-actions">${actions}</div>
+      </div>`;
+    container.appendChild(card);
+  });
+}
+
+function toggleDay(idx){const card=document.getElementById(`day-${idx}`);if(idx===getTodayIdx())return;card.classList.toggle('expanded');}
+
+function quickDone(idx,e){
+  if(e)e.stopPropagation();
+  if(getDoneDays(viewingWeek).includes(idx))return;
+  saveDoneDay(viewingWeek,idx);
+  const s=WEEKS[viewingWeek].days[idx];
+  const entry={workout:s.label,duration:'—',date:new Date().toLocaleDateString('en-GB',{weekday:'short',day:'numeric',month:'short'}),ts:Date.now()};
+  addToLog(entry);syncToSheet({date:entry.date,workout:entry.workout,duration:'—',notes:`Week ${viewingWeek+1}`});
+  renderPlan();
+}
+
+function logExtra(idx,e){
+  if(e)e.stopPropagation();
+  const s=WEEKS[viewingWeek].days[idx];
+  const entry={workout:s.label+' (extra)',duration:'—',date:new Date().toLocaleDateString('en-GB',{weekday:'short',day:'numeric',month:'short'}),ts:Date.now()};
+  addToLog(entry);syncToSheet({date:entry.date,workout:entry.workout,duration:'—',notes:`Week ${viewingWeek+1} · extra session`});
+  renderLog();
+  const btn=document.querySelector(`#day-${idx} .btn-repeat`);
+  if(btn){btn.textContent='✅ Logged!';btn.style.color='var(--green)';btn.style.borderColor='var(--green)';setTimeout(()=>{btn.textContent='+ Log extra session';btn.style.color='';btn.style.borderColor='';},2000);}
+}
+
+// ═══ EASY RUN TIMER ═══
+function startEasyRun(idx,mins){
+  easyDayIdx=idx;easyTotalSecs=mins*60;easyTimeLeft=easyTotalSecs;easyRunning=false;
+  document.getElementById('easyTimeDisplay').textContent=fmtT(easyTimeLeft);
+  document.getElementById('easyProgressFill').style.width='100%';
+  document.getElementById('easyMainBtn').textContent='▶';
+  document.getElementById('easyTimerScreen').classList.add('show');
+  requestWakeLock();
+}
+
+function toggleEasyTimer(){
+  getCtx();unlockSpeech();
+  if(!easyRunning){
+    easyRunning=true;
+    document.getElementById('easyMainBtn').textContent='⏸';
+    speak("Easy run starting. Slow and steady.",300);
+    easyTimer=setInterval(()=>{
+      easyTimeLeft--;
+      document.getElementById('easyTimeDisplay').textContent=fmtT(easyTimeLeft);
+      document.getElementById('easyProgressFill').style.width=(easyTimeLeft/easyTotalSecs*100)+'%';
+      if(easyTimeLeft===60)speak("One minute remaining.",200);
+      if(easyTimeLeft===0){completeEasyRun();}
+    },1000);
+  } else {
+    easyRunning=false;clearInterval(easyTimer);
+    document.getElementById('easyMainBtn').textContent='▶';
+    speak("Paused.",100);
+  }
+}
+
+function resetEasyTimer(){
+  clearInterval(easyTimer);easyRunning=false;easyTimeLeft=easyTotalSecs;
+  document.getElementById('easyTimeDisplay').textContent=fmtT(easyTimeLeft);
+  document.getElementById('easyProgressFill').style.width='100%';
+  document.getElementById('easyMainBtn').textContent='▶';
+}
+
+function completeEasyRun(){
+  clearInterval(easyTimer);easyRunning=false;
+  beepDone();speak('Easy run complete! Well done Tatiana!',500);
+  releaseWakeLock();
+  if(easyDayIdx>=0)saveDoneDay(viewingWeek,easyDayIdx);
+  const entry={workout:'Easy Run',duration:fmtT(easyTotalSecs),date:new Date().toLocaleDateString('en-GB',{weekday:'short',day:'numeric',month:'short'}),ts:Date.now()};
+  addToLog(entry);syncToSheet({date:entry.date,workout:entry.workout,duration:entry.duration,notes:`Week ${viewingWeek+1} · easy run`});
+  setTimeout(()=>{closeEasyTimer();renderPlan();},2000);
+}
+
+function closeEasyTimer(){
+  clearInterval(easyTimer);easyRunning=false;
+  document.getElementById('easyTimerScreen').classList.remove('show');
+  releaseWakeLock();
+}
+
+// ═══ HOLD TIMER (plank, dead hang, timed holds) ═══
+let holdTimer=null,holdRunning=false,holdSecs=30,holdLeft=30;
+function openHoldTimer(secs,title){
+  holdSecs=secs;holdLeft=secs;holdRunning=false;
+  document.getElementById('holdTimerTitle').textContent='⏱ '+(title||'HOLD');
+  document.getElementById('holdTimeDisplay').textContent=fmtT(holdLeft);
+  document.getElementById('holdMainBtn').textContent='▶';
+  // preset buttons let you pick the hold length for whatever you can manage today
+  const presets=[10,15,20,30,45,60];
+  document.getElementById('holdPresetRow').innerHTML=presets.map(p=>
+    `<button class="hold-preset${p===secs?' active':''}" onclick="setHoldPreset(${p})">${p}s</button>`).join('');
+  document.getElementById('holdTimerScreen').classList.add('show');
+  requestWakeLock();
+}
+function setHoldPreset(p){
+  clearInterval(holdTimer);holdRunning=false;holdSecs=p;holdLeft=p;
+  document.getElementById('holdTimeDisplay').textContent=fmtT(holdLeft);
+  document.getElementById('holdMainBtn').textContent='▶';
+  document.querySelectorAll('.hold-preset').forEach(b=>b.classList.toggle('active',b.textContent===p+'s'));
+}
+function toggleHoldTimer(){
+  if(!holdRunning){
+    holdRunning=true;document.getElementById('holdMainBtn').textContent='⏸';
+    beepTick();
+    holdTimer=setInterval(()=>{
+      holdLeft--;
+      document.getElementById('holdTimeDisplay').textContent=fmtT(Math.max(0,holdLeft));
+      if(holdLeft<=3&&holdLeft>0)beepTick();
+      if(holdLeft<=0){clearInterval(holdTimer);holdRunning=false;beepDone();
+        speak('Done! Rest now.',300);document.getElementById('holdMainBtn').textContent='▶';holdLeft=holdSecs;
+        setTimeout(()=>{document.getElementById('holdTimeDisplay').textContent=fmtT(holdSecs);},1500);}
+    },1000);
+  } else {
+    holdRunning=false;clearInterval(holdTimer);document.getElementById('holdMainBtn').textContent='▶';
+  }
+}
+function resetHoldTimer(){
+  clearInterval(holdTimer);holdRunning=false;holdLeft=holdSecs;
+  document.getElementById('holdTimeDisplay').textContent=fmtT(holdSecs);
+  document.getElementById('holdMainBtn').textContent='▶';
+}
+function closeHoldTimer(){
+  clearInterval(holdTimer);holdRunning=false;
+  document.getElementById('holdTimerScreen').classList.remove('show');
+  releaseWakeLock();
+}
+
+// ═══ INTERVAL TIMER ═══
+function startRunSession(idx){
+  currentDayIdx=idx;activeWorkout=WEEKS[viewingWeek].days[idx].workout;
+  document.getElementById('planScreen').style.display='none';
+  document.getElementById('timerScreen').style.display='block';
+  document.getElementById('timerTitle').textContent=activeWorkout.name.toUpperCase();
+  resetTimerState();buildDots();requestWakeLock();
+}
+
+function backToPlan(){
+  if(isRunning){clearInterval(timer);isRunning=false;}
+  stopMetronome();releaseWakeLock();
+  document.getElementById('timerScreen').style.display='none';
+  document.getElementById('planScreen').style.display='block';
+  document.body.className='idle';
+}
+
+function backToPlanFromComplete(){
+  document.getElementById('completeScreen').classList.remove('show');
+  document.getElementById('timerScreen').style.display='none';
+  document.getElementById('planScreen').style.display='block';
+  document.body.className='idle';releaseWakeLock();renderPlan();
+}
+
+function resetTimerState(){
+  clearInterval(timer);isRunning=false;stopMetronome();currentInterval='run';currentRound=0;timeLeft=0;totalElapsed=0;
+  document.getElementById('mainBtn').textContent='▶';document.getElementById('tPhase').textContent='READY';
+  document.getElementById('tTime').textContent='00';document.getElementById('tLbl').textContent='ready';
+  document.getElementById('tRound').textContent='0';document.getElementById('tTotal').textContent='00:00';
+  document.getElementById('tLeft').textContent='—';document.getElementById('tProg').style.strokeDashoffset='0';
+  document.getElementById('nextPreview').textContent='Press play to start';document.body.className='idle';
+}
+function resetTimer(){resetTimerState();buildDots();}
+
+function pauseForPhoto(){
+  if(!isRunning)return;
+  isRunning=false;clearInterval(timer);stopMetronome();
+  window.speechSynthesis&&speechSynthesis.cancel();
+  document.getElementById('mainBtn').textContent='▶';
+  document.getElementById('tPhase').textContent='📸 PAUSED';
+  speak('Paused for photo. Tap play to resume.',100);
+}
+
+function buildDots(){
+  const dots=document.getElementById('lapDots');dots.innerHTML='';
+  if(!activeWorkout)return;
+  for(let r=0;r<activeWorkout.rounds;r++){
+    ['run','walk'].forEach(type=>{const d=document.createElement('div');d.className='dot';d.id=`dot-${type}-${r}`;dots.appendChild(d);});
+  }
+}
+
+function updateDots(){
+  if(!activeWorkout)return;
+  for(let r=0;r<activeWorkout.rounds;r++){
+    const rd=document.getElementById(`dot-run-${r}`),wd=document.getElementById(`dot-walk-${r}`);
+    if(r<currentRound){rd.className='dot run-done';wd.className='dot walk-done';}
+    else if(r===currentRound&&currentInterval==='warm'){rd.className='dot';wd.className='dot';}
+    else if(r===currentRound){if(currentInterval==='run'){rd.className='dot run-done active';wd.className='dot';}else{rd.className='dot run-done';wd.className='dot walk-done active';}}
+    else{rd.className='dot';wd.className='dot';}
+  }
+}
+
+function fmtS(s){const m=Math.floor(s/60),sec=s%60;return m>0?`${m}:${sec.toString().padStart(2,'0')}`:String(sec);}
+function fmtT(s){const m=Math.floor(s/60),sec=s%60;return `${m.toString().padStart(2,'0')}:${sec.toString().padStart(2,'0')}`;}
+
+function phaseTotal(){return currentInterval==='run'?activeWorkout.run:currentInterval==='walk'?activeWorkout.walk:currentInterval==='warm'?activeWorkout.warm:activeWorkout.cool;}
+function updateUI(){
+  document.getElementById('tTime').textContent=fmtS(timeLeft);
+  document.getElementById('tRound').textContent=currentRound+1;
+  document.getElementById('tTotal').textContent=fmtT(totalElapsed);
+  document.getElementById('tLeft').textContent=activeWorkout.rounds-currentRound;
+  document.getElementById('tLbl').textContent=currentInterval==='run'?'sec to walk':currentInterval==='walk'?'sec to run':currentInterval==='warm'?'warm-up · then run':'cool-down · almost done';
+  document.getElementById('tPhase').textContent=currentInterval==='run'?'🏃 RUN':currentInterval==='walk'?'🚶 WALK':currentInterval==='warm'?'🔥 WARM-UP':'🧘 COOL-DOWN';
+  document.body.className=currentInterval==='run'?'run-active':'walk-active';
+  const total=phaseTotal();
+  document.getElementById('tProg').style.strokeDashoffset=691-(691*timeLeft/total);
+  if(currentInterval==='warm'){
+    document.getElementById('nextPreview').innerHTML=`Next → <span>Run ${fmtS(activeWorkout.run)} · round 1</span>`;
+  } else if(currentInterval==='cool'){
+    document.getElementById('nextPreview').innerHTML=`<span>Easy walk — you did it! 💪</span>`;
+  } else if(currentInterval==='run'){
+    document.getElementById('nextPreview').innerHTML=`Next → <span>Walk ${fmtS(activeWorkout.walk)}</span>`;
+  } else {
+    const nr=currentRound+1;
+    document.getElementById('nextPreview').innerHTML=nr<activeWorkout.rounds
+      ?`Next → <span>Run ${fmtS(activeWorkout.run)} · round ${nr+1}</span>`
+      :(activeWorkout.cool?`<span>Last walk — then cool-down</span>`:`<span>Last walk — finish strong! 💪</span>`);
+  }
+  updateDots();
+}
+
+function tick(){
+  timeLeft--;totalElapsed++;
+  if(timeLeft===3)beepTick();
+  if(timeLeft===2){beepTick();if(currentInterval==='run')speak('3',80);}
+  if(timeLeft===1){beepTick();if(currentInterval==='run')speak('2',80);}
+  if(timeLeft<=0){nextInterval();return;}
+  updateUI();
+}
+
+function nextInterval(){
+  if(currentInterval==='cool'){completeWorkout();return;}
+  if(currentInterval==='warm'){
+    currentInterval='run';timeLeft=activeWorkout.run;
+    beepRun();speak('Warm-up done. Round 1. Start running!',350);
+    startMetronome(activeWorkout.bpm);
+  } else if(currentInterval==='run'){
+    currentInterval='walk';timeLeft=activeWorkout.walk;
+    stopMetronome();beepWalk();speak('Walk now!',300);
+  } else {
+    currentRound++;
+    if(currentRound>=activeWorkout.rounds){
+      if(activeWorkout.cool){currentRound=activeWorkout.rounds-1;currentInterval='cool';timeLeft=activeWorkout.cool;beepWalk();speak('Last round done. Cool down, easy walk.',300);updateUI();return;}
+      completeWorkout();return;}
+    currentInterval='run';timeLeft=activeWorkout.run;
+    beepRun();speak(`Round ${currentRound+1}. Start running!`,350);
+    startMetronome(activeWorkout.bpm);
+  }
+  updateUI();
+}
+
+function completeWorkout(){
+  clearInterval(timer);isRunning=false;stopMetronome();releaseWakeLock();
+  beepDone();speak('Workout complete! Well done Tatiana!',600);
+  document.body.className='idle';
+  const btn=document.getElementById('doneFinalBtn');
+  btn.textContent='✓ MARK AS DONE';btn.className='btn-done-final';btn.dataset.logged='0';
+  document.getElementById('cStat').textContent=fmtT(totalElapsed);
+  document.getElementById('completeScreen').classList.add('show');
+}
+
+function toggleTimer(){
+  if(!isRunning){
+    getCtx();unlockSpeech();isRunning=true;
+    document.getElementById('mainBtn').textContent='⏸';
+    if(timeLeft===0){
+      currentRound=0;totalElapsed=0;
+      if(activeWorkout.warm){currentInterval='warm';timeLeft=activeWorkout.warm;beepWalk();speak('Warm-up. Walk briskly.',400);}
+      else{currentInterval='run';timeLeft=activeWorkout.run;beepRun();speak("Ready? Let's go! Start running!",500);startMetronome(activeWorkout.bpm);}
+    } else {
+      speak('Resuming. '+(currentInterval==='run'?'Keep running!':'Keep walking!'),300);
+      if(currentInterval==='run')startMetronome(activeWorkout.bpm);
+    }
+    timer=setInterval(tick,1000);updateUI();
+  } else {
+    isRunning=false;clearInterval(timer);stopMetronome();
+    window.speechSynthesis&&speechSynthesis.cancel();
+    document.getElementById('mainBtn').textContent='▶';
+    document.getElementById('tPhase').textContent='PAUSED';
+    speak('Paused.',100);
+  }
+}
+
+function skipInterval(){if(!isRunning)return;clearInterval(timer);stopMetronome();nextInterval();if(isRunning)timer=setInterval(tick,1000);}
+
+// ═══ LOG & SYNC ═══
+function logAndSync(){
+  const btn=document.getElementById('doneFinalBtn');
+  if(btn.dataset.logged==='1'){speak('Already logged!');return;}
+  if(currentDayIdx>=0)saveDoneDay(viewingWeek,currentDayIdx);
+  const entry={workout:activeWorkout?activeWorkout.name:'Workout',duration:fmtT(totalElapsed),
+    date:new Date().toLocaleDateString('en-GB',{weekday:'short',day:'numeric',month:'short'}),ts:Date.now()};
+  addToLog(entry);
+  btn.textContent='⏳ SYNCING...';btn.className='btn-done-final syncing';btn.dataset.logged='1';
+  speak('Workout logged! Great job Tatiana!',200);
+  syncToSheet({date:entry.date,workout:entry.workout,duration:entry.duration,notes:`Week ${viewingWeek+1}`})
+    .then(()=>{btn.textContent='✅ SYNCED TO DRIVE!';btn.className='btn-done-final synced';})
+    .catch(()=>{btn.textContent='✅ LOGGED (offline)';btn.className='btn-done-final synced';});
+}
+
+function addToLog(e){workoutLog.unshift(e);localStorage.setItem('tatiana_log',JSON.stringify(workoutLog));}
+function syncToSheet(data){return fetch(SHEET_URL,{method:'POST',mode:'no-cors',headers:{'Content-Type':'application/json'},body:JSON.stringify(data)});}
+
+function renderLog(){
+  const list=document.getElementById('logList'),streak=document.getElementById('logStreak'),btn=document.getElementById('exportBtn');
+  if(!workoutLog.length){list.innerHTML='<div class="log-empty">No workouts logged yet.</div>';streak.innerHTML='';if(btn)btn.style.display='none';return;}
+  streak.innerHTML=`<strong>${workoutLog.length}</strong> workout${workoutLog.length>1?'s':''} completed 🔥`;
+  if(btn)btn.style.display='block';
+  list.innerHTML=workoutLog.slice(0,15).map(e=>`
+    <div class="log-entry">
+      <div class="log-left"><span class="log-name">${e.workout}</span><span class="log-date">${e.date}</span></div>
+      <span class="log-time">${e.duration}</span>
+    </div>`).join('');
+}
+
+function exportCSV(){
+  if(!workoutLog.length)return;
+  const rows=[['Date','Workout','Duration','Timestamp']];
+  workoutLog.forEach(e=>rows.push([e.date,e.workout,e.duration,new Date(e.ts).toISOString()]));
+  const csv=rows.map(r=>r.map(v=>`"${v}"`).join(',')).join('\n');
+  const blob=new Blob([csv],{type:'text/csv'}),url=URL.createObjectURL(blob),a=document.createElement('a');
+  a.href=url;a.download='tatiana_workout_log.csv';a.click();URL.revokeObjectURL(url);
+}
+
+// ═══ EXERCISE LIBRARY ═══
+function renderExercises(){
+  const tab=document.getElementById('exercisesTab');
+  const warmup=EXERCISES.filter(e=>e.category==='warmup');
+  const posture=EXERCISES.filter(e=>e.category==='posture');
+  const strengthA=EXERCISES.filter(e=>e.id==='rdl'||e.id==='row'||e.id==='goblet'||e.id==='overhead-press'||e.id==='side-leg'||e.id==='plank');
+  const strengthB=EXERCISES.filter(e=>e.id==='bird-dog'||e.id==='chest-press'||e.id==='lateral-raise'||e.id==='dead-hang'||e.id==='glute-bridge');
+  const both=EXERCISES.filter(e=>e.id==='dead-bug');
+  tab.innerHTML=
+    exSection('🔥 Warm-up — before every session',warmup)+
+    exSection('🧘 Posture Fix',posture)+
+    exSection('💪 Strength A — Friday',strengthA)+
+    exSection('💪 Strength B — Saturday',strengthB)+
+    exSection('💪 Both Sessions',both);
+}
+
+function exSection(title,list){
+  return `<div class="ex-section"><div class="ex-section-title">${title}</div>${list.map(ex=>`
+    <div class="ex-card" onclick="openExercise('${ex.id}')">
+      <div class="ex-icon">${ex.icon||'💪'}</div>
+      <div class="ex-info">
+        <div class="ex-name">${ex.name}</div>
+        <div class="ex-meta">${ex.meta}</div>
+        <span class="ex-tag ${ex.tagClass}">${ex.tag}</span>
+      </div>
+      <div style="color:var(--muted);font-size:20px;">›</div>
+    </div>`).join('')}</div>`;
+}
+
+function openExercise(id){
+  const ex=EXERCISES.find(e=>e.id===id);if(!ex)return;
+  document.getElementById('exTitle').textContent=ex.name.toUpperCase();
+  document.getElementById('exMeta').textContent=ex.meta;
+  const phasesHTML=ex.phases.length===1
+    ?`<div style="text-align:center;">${ex.phases[0].svg}<div class="ex-phase-desc" style="margin-top:8px;">${ex.phases[0].desc}</div></div>`
+    :`<div class="ex-phases">${ex.phases.map(p=>`<div class="ex-phase"><div class="ex-phase-lbl">${p.label}</div>${p.svg}<div class="ex-phase-desc">${p.desc}</div></div>`).join('')}</div>`;
+  document.getElementById('exContent').innerHTML=`
+    <div class="ex-illus-box">
+      <div style="font-size:10px;letter-spacing:3px;color:var(--muted);text-transform:uppercase;margin-bottom:8px;">HOW IT LOOKS</div>
+      ${phasesHTML}
+    </div>
+    <div class="ex-steps-box">
+      <h3>WHY THIS EXERCISE</h3>
+      <div class="ex-why">${ex.why}</div>
+      <h3>HOW TO DO IT</h3>
+      ${ex.steps.map((s,i)=>`<div class="ex-step"><div class="ex-step-n">${i+1}</div><div class="ex-step-t">${s}</div></div>`).join('')}
+    </div>
+    <div class="ex-tip"><strong>💡 COACH TIP</strong>${ex.tip}</div>`;
+  document.getElementById('exOverlay').classList.add('show');
+  document.getElementById('exOverlay').scrollTop=0;
+}
+
+function closeExercise(){document.getElementById('exOverlay').classList.remove('show');}
+
+// ═══ INIT ═══
+buildWeekSelect();
+renderPlan();
+</script>
+</body>
+</html>
